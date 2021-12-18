@@ -7,12 +7,13 @@ But what is a Good Test? Like nearly every question, the answer is "it depends."
 That being said, a Good Test should 
 
 1) Ensure correctness
-2) Make refactoring easier
+2) Ensure refactorability
 
 These are both essential qualities. That is, they are equally important, and your tests should never compromise on either quality. In my experience, most engineers focus on just the correctness aspect of tests and completely neglect the refactorability of tested code. Writing tests this way will not lead to the natural development of good architecture. (Even worse, it tends to actively hurt the system over time.)[https://www.youtube.com/watch?v=xPL84vvLwXA&ab_channel=VMwareTanzu]
 
 The reason this happens is that *tests introduce coupling.* 
 
+## Tests and Coupling
 When you write a test, that test is directly dependent on the shape of the function it calls. And not just that, but tests are coupled to the functions used for setup and teardown. This dependency makes it harder to refactor.
 
 ```kotlin
@@ -72,7 +73,7 @@ data class Greeting(val dialect: Dialect, val name: String) {
 }
 ```
 
-But of course, now every test from before is broken. So we have to update all of them again. That might be fine with a small example like this, but at work, there are likely dozens or hundreds of tests to update like this.
+But of course, now every test from before is broken. So we have to update all of them again. In real life, this is dozens or hundreds of tests depending on how critical the code you are refactoring is. The more critical the code is, the more important it is to continuously refactor it. Yet, the more critical the code is, the more tests you will have, and thus refactoring is even more difficult.
 
 ```kotlin
 class GreetingTest : StringSpec({
@@ -146,7 +147,6 @@ class GreetingTest : StringSpec({
 })
 ```
 
-Again, we had to change all the tests. This is already getting annoying, even for an incredibly simple example for a blog post. I can feel myself going slower each time. It makes me not want to refactor anything even though I know these are good changes to make.
+Again, we had to change all the tests. This is already getting annoying, even for this trivial hello world example with four test cases. I can feel myself going slower each time. It makes me not want to refactor anything even though I know these are worthwhile changes. I'm already trying to come up with excuses to avoid additional refactoring examples.
 
-
-But this isn't the only problem. Much more serious is the simple fact that we often have complicated test cases that aren't as easy to "fix" when we make a refactor. So far, we just changed the types of args or instantiated a slightly different object. But what if we don't even understand what the test case is doing in the first place. If you haven't experienced this a hundred times in your career now, consider yourself blessed.
+In conclusion, tests "calcify" the code it touches.

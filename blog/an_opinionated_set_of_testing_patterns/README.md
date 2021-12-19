@@ -9,7 +9,7 @@ That being said, a Good Test should
 1) Ensure correctness
 2) Ensure refactorability
 
-These are both essential qualities. That is, they are equally important, and your tests should never compromise on either quality. In my experience, most engineers focus on just the correctness aspect of tests and completely neglect the refactorability of tested code. Writing tests this way will not lead to the natural development of good architecture. (Even worse, it tends to actively hurt the system over time.)[https://www.youtube.com/watch?v=xPL84vvLwXA&ab_channel=VMwareTanzu]
+These are both essential qualities. That is, they are equally important, and your tests should never compromise on either. In my experience, most engineers focus on just the correctness aspect of tests and completely neglect the refactorability of tested code. Writing tests this way will not lead to the natural development of good architecture. (Even worse, it tends to actively hurt the system, team, and organization over time.)[https://www.youtube.com/watch?v=xPL84vvLwXA&ab_channel=VMwareTanzu]
 
 The reason this happens is that *tests introduce coupling.* 
 
@@ -147,6 +147,16 @@ class GreetingTest : StringSpec({
 })
 ```
 
-Again, we had to change all the tests. This is already getting annoying, even for this trivial hello world example with four test cases. I can feel myself going slower each time. It makes me not want to refactor anything even though I know these are worthwhile changes. I'm already trying to come up with excuses to avoid additional refactoring examples.
+Again, we had to change all the tests. This is already getting annoying, even for this trivial hello world example with four test cases. This coupling discourages refactoring and calcifies the code.
 
-In conclusion, tests "calcify" the code it touches.
+## Patterns!
+Back to the point of this post, if you practice TDD and try to write tests that ensure correctness and refactorability, you will naturally learn to build scalable and testable architectures. The following are a collection of patterns I use day to day when writing code, and that have held up well over time.
+
+- Test Driven Development
+- Keep the Domain Pure
+- Test Abstractions Not Concretions
+- Ports and Adapters Architecture
+- TODO: what else?
+
+## Closing Thoughts
+In some ways, all of these ideas come just from applying the same principles we apply to our production code to our tests. SOLID, in particular, comes to mind. I would go so far as to say it is *more* important for your tests to be written and abstracted in production quality than the actual production code itself, since the production code is derived and maintained through the tests.

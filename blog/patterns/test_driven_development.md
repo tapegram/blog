@@ -45,24 +45,23 @@ Taken from [the wikipedia article on TDD.](https://en.wikipedia.org/wiki/Test-dr
 Here is [an excellent demo of Uncle Bob's "Three Laws of TDD" by the man himself.](https://www.youtube.com/watch?v=qkblc5WRn-U&ab_channel=IntelliJIDEAbyJetBrains)
 
 ## Resulting Context
-Fast feedback loops in the dev cycle.
+The immediate benefits of embracing TDD include
 
-Continuous validation when writing code (easy debugging).
+1) Fast feedback loops in the dev-cycle - You know instantly if your code is working or not as you go, instead of spending an hour writing a huge block of code and then only finding out after that *something* about it doesn't work.
+2) Continuous Validation - As mentioned above, every change is small and incremental, so when something breaks you know exactly what it was that broke. [No need for debuggers or spending hours looking for the problem. Just hit "undo."](https://www.artima.com/weblogs/viewpost.jsp?thread=23476). And for a personal experience: I have not needed to use anything beyond tests and the occasional print statements in the last 5ish years (since I started practicing TDD).
+3) Writing tests firsts encourages writing testable code - This is one of the biggest wins of TDD since it naturally pushes you towards a Ports and Adapters architecture, as well as writing testable pure code.
+4) Encourages Incremental Work - After every "cycle" in TDD, you can decided "Is this good enough for a PR?" Similarly, you are done with the ticket when all of your AC have corresponding passing tests. EZ-PZ.
+5) Focuses Discussion on the Problem - Because you start with tests first, you need to know what "specs" you are providing for the system. In other words, writing tests helps you understand the "usecases" or "business logic" you need to implement, before you actually implement them. I workshop test cases with product all the time and require that Acceptance Criteria on tickets be written in given / when / then style, when possible.
+6) TDD gives you, the engineer, tons of confidence in the code you write. It may come across as a bit arrogant, but one my code gets deployed and someone reports an issue, I can sit back smugly knowing it wasn't my commit (unless there was a miscommunication about business rules, but that's really rare in my experience).
 
-Encourages writing "testable code." What is "testable code."
+However, there are quite a few traps you can fall into by misapplying TDD, as well as challenges to overcome to get the above value out if it.
 
-Focusing discussions on usecases / AC.
+See [this talk](https://www.youtube.com/watch?v=xPL84vvLwXA&ab_channel=VMwareTanzu) for a great crash course on what doing TDD wrong looks like. In summary: TDD will fail if you don't ensure that you write tests that promote refactorability.
 
-Encourages incremental work
+The first problem you may run into is just that you are often not writing code from scratch -- instead you are working with legacy code that is inherently difficult to test. Maybe the code is full of effects that require mocking (which then leads to difficulty refactoring), or the code isn't well abstracted or isolated, so testing any bit requires testing the whole dang system. Running into these difficulties should re-affirm the value of TDD, since you can now plainly see and feel the problems that happen when testing isn't considered part of the final production code.
 
-Build tons of confidence in quality (because its better)
+There isn't an easy fix for this. You have to write tests at the highest level possible to allow for testing, mock/patch as little as possible to get the tests working, and refactor refactor refactor. And also stop writing code that isn't testable, factor out code when possible so you can practice TDD on that small bit, and then grow it. [This talk](https://www.youtube.com/watch?v=8bZh5LMaSmE&t=830s&ab_channel=Confreaks) by Sandi Metz may be helpful if you are stuck in this position!
 
+Another problem is the interesting idea of *emergent* architectures vs *designed* architectures. Some TDD purests would claim that you start from scratch wtih TDD and through refactoring the architecture emerges. Others [claim that TDD destroys the ability to create thoughtfully designed abstraction matching the mental model of your users](https://www.youtube.com/watch?v=ZrBQmIDdls4). I think this is a very interesteding discussion and have personally landed on an approach [resembling what is described here](https://www.youtube.com/watch?v=KtHQGs3zFAM), but with a little DDD mixed in: Scaffold your initial domain models, create the aggregates you have a very high confidence are the right ones for your system (it's not as important if the internals are "right"), wrap them in a service, and then go to town with TDD against the service.
 
-
-Must value refactorability or TDD can lead to future difficulties when extending or refactoring.
-
-Design vs Emergent Architectures
-
-Mastery (Uncle bob blog post)
-
-Relationship with Types
+A final note on "Mastery." TDD is a discipline and a practice aligned with our values when producing software. However, as you practice it and gain mastery, I have found you begin to write the kind of product code you would write with TDD, without writing the tests first. It becomes a part of who you are as an engineer. In my experience, code just feels "wrong" if it's not easy to test. I'm not as "hardcore" about always writing all the tests according to the three laws as I have been in years past, but I'm still constantly thinking about testability and working in clean, green increaments. [Of course, I mostly write tests first in a TDD style, but I feel the real "value" of it has been its effect on how I think about production code.](https://blog.cleancoder.com/uncle-bob/2016/11/10/TDD-Doesnt-work.html)

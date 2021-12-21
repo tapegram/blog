@@ -274,6 +274,6 @@ However, one of the biggest problems with Ports and Adapters is that it is maint
 
 In order to reduce the personal and mental maintenance cost of a ports and adapters architecture, one may try to enforce it at the compiler level (by enforcing referential transparency in pure functions, such as [KEEP THE DOMAIN PURE](keep_the_domain_pure.md)) or other such ["pits of success."](https://www.youtube.com/watch?v=US8QG9I1XW0&ab_channel=NDCConferences)
 
-Additionally, you will likely still run into some problems with tests directly depending on domain objects, which can make the tests fragile and the domain harder to refactor. To address these issues, you may want to consider applying [HIDE THE DOMAIN FROM TESTS.](hide_the_domain_from_tests.md)
+Additionally, you will likely still run into some problems with tests directly depending on domain objects, which can make the tests fragile and the domain harder to refactor. To address these issues, you may want to consider applying [HIDE THE DOMAIN.](hide_the_domain.md)
 
 Also, you will want to be sure to [TEST THE HAPPY AND SAD PATHS.](test_the_happy_and_sad_paths.md)

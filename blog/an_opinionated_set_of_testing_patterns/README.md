@@ -152,11 +152,8 @@ Again, we had to change all the tests. This is already getting annoying, even fo
 ## Patterns!
 Back to the point of this post, if you practice TDD and try to write tests that ensure correctness and refactorability, you will naturally learn to build scalable and testable architectures. The following are a collection of patterns I use day to day when writing code, and that have held up well over time.
 
-- Test Driven Development
-- Keep the Domain Pure
-- Test Abstractions Not Concretions
-- Ports and Adapters Architecture
-- TODO: what else?
+- [TEST DRIVEN DEVELOPMENT](../patterns/test_driven_development.md)
+- [PORTS AND ADAPTERS](../patterns/ports_and_adapters.md)
 
 ## Closing Thoughts
-In some ways, all of these ideas come just from applying the same principles we apply to our production code to our tests. SOLID, in particular, comes to mind. I would go so far as to say it is *more* important for your tests to be written and abstracted in production quality than the actual production code itself, since the production code is derived and maintained through the tests.
+In some ways, all of these ideas come just from applying the same principles we apply to our production code to our tests. SOLID, in particular, comes to mind. I would go so far as to say it is *more* important for your tests to be written and abstracted in production quality than the actual production code itself since the production code is derived and maintained through the tests.

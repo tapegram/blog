@@ -181,11 +181,6 @@ class ItemRequest(
     val sku: String,
 )
 
-class Cart(
-  val id: String,
-  val items: List<Item>
-)
-
 @RestController
 @RequestMapping("/api")
 class CartController(

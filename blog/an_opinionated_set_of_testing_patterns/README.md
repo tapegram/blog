@@ -151,6 +151,28 @@ Again, we had to change all the tests. This is already getting annoying, even fo
 
 [Uncle Bob has a great blog post exploring this topic (among others)](https://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html)
 
+```
+Still another common argument is that as the number of tests grows, a single change to the production code can cause hundreds of tests to require corresponding changes. For example, if you add an argument to a method, every test that calls that method must be changed to add the new argument. This is known as The Fragile Test Problem.
+
+A related argument is: The more tests you have, the harder it is to change the production code; because so many tests can break and require repair. Thus, tests make the production code rigid.
+
+...
+
+Yes. That’s right. Tests need to be designed. Principles of design apply to tests just as much as they apply to regular code. Tests are part of the system; and they must be maintained to the same standards as any other part of the system.
+
+...
+
+The problem is – and I want you to think carefully about this next statement – a one-to-one correspondence implies extremely tight coupling.
+
+Think of it! If the structure of the tests follows the structure of the production code, then the tests are inextricably coupled to the production code
+
+...
+
+What makes TDD work? You do. Following the three laws provides no guarantee. The three laws are a discipline, not a solution. It is you, the programmer, who makes TDD work. And you make it work by understanding that tests are part of the system, that tests must be designed, and that test code evolves towards ever greater specificity, while production code evolves towards ever greater generality.
+
+Can TDD harm your design and architecture? Yes! If you don’t employ design principles to evolve your production code, if you don’t evolve the tests and code in opposite directions, if you don’t treat the tests as part of your system, if you don’t think about decoupling, separation and isolation, you will damage your design and architecture – TDD or no TDD.
+```
+
 ## Patterns!
 Back to the point of this post, if you practice TDD and try to write tests that ensure correctness and refactorability, you will naturally learn to build scalable and testable architectures. The following are a collection of patterns I use day to day when writing code, and that have held up well over time. By starting with TEST DRIVEN DEVELOPMENT, I believe a junior engineer with some curiosity and initiative, will eventually discover some form of all of these patterns.
 

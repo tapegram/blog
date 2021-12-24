@@ -64,4 +64,32 @@ There isn't an easy fix for this. You have to write tests at the highest level p
 
 Another problem is the interesting idea of *emergent* architectures vs *designed* architectures. Some TDD purests would claim that you start from scratch wtih TDD and through refactoring the architecture emerges. Others [claim that TDD destroys the ability to create thoughtfully designed abstraction matching the mental model of your users](https://www.youtube.com/watch?v=ZrBQmIDdls4). I think this is a very interesteding discussion and have personally landed on an approach [resembling what is described here](https://www.youtube.com/watch?v=KtHQGs3zFAM), but with a little DDD mixed in: Scaffold your initial domain models, create the aggregates you have a very high confidence are the right ones for your system (it's not as important if the internals are "right"), wrap them in a service, and then go to town with TDD against the service.
 
-A final note on "Mastery." TDD is a discipline and a practice aligned with our values when producing software. However, as you practice it and gain mastery, I have found you begin to write the kind of product code you would write with TDD, without writing the tests first. It becomes a part of who you are as an engineer. In my experience, code just feels "wrong" if it's not easy to test. I'm not as "hardcore" about always writing all the tests according to the three laws as I have been in years past, but I'm still constantly thinking about testability and working in clean, green increaments. [Of course, I mostly write tests first in a TDD style, but I feel the real "value" of it has been its effect on how I think about production code.](https://blog.cleancoder.com/uncle-bob/2016/11/10/TDD-Doesnt-work.html)
+[Uncle Bob has a great blog post exploring the topics of test coupling and emergent architectures.](https://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html)
+
+```
+Still another common argument is that as the number of tests grows, a single change to the production code can cause hundreds of tests to require corresponding changes. For example, if you add an argument to a method, every test that calls that method must be changed to add the new argument. This is known as The Fragile Test Problem.
+
+A related argument is: The more tests you have, the harder it is to change the production code; because so many tests can break and require repair. Thus, tests make the production code rigid.
+
+...
+
+Yes. That’s right. Tests need to be designed. Principles of design apply to tests just as much as they apply to regular code. Tests are part of the system; and they must be maintained to the same standards as any other part of the system.
+
+...
+
+The problem is – and I want you to think carefully about this next statement – a one-to-one correspondence implies extremely tight coupling.
+
+Think of it! If the structure of the tests follows the structure of the production code, then the tests are inextricably coupled to the production code
+
+...
+
+What makes TDD work? You do. Following the three laws provides no guarantee. The three laws are a discipline, not a solution. It is you, the programmer, who makes TDD work. And you make it work by understanding that tests are part of the system, that tests must be designed, and that test code evolves towards ever greater specificity, while production code evolves towards ever greater generality.
+
+Can TDD harm your design and architecture? Yes! If you don’t employ design principles to evolve your production code, if you don’t evolve the tests and code in opposite directions, if you don’t treat the tests as part of your system, if you don’t think about decoupling, separation and isolation, you will damage your design and architecture – TDD or no TDD.
+```
+
+As you may see in the diagrams in that blog post or learn from experience, TDD basically requires the application of [PORTS AND ADAPTERS](ports_and_adapters.md) or another similar architecture involving a layer of indirection, in the tests and in the production code.
+
+Similarly, you will quickly realize that you should [TEST USECASES](test_usescases.md), not methods, in order to get maximum value out of your tests.
+
+A final note on "Mastery." TDD is a discipline and a practice aligned with our (mostly agile) values when producing software. However, as you practice it and gain mastery, I have found you begin to write the kind of production code you would write with TDD, without writing the tests first. It becomes a part of who you are as an engineer. In my experience, code feels "wrong" if its not easy to test. I'm not as "hardcore" about always writing all the tests according to the three laws as I have been in years past, but I'm still constantly thinking about testability and working in clean, green increments. [Of course, I mostly write tests first in a TDD style, but I feel the real "value" of it has been its effect on how I think about production code.](https://blog.cleancoder.com/uncle-bob/2016/11/10/TDD-Doesnt-work.html)

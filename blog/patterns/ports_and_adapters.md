@@ -263,12 +263,10 @@ The adapters can be tested separately as part of integration tests.
 Ports and Adapters decouples business logic from infrastructure. This has the benefits of
 
 1) Testing the business logic is easier, cheaper, and faster.
-2) Technology choices become "implementation details" that can be swapped out with no effect on the domain. Want to switch from Postgres to DynamoDB? That porject just went from "MEGA" to "Small."
+2) Technology choices become "implementation details" that can be swapped out with no effect on the domain. Want to switch from Postgres to DynamoDB? That project just went from "MEGA" to "Small."
 
-However, one of the biggest problems with Ports and Adapters is that it is maintained purely through developer discipline. Anyone can submit a PR that breaks this architecture and you immediately start losing the benefits. This can lead to a lot of energy spent convincing well meaning junior and even senior engineers not to merge commits that they consider perfectly valid because they don't know about or see the benefits of the chosen architecture.
+However, one of the biggest problems with Ports and Adapters is that it is maintained purely through developer discipline. Anyone can submit a PR that breaks this architecture and you immediately start losing the benefits. This can lead to a lot of energy spent convincing well-meaning junior and even senior engineers not to merge commits that they consider perfectly valid because they don't know about or see the benefits of the chosen architecture.
 
-In order to reduce the personal and mental maintenance cost of a ports and adapters architecture, one may try to enforce it at the compiler level (by enforcing referential transparency in pure functions, such as [KEEP THE DOMAIN PURE](keep_the_domain_pure.md)) or other such ["pits of success."](https://www.youtube.com/watch?v=US8QG9I1XW0&ab_channel=NDCConferences)
+In order to reduce the personal and mental maintenance cost of a ports and adapters architecture, one may try to create a ["pit of success."](https://www.youtube.com/watch?v=US8QG9I1XW0&ab_channel=NDCConferences) by [ENFORCING REFERENTIAL TRANSPARENCY](enforce_referential_transparency.md)
 
-Additionally, you will likely still run into some problems with tests directly depending on domain objects, which can make the tests fragile and the domain harder to refactor. To address these issues, you may want to consider applying [HIDE THE DOMAIN.](hide_the_domain.md)
-
-Also, you will want to be sure to [TEST THE HAPPY AND SAD PATHS.](test_the_happy_and_sad_paths.md)
+Additionally, you will likely still run into some problems with tests directly depending on domain objects, which can make the tests fragile and the domain harder to refactor. If refactoring the domain is your highest priority (as it should be in a context demanding Domain Driven Design), you may want to consider applying [HIDE THE DOMAIN.](hide_the_domain.md)

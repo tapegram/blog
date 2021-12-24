@@ -149,6 +149,8 @@ class GreetingTest : StringSpec({
 
 Again, we had to change all the tests. This is already getting annoying, even for this trivial hello world example with four test cases. This coupling discourages refactoring and calcifies the code.
 
+[Uncle Bob has a great blog post exploring this topic (among others)](https://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html)
+
 ## Patterns!
 Back to the point of this post, if you practice TDD and try to write tests that ensure correctness and refactorability, you will naturally learn to build scalable and testable architectures. The following are a collection of patterns I use day to day when writing code, and that have held up well over time. By starting with TEST DRIVEN DEVELOPMENT, I believe a junior engineer with some curiosity and initiative, will eventually discover some form of all of these patterns.
 

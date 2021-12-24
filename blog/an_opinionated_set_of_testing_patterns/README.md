@@ -150,10 +150,16 @@ class GreetingTest : StringSpec({
 Again, we had to change all the tests. This is already getting annoying, even for this trivial hello world example with four test cases. This coupling discourages refactoring and calcifies the code.
 
 ## Patterns!
-Back to the point of this post, if you practice TDD and try to write tests that ensure correctness and refactorability, you will naturally learn to build scalable and testable architectures. The following are a collection of patterns I use day to day when writing code, and that have held up well over time.
+Back to the point of this post, if you practice TDD and try to write tests that ensure correctness and refactorability, you will naturally learn to build scalable and testable architectures. The following are a collection of patterns I use day to day when writing code, and that have held up well over time. By starting with TEST DRIVEN DEVELOPMENT, I believe a junior engineer with some curiosity and initiative, will eventually discover some form of all of these patterns.
 
 - [TEST DRIVEN DEVELOPMENT](../patterns/test_driven_development.md)
 - [PORTS AND ADAPTERS](../patterns/ports_and_adapters.md)
+- [ENFORCE REFERENTIAL TRANSPARENCY](../patterns/enforce_referential_transparency.md)
+- [HIDE THE DOMAIN](../patterns/hide_the_domain.md)
+- [KEEP THE DOMAIN PURE](../patterns/keep_the_domain_pure.md)
+- [MODEL DOMAIN ERRORS](../patterns/model_domain_errors.md)
+- [TEST USECASES](../patterns/test_usecases.md)
+- [MAKE A DSL FOR USECASES](../patterns/make_a_dsl_for_usecases.md)
 
 ## Closing Thoughts
 In some ways, all of these ideas come just from applying the same principles we apply to our production code to our tests. SOLID, in particular, comes to mind. I would go so far as to say it is *more* important for your tests to be written and abstracted in production quality than the actual production code itself since the production code is derived and maintained through the tests.

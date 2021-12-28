@@ -13,6 +13,14 @@ class EmailTest : StringSpec({
             .`then no one should receive an email`()
     }
 
+    "Should generate no emails if it is no one's birthday" {
+        Given()
+            .`Fran, who turned 36 yesterday`()
+            .`Tia, who turns 25 tomorrow`()
+            .`when birthday emails are sent for today`()
+            .`then no one should receive an email`()
+    }
+
     "Should generate an email for Doug on his birthday" {
         Given()
             .`Doug, who turns 45 today`()

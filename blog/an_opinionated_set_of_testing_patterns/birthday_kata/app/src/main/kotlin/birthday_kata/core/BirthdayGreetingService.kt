@@ -2,7 +2,8 @@ package birthday_kata.core
 
 import arrow.core.Either
 import arrow.core.computations.either
-import java.time.Instant
+import arrow.core.right
+import java.time.LocalDate
 import java.time.MonthDay
 
 sealed class SendBirthdayEmailsForTodayError: Error {
@@ -25,7 +26,7 @@ data class BirthdayGreetingService(
     val employeeRepo: EmployeeRepo,
 ) {
     suspend fun sendBirthdayEmailsForToday(
-        now: Instant,
+        now: LocalDate,
     ): Response = either {
         val employees =employeeRepo.findAllWithBirthdayToday(MonthDay.from(now)).bind()
         val emails = employees.toBirthdayEmails()
@@ -44,7 +45,9 @@ private fun Email.toResponse(): EmailResponse =
         body = body
     )
 
-private fun Employees.toBirthdayEmails(): Emails = TODO()
+private fun Employees.toBirthdayEmails(): Emails =
+    this.map { it.toBirthdayEmail() }
+
 private suspend fun EmployeeRepo.findAllWithBirthdayToday(
     birthday: Birthday
 ): Either<SendBirthdayEmailsForTodayError, Employees> =
@@ -60,4 +63,5 @@ private fun <A> Either<FindByBirthdayError, A>.mapErrors(): Either<SendBirthdayE
     }
 
 private suspend fun EmailClient.send(emails: List<Email>): Either<SendBirthdayEmailsForTodayError, Unit> =
-    TODO()
+    // Coding to happy path for now, until we add more tests
+    emails.forEach { this.send(it) }.right()

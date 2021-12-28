@@ -3,16 +3,17 @@ package birthday_kata
 import birthday_kata.core.BirthdayGreetingService
 import birthday_kata.core.DomainName
 import birthday_kata.core.EmailAddress
+import birthday_kata.core.EmailResponse
 import birthday_kata.core.Employee
 import birthday_kata.core.Employees
 import birthday_kata.core.Extension
 import birthday_kata.core.Response
-import java.time.Instant
-import java.time.Period
+import io.kotest.assertions.arrow.core.shouldBeRight
+import java.time.LocalDate
 import java.util.UUID
 
 
-private fun doug(dob: Instant): Employee =
+private fun doug(dob: LocalDate): Employee =
     Employee(
         id = UUID.randomUUID(),
         dateOfBirth = dob,
@@ -21,7 +22,7 @@ private fun doug(dob: Instant): Employee =
         emailAddress = EmailAddress("doug", DomainName("business", Extension.COM))
     )
 
-private fun trixie(dob: Instant): Employee =
+private fun trixie(dob: LocalDate): Employee =
     Employee(
         id = UUID.randomUUID(),
         dateOfBirth = dob,
@@ -30,7 +31,7 @@ private fun trixie(dob: Instant): Employee =
         emailAddress = EmailAddress("trixie", DomainName("business", Extension.COM))
     )
 
-private fun fran(dob: Instant): Employee =
+private fun fran(dob: LocalDate): Employee =
     Employee(
         id = UUID.randomUUID(),
         dateOfBirth = dob,
@@ -39,7 +40,7 @@ private fun fran(dob: Instant): Employee =
         emailAddress = EmailAddress("fran", DomainName("business", Extension.COM))
     )
 
-private fun tia(dob: Instant): Employee =
+private fun tia(dob: LocalDate): Employee =
     Employee(
         id = UUID.randomUUID(),
         dateOfBirth = dob,
@@ -50,9 +51,10 @@ private fun tia(dob: Instant): Employee =
 
 data class Given(
     val employees: Employees = emptyList(),
-    val today: Instant = Instant.now(),
+    val today: LocalDate = LocalDate.now(),
 ) {
-    fun `No employees`() = this
+    fun `No employees`() =
+        this.copy(employees = emptyList())
 
     suspend fun `Doug, who turns 45 today`() =
         this.copy(employees = employees + doug(today.minusYears(45)))
@@ -72,11 +74,36 @@ data class Given(
     ).sendBirthdayEmailsForToday(today)
 }
 
-fun Instant.minusDays(days: Int): Instant =
-    this.minus(Period.ofDays(days))
+fun Response.`then Doug and Trixie should receive emails`() =
+    this.also {
+        it.shouldBeRight(
+            listOf(
+                EmailResponse(
+                    subject = "Happy Birthday!",
+                    to = "doug@business.com",
+                    body = "Dear Doug, Happy Birthday!"
+                ),
+                EmailResponse(
+                    subject = "Happy Birthday!",
+                    to = "trixie@business.com",
+                    body = "Dear Trixie, Happy Birthday!"
+                )
+            )
+        )
+    }
 
-fun Instant.plusDays(days: Int): Instant =
-    this.plus(Period.ofDays(days))
+fun Response.`then only Doug should receive an email`() =
+    this.also {
+        it.shouldBeRight(
+            listOf(
+                EmailResponse(
+                    subject = "Happy Birthday!",
+                    to = "doug@business.com",
+                    body = "Dear Doug, Happy Birthday!"
+                ),
+            )
+        )
+    }
 
-fun Instant.minusYears(years: Int): Instant =
-    this.minus(Period.ofYears(years))
+fun Response.`then no one should receive an email`() =
+    this.also { it.shouldBeRight(emptyList()) }

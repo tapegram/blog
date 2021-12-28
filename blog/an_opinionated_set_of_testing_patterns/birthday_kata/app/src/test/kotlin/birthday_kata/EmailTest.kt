@@ -3,7 +3,6 @@
  */
 package birthday_kata
 
-import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.core.spec.style.StringSpec
 
 class EmailTest : StringSpec({
@@ -11,6 +10,25 @@ class EmailTest : StringSpec({
         Given()
             .`No employees`()
             .`when birthday emails are sent for today`()
-            .shouldBeRight(emptyList())
+            .`then no one should receive an email`()
+    }
+
+    "Should generate an email for Doug on his birthday" {
+        Given()
+            .`Doug, who turns 45 today`()
+            .`Fran, who turned 36 yesterday`()
+            .`Tia, who turns 25 tomorrow`()
+            .`when birthday emails are sent for today`()
+            .`then only Doug should receive an email`()
+    }
+
+    "Should generate emails for Doug and Trixie on their shared birthday" {
+        Given()
+            .`Doug, who turns 45 today`()
+            .`Trixie, who turns 72 today`()
+            .`Fran, who turned 36 yesterday`()
+            .`Tia, who turns 25 tomorrow`()
+            .`when birthday emails are sent for today`()
+            .`then Doug and Trixie should receive emails`()
     }
 })

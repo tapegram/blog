@@ -6,7 +6,7 @@ import birthday_kata.core.Birthday
 import birthday_kata.core.Employee
 import birthday_kata.core.EmployeeRepo
 import birthday_kata.core.FindByBirthdayError
-import java.time.Instant
+import java.time.LocalDate
 import java.time.MonthDay
 
 data class InMemoryEmployeeRepo(val employees: MutableList<Employee>): EmployeeRepo {
@@ -14,5 +14,5 @@ data class InMemoryEmployeeRepo(val employees: MutableList<Employee>): EmployeeR
         employees.filter { it.dateOfBirth.matches(dob) }.right()
 }
 
-private fun Instant.matches(monthDay: MonthDay): Boolean =
+private fun LocalDate.matches(monthDay: MonthDay): Boolean =
     MonthDay.from(this) == monthDay

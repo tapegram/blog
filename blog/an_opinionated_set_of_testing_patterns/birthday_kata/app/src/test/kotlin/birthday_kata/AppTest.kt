@@ -3,12 +3,12 @@
  */
 package birthday_kata
 
-import kotlin.test.Test
-import kotlin.test.assertNotNull
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
-class AppTest {
-    @Test fun appHasAGreeting() {
+class AppTest : StringSpec({
+    "app has a greeting" {
         val classUnderTest = App()
-        assertNotNull(classUnderTest.greeting, "app should have a greeting")
+        classUnderTest.greeting shouldBe "Hello World!"
     }
-}
+})

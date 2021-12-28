@@ -10,19 +10,39 @@ sealed class SendBirthdayEmailsForTodayError: Error {
     object EmployeeLookupFailed: SendBirthdayEmailsForTodayError()
 }
 
+typealias Response = Either<SendBirthdayEmailsForTodayError, EmailResponses>
+
+data class EmailResponse(
+    val subject: String,
+    val to: String,
+    val body: String,
+)
+
+typealias EmailResponses = List<EmailResponse>
+
 data class BirthdayGreetingService(
     val emailClient: EmailClient,
     val employeeRepo: EmployeeRepo,
 ) {
     suspend fun sendBirthdayEmailsForToday(
         now: Instant,
-    ): Either<SendBirthdayEmailsForTodayError, Emails> = either {
+    ): Either<SendBirthdayEmailsForTodayError, EmailResponses> = either {
         val employees =employeeRepo.findAllWithBirthdayToday(MonthDay.from(now)).bind()
         val emails = employees.toBirthdayEmails()
         emailClient.send(emails).bind()
-        emails
+        emails.toResponse()
     }
 }
+
+fun Emails.toResponse(): EmailResponses =
+    this.map { it.toResponse() }
+
+fun Email.toResponse(): EmailResponse =
+    EmailResponse(
+        subject = subject,
+        to = to.toString(),
+        body = body
+    )
 
 private suspend fun Employees.toBirthdayEmails(): Emails = TODO()
 private suspend fun EmployeeRepo.findAllWithBirthdayToday(

@@ -33,6 +33,7 @@ dependencies {
     val kotestVersion = "5.0.3"
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+    testImplementation("io.kotest.extensions:kotest-assertions-arrow:1.2.1")
 
     // Arrow
     implementation(platform("io.arrow-kt:arrow-stack:1.0.1"))

@@ -26,7 +26,7 @@ data class BirthdayGreetingService(
 ) {
     suspend fun sendBirthdayEmailsForToday(
         now: Instant,
-    ): Either<SendBirthdayEmailsForTodayError, EmailResponses> = either {
+    ): Response = either {
         val employees =employeeRepo.findAllWithBirthdayToday(MonthDay.from(now)).bind()
         val emails = employees.toBirthdayEmails()
         emailClient.send(emails).bind()
@@ -34,17 +34,17 @@ data class BirthdayGreetingService(
     }
 }
 
-fun Emails.toResponse(): EmailResponses =
+private fun Emails.toResponse(): EmailResponses =
     this.map { it.toResponse() }
 
-fun Email.toResponse(): EmailResponse =
+private fun Email.toResponse(): EmailResponse =
     EmailResponse(
         subject = subject,
         to = to.toString(),
         body = body
     )
 
-private suspend fun Employees.toBirthdayEmails(): Emails = TODO()
+private fun Employees.toBirthdayEmails(): Emails = TODO()
 private suspend fun EmployeeRepo.findAllWithBirthdayToday(
     birthday: Birthday
 ): Either<SendBirthdayEmailsForTodayError, Employees> =
@@ -54,7 +54,8 @@ private suspend fun EmployeeRepo.findAllWithBirthdayToday(
 private fun <A> Either<FindByBirthdayError, A>.mapErrors(): Either<SendBirthdayEmailsForTodayError, A> =
     this.mapLeft {
         when (it) {
-            is FindByBirthdayError.ConnectionFailed -> SendBirthdayEmailsForTodayError.EmployeeLookupFailed
+            is FindByBirthdayError.ConnectionFailed ->
+                SendBirthdayEmailsForTodayError.EmployeeLookupFailed
         }
     }
 

@@ -1,7 +1,7 @@
 package birthday_kata
 
 import arrow.core.Either
-import arrow.core.right
+import arrow.core.left
 import birthday_kata.core.Birthday
 import birthday_kata.core.Employee
 import birthday_kata.core.EmployeeRepo
@@ -10,14 +10,12 @@ import birthday_kata.core.SaveError
 import java.time.LocalDate
 import java.time.MonthDay
 
-data class InMemoryEmployeeRepo(val employees: MutableList<Employee>): EmployeeRepo {
+object ConnectionFailureEmployeeRepo: EmployeeRepo {
     override suspend fun findByBirthday(dob: Birthday): Either<FindByBirthdayError, List<Employee>> =
-        employees.filter { it.dateOfBirth.matches(dob) }.right()
+        FindByBirthdayError.ConnectionFailed(message="Oops!").left()
 
-    override suspend fun save(employee: Employee): Either<SaveError, Unit> {
-        employees.add(employee)
-        return Unit.right()
-    }
+    override suspend fun save(employee: Employee): Either<SaveError, Unit> =
+        SaveError.ConnectionFailed(message="Oops!").left()
 }
 
 private fun LocalDate.matches(monthDay: MonthDay): Boolean =

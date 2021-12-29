@@ -193,6 +193,10 @@ I've written [another blog post about this kata for the Unison blog](https://www
 
 Anyway, I've gone ahead an done a quick run through of the Birthday Greeting Kata and tried to apply the above patterns. There is always room to grow and things that I would change, but I think this is a decent example for getting a sense of what all this looks like together.
 
+Please note that there might not be enough complexity in this domain to necessarily warrent all of the abstraction I have added. I have some difficultly providing actually complex domains (like you would have at work) in a blog post or talk just because they are complex and they either take a long time to write up or don't fit into a single talk.
+
+I intent do eventually do another blog post with a more complex domain that I have some familiarity with so I can show PR by PR what decisions are made and how the testing infrastructure helps support an evolving architecture.
+
 After committing this blog post, I will do a follow up PR and link it [here](eventually) to show what a major refactor would look like with regard to the tests.
 
 Take a look! The example is the `birthday_kata` project in this same directory.

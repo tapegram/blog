@@ -189,13 +189,13 @@ Back to the point of this post, if you practice TDD and try to write tests that 
 ## An example app
 One of my favorite katas is the [Birthday Greeting Kata](http://matteo.vaccari.name/blog/archives/154.html) which is used to learn TEST DRVIEN DEVELOPMENT and PORTS AND ADAPTERS.
 
-I've written [another blog post about this kata for the Unison blog] as well, in case people are interested in algebraic effects (hint:you should be). Maybe we will be able to get something good in [Kotlin soon](https://github.com/arrow-kt/arrow/issues/2556)!
+I've written [another blog post about this kata for the Unison blog](https://www.unisonweb.org/2021/08/20/birthday-kata/) as well, in case people are interested in algebraic effects (hint:you should be). Maybe we will be able to get something good in [Kotlin soon](https://github.com/arrow-kt/arrow/issues/2556)!
 
 Anyway, I've gone ahead an done a quick run through of the Birthday Greeting Kata and tried to apply the above patterns. There is always room to grow and things that I would change, but I think this is a decent example for getting a sense of what all this looks like together.
 
 After committing this blog post, I will do a follow up PR and link it [here](eventually) to show what a major refactor would look like with regard to the tests.
 
-Take a look!
+Take a look! The example is the `birthday_kata` project in this same directory.
 
 ## Closing Thoughts
 In some ways, all of these ideas come just from applying the same principles we apply to our production code to our tests. SOLID, in particular, comes to mind. I would go so far as to say it is *more* important for your tests to be written and abstracted in production quality than the actual production code itself since the production code is derived and maintained through the tests.

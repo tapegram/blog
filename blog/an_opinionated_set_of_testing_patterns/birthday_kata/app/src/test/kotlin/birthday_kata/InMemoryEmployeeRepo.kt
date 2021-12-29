@@ -2,11 +2,11 @@ package birthday_kata
 
 import arrow.core.Either
 import arrow.core.right
-import birthday_kata.core.Birthday
-import birthday_kata.core.Employee
-import birthday_kata.core.EmployeeRepo
-import birthday_kata.core.FindByBirthdayError
-import birthday_kata.core.SaveError
+import birthday_kata.core.domain.Birthday
+import birthday_kata.core.domain.Employee
+import birthday_kata.core.domain.EmployeeRepo
+import birthday_kata.core.domain.FindByBirthdayError
+import birthday_kata.core.domain.SaveError
 import java.time.LocalDate
 import java.time.MonthDay
 

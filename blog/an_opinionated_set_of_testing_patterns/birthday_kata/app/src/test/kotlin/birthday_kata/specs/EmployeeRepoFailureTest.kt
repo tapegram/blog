@@ -1,5 +1,7 @@
-package birthday_kata
+package birthday_kata.specs
 
+import birthday_kata.Given
+import birthday_kata.`then an employee lookup failed error should be returned`
 import io.kotest.core.spec.style.StringSpec
 
 class EmployeeRepoFailureTest : StringSpec({

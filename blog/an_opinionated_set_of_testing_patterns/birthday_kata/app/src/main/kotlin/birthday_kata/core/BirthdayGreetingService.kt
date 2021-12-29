@@ -3,10 +3,18 @@ package birthday_kata.core
 import arrow.core.Either
 import arrow.core.computations.either
 import arrow.core.right
+import birthday_kata.core.domain.Birthday
+import birthday_kata.core.domain.Email
+import birthday_kata.core.domain.EmailClient
+import birthday_kata.core.domain.Emails
+import birthday_kata.core.domain.EmployeeRepo
+import birthday_kata.core.domain.Employees
+import birthday_kata.core.domain.FindByBirthdayError
+import birthday_kata.core.domain.toBirthdayEmail
 import java.time.LocalDate
 import java.time.MonthDay
 
-sealed class SendBirthdayEmailsForTodayError: Error {
+sealed class SendBirthdayEmailsForTodayError {
     data class Unknown(val message: String): SendBirthdayEmailsForTodayError()
     object EmployeeLookupFailed: SendBirthdayEmailsForTodayError()
 }

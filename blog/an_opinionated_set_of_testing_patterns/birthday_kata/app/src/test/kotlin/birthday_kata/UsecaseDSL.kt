@@ -1,15 +1,15 @@
 package birthday_kata
 
 import birthday_kata.core.BirthdayGreetingService
-import birthday_kata.core.DomainName
-import birthday_kata.core.EmailAddress
-import birthday_kata.core.EmailClient
 import birthday_kata.core.EmailResponse
-import birthday_kata.core.Employee
-import birthday_kata.core.EmployeeRepo
-import birthday_kata.core.Extension
 import birthday_kata.core.Response
 import birthday_kata.core.SendBirthdayEmailsForTodayError
+import birthday_kata.core.domain.DomainName
+import birthday_kata.core.domain.EmailAddress
+import birthday_kata.core.domain.EmailClient
+import birthday_kata.core.domain.Employee
+import birthday_kata.core.domain.EmployeeRepo
+import birthday_kata.core.domain.Extension
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import java.time.LocalDate

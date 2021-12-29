@@ -195,7 +195,7 @@ Anyway, I've gone ahead an done a quick run through of the Birthday Greeting Kat
 
 After committing this blog post, I will do a follow up PR and link it [here](eventually) to show what a major refactor would look like with regard to the tests.
 
-[Take a look!](birthday_kata/README.md)
+[Take a look!](birthday_kata/)
 
 ## Closing Thoughts
 In some ways, all of these ideas come just from applying the same principles we apply to our production code to our tests. SOLID, in particular, comes to mind. I would go so far as to say it is *more* important for your tests to be written and abstracted in production quality than the actual production code itself since the production code is derived and maintained through the tests.

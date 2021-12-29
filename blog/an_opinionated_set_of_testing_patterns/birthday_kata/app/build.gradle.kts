@@ -35,10 +35,7 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
     testImplementation("io.kotest.extensions:kotest-assertions-arrow:1.2.1")
 
-    // MockK
-    testImplementation("io.mockk:mockk:1.4.1")
-
-            // Arrow
+    // Arrow
     implementation(platform("io.arrow-kt:arrow-stack:1.0.1"))
     implementation("io.arrow-kt:arrow-core")
 }

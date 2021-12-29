@@ -3,6 +3,7 @@ package birthday_kata
 import birthday_kata.core.BirthdayGreetingService
 import birthday_kata.core.DomainName
 import birthday_kata.core.EmailAddress
+import birthday_kata.core.EmailClient
 import birthday_kata.core.EmailResponse
 import birthday_kata.core.Employee
 import birthday_kata.core.EmployeeRepo
@@ -53,6 +54,7 @@ private fun tia(dob: LocalDate): Employee =
 
 data class Given(
     val employeeRepo: EmployeeRepo = InMemoryEmployeeRepo(mutableListOf()),
+    val emailClient: EmailClient = StubbedEmailClient,
     val today: LocalDate = LocalDate.now(),
 ) {
     fun `No employees`() =
@@ -82,8 +84,8 @@ data class Given(
         this.copy(employeeRepo = ConnectionFailureEmployeeRepo)
 
     suspend fun `when birthday emails are sent for today`(): Response = BirthdayGreetingService(
-        emailClient = StubbedEmailClient,
-        employeeRepo = employeeRepo
+        emailClient = emailClient,
+        employeeRepo = employeeRepo,
     ).sendBirthdayEmailsForToday(today)
 }
 
@@ -121,5 +123,5 @@ fun Response.`then only Doug should receive an email`() =
 fun Response.`then no one should receive an email`() =
     this.also { it.shouldBeRight(emptyList()) }
 
-fun Response.`then an employee lookup failured error should be returned`() =
+fun Response.`then an employee lookup failed error should be returned`() =
     this.also { it.shouldBeLeft(SendBirthdayEmailsForTodayError.EmployeeLookupFailed) }

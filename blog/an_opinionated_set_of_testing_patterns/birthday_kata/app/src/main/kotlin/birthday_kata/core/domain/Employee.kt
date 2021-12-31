@@ -19,8 +19,8 @@ typealias LastName = String
 typealias EmployeeId = UUID
 typealias Birthday = MonthDay
 
-fun Employee.toBirthdayEmail(): Email =
-    Email(
+fun Employee.toBirthdayEmail(): Message.Email =
+    Message.Email(
         subject = "Happy Birthday!",
         to = this.emailAddress,
         body = "Dear ${this.firstName}, Happy Birthday!"

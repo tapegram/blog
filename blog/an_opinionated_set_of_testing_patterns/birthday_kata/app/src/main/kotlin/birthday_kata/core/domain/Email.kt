@@ -1,12 +1,21 @@
 package birthday_kata.core.domain
 
-typealias Emails = List<Email>
+typealias Messages = List<Message>
 
-data class Email(
-    val subject: EmailSubject,
-    val to: EmailAddress,
-    val body: MessageBody,
-)
+sealed class Message {
+    data class Email(
+        val subject: EmailSubject,
+        val to: EmailAddress,
+        val body: MessageBody,
+    ): Message()
+
+    data class SMS(
+        val number: PhoneNumber,
+        val body: MessageBody,
+    ): Message()
+}
+
+typealias PhoneNumber = String
 
 typealias EmailSubject = String
 typealias MessageBody = String

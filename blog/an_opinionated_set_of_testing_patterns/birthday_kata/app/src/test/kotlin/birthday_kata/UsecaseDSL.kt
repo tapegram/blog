@@ -10,6 +10,8 @@ import birthday_kata.core.domain.EmailClient
 import birthday_kata.core.domain.Employee
 import birthday_kata.core.domain.EmployeeRepo
 import birthday_kata.core.domain.Extension
+import birthday_kata.core.domain.MessageClient
+import birthday_kata.core.domain.SMSClient
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import java.time.LocalDate
@@ -55,6 +57,7 @@ private fun tia(dob: LocalDate): Employee =
 data class Given(
     val employeeRepo: EmployeeRepo = InMemoryEmployeeRepo(mutableListOf()),
     val emailClient: EmailClient = StubbedEmailClient,
+    val smsClient: SMSClient = StubbedSMSClient,
     val today: LocalDate = LocalDate.now(),
 ) {
     fun `No employees`() =
@@ -84,7 +87,10 @@ data class Given(
         this.copy(employeeRepo = ConnectionFailureEmployeeRepo)
 
     suspend fun `when birthday emails are sent for today`(): Response = BirthdayGreetingService(
-        emailClient = emailClient,
+        messageClient = MessageClient(
+            emailClient = emailClient,
+            smsClient = smsClient,
+        ),
         employeeRepo = employeeRepo,
     ).sendBirthdayEmailsForToday(today)
 }

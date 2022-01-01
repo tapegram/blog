@@ -21,13 +21,20 @@ sealed class SendBirthdayEmailsForTodayError {
 
 typealias Response = Either<SendBirthdayEmailsForTodayError, EmailResponses>
 
-data class EmailResponse(
-    val subject: String,
-    val to: String,
-    val body: String,
-)
+sealed class MessageResponse {
+    data class EmailResponse(
+        val subject: String,
+        val to: String,
+        val body: String,
+    ): MessageResponse()
 
-typealias EmailResponses = List<EmailResponse>
+    data class SMSResponse(
+        val number: String,
+        val body: String,
+    ): MessageResponse()
+}
+
+typealias EmailResponses = List<MessageResponse.EmailResponse>
 
 data class BirthdayGreetingService(
     val messageClient: MessageClient,
@@ -46,14 +53,14 @@ data class BirthdayGreetingService(
 private fun Messages.toResponse(): EmailResponses =
     this.map { it.toResponse() }
 
-private fun Message.toResponse(): EmailResponse =
+private fun Message.toResponse(): MessageResponse.EmailResponse =
     when (this) {
         is Message.Email -> this.toResponse()
         is Message.SMS -> TODO("Fill this in when in the next PR")
     }
 
-private fun Message.Email.toResponse(): EmailResponse =
-    EmailResponse(
+private fun Message.Email.toResponse(): MessageResponse.EmailResponse =
+    MessageResponse.EmailResponse(
         subject = subject,
         to = to.toString(),
         body = body

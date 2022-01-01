@@ -1,58 +1,59 @@
 package birthday_kata
 
 import birthday_kata.core.BirthdayGreetingService
-import birthday_kata.core.EmailResponse
+import birthday_kata.core.MessageResponse
 import birthday_kata.core.Response
 import birthday_kata.core.SendBirthdayEmailsForTodayError
-import birthday_kata.core.domain.DomainName
-import birthday_kata.core.domain.EmailAddress
 import birthday_kata.core.domain.EmailClient
 import birthday_kata.core.domain.Employee
 import birthday_kata.core.domain.EmployeeRepo
-import birthday_kata.core.domain.Extension
 import birthday_kata.core.domain.MessageClient
 import birthday_kata.core.domain.SMSClient
+import birthday_kata.usecases.employee
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import java.time.LocalDate
-import java.util.UUID
 
 
 private fun doug(dob: LocalDate): Employee =
-    Employee(
-        id = UUID.randomUUID(),
-        dateOfBirth = dob,
-        firstName = "Doug",
-        lastName = "Dougson",
-        emailAddress = EmailAddress("doug", DomainName("business", Extension.COM))
-    )
+    employee {
+        dateOfBirth { dob }
+        firstName { "Doug" }
+        lastName { "Dougson" }
+        emailAddress {
+            localPart { "doug" }
+        }
+    }
 
 private fun trixie(dob: LocalDate): Employee =
-    Employee(
-        id = UUID.randomUUID(),
-        dateOfBirth = dob,
-        firstName = "Trixie",
-        lastName = "Tang",
-        emailAddress = EmailAddress("trixie", DomainName("business", Extension.COM))
-    )
+    employee {
+        dateOfBirth { dob }
+        firstName { "Trixie" }
+        lastName { "Tang" }
+        emailAddress {
+            localPart { "trixie" }
+        }
+    }
 
 private fun fran(dob: LocalDate): Employee =
-    Employee(
-        id = UUID.randomUUID(),
-        dateOfBirth = dob,
-        firstName = "Fran",
-        lastName = "Frandottir",
-        emailAddress = EmailAddress("fran", DomainName("business", Extension.COM))
-    )
+    employee {
+        dateOfBirth { dob }
+        firstName { "Fran" }
+        lastName { "Frandottir" }
+        emailAddress {
+            localPart { "fran" }
+        }
+    }
 
 private fun tia(dob: LocalDate): Employee =
-    Employee(
-        id = UUID.randomUUID(),
-        dateOfBirth = dob,
-        firstName = "Tia",
-        lastName = "Tiara",
-        emailAddress = EmailAddress("tia", DomainName("business", Extension.COM))
-    )
+    employee {
+        dateOfBirth { dob }
+        firstName { "Tia" }
+        lastName { "Tiara" }
+        emailAddress {
+            localPart { "tia" }
+        }
+    }
 
 data class Given(
     val employeeRepo: EmployeeRepo = InMemoryEmployeeRepo(mutableListOf()),
@@ -99,12 +100,12 @@ fun Response.`then Doug and Trixie should receive emails`() =
     this.also {
         it.shouldBeRight(
             listOf(
-                EmailResponse(
+                MessageResponse.EmailResponse(
                     subject = "Happy Birthday!",
                     to = "doug@business.com",
                     body = "Dear Doug, Happy Birthday!"
                 ),
-                EmailResponse(
+                MessageResponse.EmailResponse(
                     subject = "Happy Birthday!",
                     to = "trixie@business.com",
                     body = "Dear Trixie, Happy Birthday!"
@@ -117,7 +118,7 @@ fun Response.`then only Doug should receive an email`() =
     this.also {
         it.shouldBeRight(
             listOf(
-                EmailResponse(
+                MessageResponse.EmailResponse(
                     subject = "Happy Birthday!",
                     to = "doug@business.com",
                     body = "Dear Doug, Happy Birthday!"

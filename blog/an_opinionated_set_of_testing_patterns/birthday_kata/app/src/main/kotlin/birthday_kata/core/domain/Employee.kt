@@ -30,6 +30,18 @@ enum class ContactMethod {
     SMS
 }
 
+fun Employee.toBirthdayMessage(): Message =
+    when (this.contactInfo.preferredContactMethod) {
+        ContactMethod.Email -> this.toBirthdayEmail()
+        ContactMethod.SMS -> this.toBirthdaySMS()
+    }
+
+fun Employee.toBirthdaySMS(): Message.SMS =
+    Message.SMS(
+        number = this.contactInfo.phoneNumber,
+        body = "Happy Birthday, ${this.firstName}!!"
+    )
+
 fun Employee.toBirthdayEmail(): Message.Email =
     Message.Email(
         subject = "Happy Birthday!",

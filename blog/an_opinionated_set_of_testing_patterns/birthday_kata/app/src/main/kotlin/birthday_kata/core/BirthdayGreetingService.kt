@@ -10,7 +10,7 @@ import birthday_kata.core.domain.FindByBirthdayError
 import birthday_kata.core.domain.Message
 import birthday_kata.core.domain.MessageClient
 import birthday_kata.core.domain.Messages
-import birthday_kata.core.domain.toBirthdayEmail
+import birthday_kata.core.domain.toBirthdayMessage
 import java.time.LocalDate
 import java.time.MonthDay
 
@@ -19,7 +19,7 @@ sealed class SendBirthdayEmailsForTodayError {
     object EmployeeLookupFailed: SendBirthdayEmailsForTodayError()
 }
 
-typealias Response = Either<SendBirthdayEmailsForTodayError, EmailResponses>
+typealias Response = Either<SendBirthdayEmailsForTodayError, MessageResponses>
 
 sealed class MessageResponse {
     data class EmailResponse(
@@ -34,7 +34,7 @@ sealed class MessageResponse {
     ): MessageResponse()
 }
 
-typealias EmailResponses = List<MessageResponse.EmailResponse>
+typealias MessageResponses = List<MessageResponse>
 
 data class BirthdayGreetingService(
     val messageClient: MessageClient,
@@ -43,31 +43,39 @@ data class BirthdayGreetingService(
     suspend fun sendBirthdayEmailsForToday(
         now: LocalDate,
     ): Response = either {
-        val employees =employeeRepo.findAllWithBirthdayToday(MonthDay.from(now)).bind()
+        val employees = employeeRepo
+            .findAllWithBirthdayToday(MonthDay.from(now))
+            .bind()
         val messages = employees.toBirthdayMessages()
         messageClient.send(messages).bind()
         messages.toResponse()
     }
 }
 
-private fun Messages.toResponse(): EmailResponses =
+private fun Messages.toResponse(): MessageResponses =
     this.map { it.toResponse() }
 
-private fun Message.toResponse(): MessageResponse.EmailResponse =
+private fun Message.toResponse(): MessageResponse =
     when (this) {
-        is Message.Email -> this.toResponse()
-        is Message.SMS -> TODO("Fill this in when in the next PR")
+        is Message.Email -> this.toEmailResponse()
+        is Message.SMS -> this.toSMSResponse()
     }
 
-private fun Message.Email.toResponse(): MessageResponse.EmailResponse =
+private fun Message.Email.toEmailResponse(): MessageResponse.EmailResponse =
     MessageResponse.EmailResponse(
         subject = subject,
         to = to.toString(),
         body = body
     )
 
+private fun Message.SMS.toSMSResponse(): MessageResponse.SMSResponse =
+    MessageResponse.SMSResponse(
+        number = number,
+        body = body,
+    )
+
 private fun Employees.toBirthdayMessages(): Messages =
-    this.map { it.toBirthdayEmail() }
+    this.map { it.toBirthdayMessage() }
 
 private suspend fun EmployeeRepo.findAllWithBirthdayToday(
     birthday: Birthday

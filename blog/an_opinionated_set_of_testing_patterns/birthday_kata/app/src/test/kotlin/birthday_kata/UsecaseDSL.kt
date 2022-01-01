@@ -4,6 +4,7 @@ import birthday_kata.core.BirthdayGreetingService
 import birthday_kata.core.MessageResponse
 import birthday_kata.core.Response
 import birthday_kata.core.SendBirthdayEmailsForTodayError
+import birthday_kata.core.domain.ContactMethod
 import birthday_kata.core.domain.EmailClient
 import birthday_kata.core.domain.Employee
 import birthday_kata.core.domain.EmployeeRepo
@@ -38,6 +39,7 @@ private fun charles(dob: LocalDate): Employee =
             emailAddress {
                 localPart { "charles" }
             }
+            preferredContactMethod { ContactMethod.SMS }
         }
     }
 
@@ -51,6 +53,7 @@ private fun louise(dob: LocalDate): Employee =
             emailAddress {
                 localPart { "louise" }
             }
+            preferredContactMethod { ContactMethod.SMS }
         }
     }
 
@@ -172,7 +175,7 @@ fun Response.`then only Charles should receive an SMS`() =
 fun Response.`then Charles should receive an SMS`() =
     this.also {
         it.shouldBeRight()
-        it.tap { messages ->
+        it.tap { messages: List<MessageResponse> ->
             MessageResponse.SMSResponse(
                 number = "555-111-1111",
                 body = "Happy Birthday, Charles!!",
@@ -214,7 +217,7 @@ fun Response.`then only Doug should receive an email`() =
 fun Response.`then Doug should receive an email`() =
     this.also {
         it.shouldBeRight()
-        it.tap { messages ->
+        it.tap { messages: List<MessageResponse> ->
             MessageResponse.EmailResponse(
                 subject = "Happy Birthday!",
                 to = "doug@business.com",

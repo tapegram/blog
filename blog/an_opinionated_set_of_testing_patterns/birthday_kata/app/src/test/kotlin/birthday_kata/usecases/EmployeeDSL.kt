@@ -1,5 +1,7 @@
 package birthday_kata.usecases
 
+import birthday_kata.core.domain.ContactInfo
+import birthday_kata.core.domain.ContactMethod
 import birthday_kata.core.domain.DomainName
 import birthday_kata.core.domain.EmailAddress
 import birthday_kata.core.domain.Employee
@@ -7,6 +9,7 @@ import birthday_kata.core.domain.Extension
 import birthday_kata.core.domain.FirstName
 import birthday_kata.core.domain.LastName
 import birthday_kata.core.domain.LocalPart
+import birthday_kata.core.domain.PhoneNumber
 import java.time.LocalDate
 import java.util.UUID
 
@@ -19,10 +22,17 @@ data class EmployeeBuilder(
     var dateOfBirth: LocalDate = LocalDate.now().minusYears(30),
     var firstName: FirstName = "Doug",
     var lastName: LastName = "Dougson",
-    var emailAddress: EmailAddress = EmailAddress("doug", DomainName("business", Extension.COM))
+    var contactInfo: ContactInfo = contactInfo {
+        phoneNumber { "555-123-12345" }
+        emailAddress {
+            localPart { "doug" }
+            domain { "business" }
+            extension { Extension.COM }
+        }
+    }
 ) {
     inline fun id(id: EmployeeBuilder.() -> UUID) {
-       this.id = id()
+        this.id = id()
     }
 
     inline fun dateOfBirth(dateOfBirth: EmployeeBuilder.() -> LocalDate) {
@@ -37,8 +47,8 @@ data class EmployeeBuilder(
         this.lastName = lastName()
     }
 
-    inline fun emailAddress(lambda: EmailAddressBuilder.() -> Unit) {
-        this.emailAddress= EmailAddressBuilder().apply(lambda).build()
+    inline fun contactInfo(lambda: ContactInfoBuilder.() -> Unit) {
+        this.contactInfo= ContactInfoBuilder().apply(lambda).build()
     }
 
     fun build() = Employee(
@@ -46,7 +56,35 @@ data class EmployeeBuilder(
         dateOfBirth = dateOfBirth,
         firstName = firstName,
         lastName = lastName,
+        contactInfo = contactInfo,
+    )
+}
+
+data class ContactInfoBuilder(
+    var phoneNumber: PhoneNumber = "555-123-1234",
+    var emailAddress: EmailAddress = emailAddress {
+        localPart { "doug" }
+        domain { "business" }
+        extension { Extension.COM }
+    },
+    var preferredContactMethod: ContactMethod = ContactMethod.Email,
+) {
+    inline fun phoneNumber(phoneNumber: ContactInfoBuilder.() -> PhoneNumber) {
+        this.phoneNumber = phoneNumber()
+    }
+
+    inline fun emailAddress(lambda: EmailAddressBuilder.() -> Unit) {
+        this.emailAddress = EmailAddressBuilder().apply(lambda).build()
+    }
+
+    inline fun preferredContactMethod(preferredContactMethod: ContactInfoBuilder.() -> ContactMethod) {
+        this.preferredContactMethod = preferredContactMethod()
+    }
+
+    fun build() = ContactInfo(
+        phoneNumber = phoneNumber,
         emailAddress = emailAddress,
+        preferredContactMethod = preferredContactMethod,
     )
 }
 
@@ -78,3 +116,9 @@ data class EmailAddressBuilder(
 
 fun employee(lambda: EmployeeBuilder.() -> Unit): Employee =
     EmployeeBuilder().apply(lambda).build()
+
+fun contactInfo(lambda: ContactInfoBuilder.() -> Unit): ContactInfo =
+    ContactInfoBuilder().apply(lambda).build()
+
+fun emailAddress(lambda: EmailAddressBuilder.() -> Unit): EmailAddress =
+    EmailAddressBuilder().apply(lambda).build()

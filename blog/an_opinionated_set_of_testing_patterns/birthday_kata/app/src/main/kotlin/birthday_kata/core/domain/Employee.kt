@@ -11,7 +11,7 @@ data class Employee(
     val dateOfBirth: LocalDate,
     val firstName: FirstName,
     val lastName: LastName,
-    val emailAddress: EmailAddress
+    val contactInfo: ContactInfo,
 )
 
 typealias FirstName = String
@@ -19,9 +19,20 @@ typealias LastName = String
 typealias EmployeeId = UUID
 typealias Birthday = MonthDay
 
+data class ContactInfo(
+    val phoneNumber: PhoneNumber,
+    val emailAddress: EmailAddress,
+    val preferredContactMethod: ContactMethod,
+)
+
+enum class ContactMethod {
+    Email,
+    SMS
+}
+
 fun Employee.toBirthdayEmail(): Message.Email =
     Message.Email(
         subject = "Happy Birthday!",
-        to = this.emailAddress,
+        to = this.contactInfo.emailAddress,
         body = "Dear ${this.firstName}, Happy Birthday!"
     )

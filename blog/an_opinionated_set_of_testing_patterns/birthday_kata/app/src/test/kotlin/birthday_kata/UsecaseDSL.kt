@@ -20,8 +20,36 @@ private fun doug(dob: LocalDate): Employee =
         dateOfBirth { dob }
         firstName { "Doug" }
         lastName { "Dougson" }
-        emailAddress {
-            localPart { "doug" }
+        contactInfo {
+            emailAddress {
+                localPart { "doug" }
+            }
+        }
+    }
+
+private fun charles(dob: LocalDate): Employee =
+    employee {
+        dateOfBirth { dob }
+        firstName { "Charles" }
+        lastName { "TheThird" }
+        contactInfo {
+            phoneNumber { "555-111-1111" }
+            emailAddress {
+                localPart { "charles" }
+            }
+        }
+    }
+
+private fun louise(dob: LocalDate): Employee =
+    employee {
+        dateOfBirth { dob }
+        firstName { "Louise" }
+        lastName { "Jeeze" }
+        contactInfo {
+            phoneNumber { "555-222-2222" }
+            emailAddress {
+                localPart { "louise" }
+            }
         }
     }
 
@@ -30,8 +58,10 @@ private fun trixie(dob: LocalDate): Employee =
         dateOfBirth { dob }
         firstName { "Trixie" }
         lastName { "Tang" }
-        emailAddress {
-            localPart { "trixie" }
+        contactInfo {
+            emailAddress {
+                localPart { "trixie" }
+            }
         }
     }
 
@@ -40,8 +70,10 @@ private fun fran(dob: LocalDate): Employee =
         dateOfBirth { dob }
         firstName { "Fran" }
         lastName { "Frandottir" }
-        emailAddress {
-            localPart { "fran" }
+        contactInfo {
+            emailAddress {
+                localPart { "fran" }
+            }
         }
     }
 
@@ -50,8 +82,10 @@ private fun tia(dob: LocalDate): Employee =
         dateOfBirth { dob }
         firstName { "Tia" }
         lastName { "Tiara" }
-        emailAddress {
-            localPart { "tia" }
+        contactInfo {
+            emailAddress {
+                localPart { "tia" }
+            }
         }
     }
 
@@ -84,6 +118,16 @@ data class Given(
         return this
     }
 
+    suspend fun `Charles, who turns 15 today and preferres SMS`(): Given {
+        employeeRepo.save(charles(today.minusYears(15)))
+        return this
+    }
+
+    suspend fun `Louise, who turns 71 today and preferres SMS`(): Given {
+        employeeRepo.save(louise(today.minusYears(71)))
+        return this
+    }
+
     fun `a persistent connection failure when connecting to the Employee database`(): Given =
         this.copy(employeeRepo = ConnectionFailureEmployeeRepo)
 
@@ -95,6 +139,34 @@ data class Given(
         employeeRepo = employeeRepo,
     ).sendBirthdayEmailsForToday(today)
 }
+
+fun Response.`then Charles and Louise should receive SMSs`() =
+    this.also {
+        it.shouldBeRight(
+            listOf(
+                MessageResponse.SMSResponse(
+                    number = "555-111-1111",
+                    body = "Happy Birthday, Charles!!",
+                ),
+                MessageResponse.SMSResponse(
+                    number = "555-222-2222",
+                    body = "Happy Birthday, Louise!!",
+                ),
+            )
+        )
+    }
+
+fun Response.`then Charles should receive an SMS`() =
+    this.also {
+        it.shouldBeRight(
+            listOf(
+                MessageResponse.SMSResponse(
+                    number = "555-111-1111",
+                    body = "Happy Birthday, Charles!!",
+                )
+            )
+        )
+    }
 
 fun Response.`then Doug and Trixie should receive emails`() =
     this.also {

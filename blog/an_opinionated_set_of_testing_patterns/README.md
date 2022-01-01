@@ -197,9 +197,9 @@ Please note that there might not be enough complexity in this domain to necessar
 
 I intend to eventually do another blog post with a more complex domain that I have some familiarity with so I can show PR by PR what decisions are made and how the testing infrastructure helps support an evolving architecture.
 
-After committing this blog post, I will do a follow up PR and link it [here](eventually) to show what a major refactor would look like.
-
 Take a look! The the code is [here](https://github.com/tapegram/blog/tree/main/blog/an_opinionated_set_of_testing_patterns/birthday_kata)
+
+If you want to see an example of a rather large refactor (generalizing the messaging instead of only allowing emails), take a look at [this draft pr.](https://github.com/tapegram/blog/pull/2)
 
 ## Closing Thoughts
 In some ways, all of these ideas come just from applying the same principles we apply to our production code to our tests. SOLID, in particular, comes to mind. I would go so far as to say it is *more* important for your tests to be written and abstracted in production quality than the actual production code itself since the production code is derived and maintained through the tests.

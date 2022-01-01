@@ -1,60 +1,102 @@
 package birthday_kata
 
 import birthday_kata.core.BirthdayGreetingService
-import birthday_kata.core.EmailResponse
+import birthday_kata.core.MessageResponse
 import birthday_kata.core.Response
 import birthday_kata.core.SendBirthdayEmailsForTodayError
-import birthday_kata.core.domain.DomainName
-import birthday_kata.core.domain.EmailAddress
+import birthday_kata.core.domain.ContactMethod
 import birthday_kata.core.domain.EmailClient
 import birthday_kata.core.domain.Employee
 import birthday_kata.core.domain.EmployeeRepo
-import birthday_kata.core.domain.Extension
+import birthday_kata.core.domain.MessageClient
+import birthday_kata.core.domain.SMSClient
+import birthday_kata.usecases.employee
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
+import io.kotest.matchers.collections.shouldBeIn
 import java.time.LocalDate
-import java.util.UUID
 
 
 private fun doug(dob: LocalDate): Employee =
-    Employee(
-        id = UUID.randomUUID(),
-        dateOfBirth = dob,
-        firstName = "Doug",
-        lastName = "Dougson",
-        emailAddress = EmailAddress("doug", DomainName("business", Extension.COM))
-    )
+    employee {
+        dateOfBirth { dob }
+        firstName { "Doug" }
+        lastName { "Dougson" }
+        contactInfo {
+            emailAddress {
+                localPart { "doug" }
+            }
+        }
+    }
+
+private fun charles(dob: LocalDate): Employee =
+    employee {
+        dateOfBirth { dob }
+        firstName { "Charles" }
+        lastName { "TheThird" }
+        contactInfo {
+            phoneNumber { "555-111-1111" }
+            emailAddress {
+                localPart { "charles" }
+            }
+            preferredContactMethod { ContactMethod.SMS }
+        }
+    }
+
+private fun louise(dob: LocalDate): Employee =
+    employee {
+        dateOfBirth { dob }
+        firstName { "Louise" }
+        lastName { "Jeeze" }
+        contactInfo {
+            phoneNumber { "555-222-2222" }
+            emailAddress {
+                localPart { "louise" }
+            }
+            preferredContactMethod { ContactMethod.SMS }
+        }
+    }
 
 private fun trixie(dob: LocalDate): Employee =
-    Employee(
-        id = UUID.randomUUID(),
-        dateOfBirth = dob,
-        firstName = "Trixie",
-        lastName = "Tang",
-        emailAddress = EmailAddress("trixie", DomainName("business", Extension.COM))
-    )
+    employee {
+        dateOfBirth { dob }
+        firstName { "Trixie" }
+        lastName { "Tang" }
+        contactInfo {
+            emailAddress {
+                localPart { "trixie" }
+            }
+        }
+    }
 
 private fun fran(dob: LocalDate): Employee =
-    Employee(
-        id = UUID.randomUUID(),
-        dateOfBirth = dob,
-        firstName = "Fran",
-        lastName = "Frandottir",
-        emailAddress = EmailAddress("fran", DomainName("business", Extension.COM))
-    )
+    employee {
+        dateOfBirth { dob }
+        firstName { "Fran" }
+        lastName { "Frandottir" }
+        contactInfo {
+            emailAddress {
+                localPart { "fran" }
+            }
+        }
+    }
 
 private fun tia(dob: LocalDate): Employee =
-    Employee(
-        id = UUID.randomUUID(),
-        dateOfBirth = dob,
-        firstName = "Tia",
-        lastName = "Tiara",
-        emailAddress = EmailAddress("tia", DomainName("business", Extension.COM))
-    )
+    employee {
+        dateOfBirth { dob }
+        firstName { "Tia" }
+        lastName { "Tiara" }
+        contactInfo {
+            emailAddress {
+                localPart { "tia" }
+            }
+        }
+    }
 
 data class Given(
     val employeeRepo: EmployeeRepo = InMemoryEmployeeRepo(mutableListOf()),
     val emailClient: EmailClient = StubbedEmailClient,
+    val smsClient: SMSClient = StubbedSMSClient,
     val today: LocalDate = LocalDate.now(),
 ) {
     fun `No employees`() =
@@ -80,25 +122,77 @@ data class Given(
         return this
     }
 
+    suspend fun `Charles, who turns 15 today and preferres SMS`(): Given {
+        employeeRepo.save(charles(today.minusYears(15)))
+        return this
+    }
+
+    suspend fun `Louise, who turns 71 today and preferres SMS`(): Given {
+        employeeRepo.save(louise(today.minusYears(71)))
+        return this
+    }
+
     fun `a persistent connection failure when connecting to the Employee database`(): Given =
         this.copy(employeeRepo = ConnectionFailureEmployeeRepo)
 
     suspend fun `when birthday emails are sent for today`(): Response = BirthdayGreetingService(
-        emailClient = emailClient,
+        messageClient = MessageClient(
+            emailClient = emailClient,
+            smsClient = smsClient,
+        ),
         employeeRepo = employeeRepo,
     ).sendBirthdayEmailsForToday(today)
 }
+
+fun Response.`then Charles and Louise should receive SMSs`() =
+    this.also {
+        it.shouldBeRight(
+            listOf(
+                MessageResponse.SMSResponse(
+                    number = "555-111-1111",
+                    body = "Happy Birthday, Charles!!",
+                ),
+                MessageResponse.SMSResponse(
+                    number = "555-222-2222",
+                    body = "Happy Birthday, Louise!!",
+                ),
+            )
+        )
+    }
+
+fun Response.`then only Charles should receive an SMS`() =
+    this.also {
+        it.shouldBeRight(
+            listOf(
+                MessageResponse.SMSResponse(
+                    number = "555-111-1111",
+                    body = "Happy Birthday, Charles!!",
+                )
+            )
+        )
+    }
+
+fun Response.`then Charles should receive an SMS`() =
+    this.also {
+        it.shouldBeRight()
+        it.tap { messages: List<MessageResponse> ->
+            MessageResponse.SMSResponse(
+                number = "555-111-1111",
+                body = "Happy Birthday, Charles!!",
+            ).shouldBeIn(messages)
+        }
+    }
 
 fun Response.`then Doug and Trixie should receive emails`() =
     this.also {
         it.shouldBeRight(
             listOf(
-                EmailResponse(
+                MessageResponse.EmailResponse(
                     subject = "Happy Birthday!",
                     to = "doug@business.com",
                     body = "Dear Doug, Happy Birthday!"
                 ),
-                EmailResponse(
+                MessageResponse.EmailResponse(
                     subject = "Happy Birthday!",
                     to = "trixie@business.com",
                     body = "Dear Trixie, Happy Birthday!"
@@ -111,13 +205,25 @@ fun Response.`then only Doug should receive an email`() =
     this.also {
         it.shouldBeRight(
             listOf(
-                EmailResponse(
+                MessageResponse.EmailResponse(
                     subject = "Happy Birthday!",
                     to = "doug@business.com",
                     body = "Dear Doug, Happy Birthday!"
                 ),
             )
         )
+    }
+
+fun Response.`then Doug should receive an email`() =
+    this.also {
+        it.shouldBeRight()
+        it.tap { messages: List<MessageResponse> ->
+            MessageResponse.EmailResponse(
+                subject = "Happy Birthday!",
+                to = "doug@business.com",
+                body = "Dear Doug, Happy Birthday!"
+            ).shouldBeIn(messages)
+        }
     }
 
 fun Response.`then no one should receive an email`() =

@@ -8,3 +8,5 @@ Feel free to browse the repo or to jump into any of the content links below!
 [Modeling a Birthday Message Service in Unison (UnisonWeb guest post)](https://www.unisonweb.org/2021/08/20/birthday-kata/)
 
 [Modeling Complexity (Talk)](https://www.youtube.com/watch?v=nEGIfvxK8Uo)
+
+[Code Example: Algebraic Effects and Graphql in Haskell](https://github.com/morpheusgraphql/morpheus-graphql/tree/master/examples/scotty-freer-simple)

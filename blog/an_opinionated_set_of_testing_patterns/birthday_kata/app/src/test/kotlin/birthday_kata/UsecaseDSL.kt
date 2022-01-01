@@ -12,6 +12,7 @@ import birthday_kata.core.domain.SMSClient
 import birthday_kata.usecases.employee
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
+import io.kotest.matchers.collections.shouldBeIn
 import java.time.LocalDate
 
 
@@ -156,7 +157,7 @@ fun Response.`then Charles and Louise should receive SMSs`() =
         )
     }
 
-fun Response.`then Charles should receive an SMS`() =
+fun Response.`then only Charles should receive an SMS`() =
     this.also {
         it.shouldBeRight(
             listOf(
@@ -166,6 +167,17 @@ fun Response.`then Charles should receive an SMS`() =
                 )
             )
         )
+    }
+
+fun Response.`then Charles should receive an SMS`() =
+    this.also {
+        it.shouldBeRight()
+        it.tap { messages ->
+            MessageResponse.SMSResponse(
+                number = "555-111-1111",
+                body = "Happy Birthday, Charles!!",
+            ).shouldBeIn(messages)
+        }
     }
 
 fun Response.`then Doug and Trixie should receive emails`() =
@@ -197,6 +209,18 @@ fun Response.`then only Doug should receive an email`() =
                 ),
             )
         )
+    }
+
+fun Response.`then Doug should receive an email`() =
+    this.also {
+        it.shouldBeRight()
+        it.tap { messages ->
+            MessageResponse.EmailResponse(
+                subject = "Happy Birthday!",
+                to = "doug@business.com",
+                body = "Dear Doug, Happy Birthday!"
+            ).shouldBeIn(messages)
+        }
     }
 
 fun Response.`then no one should receive an email`() =

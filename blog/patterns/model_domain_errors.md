@@ -25,7 +25,7 @@ data class SubscriptionBillingService(
 }
 ```
 
-This code only handles the happy path! And you can tell from the two interfaces that there could be failures that that we are ignoring.
+This code only handles the happy path! And you can tell from the two interfaces that there could be failures that we are ignoring.
 
 Capture could fail for a variety of reasons such as the card being declined or the payment method not being found. Similarly, the repo could fail to find the subscription or saving could fail because of an outage. We could throw a bunch of try catches everywhere instead
 
@@ -40,7 +40,7 @@ data class SubscriptionBillingService(
     } catch (e: RuntimeException) {
       /*
       Wait, I don't actually know what exceptions get thrown by this function???? Guess I have to go to its definition and dig around.
-      Oh it calls other functions that throw exceptions? So I'll never really know if I'm handling the failure cases??
+      Oh, it calls other functions that throw exceptions? So I'll never really know if I'm handling the failure cases??
       */
       throw ChargeFailed("Failed when fetching subscription: ${e.message}"))
     }
@@ -61,7 +61,7 @@ data class SubscriptionBillingService(
 }
 ```
 
-There are of course ways to try to make this better (since this is the way most people write code), so I don't want to necessarily make a "strawman" here. But this obviously needs so work. All of the failure handling is low level try/catch blocks that clutter the code and make it hard to understand what is going on.
+There are of course ways to try to make this better (since this is the way most people write code), so I don't want to necessarily make a "straw-man" here. But this obviously needs so work. All the failure handling is low level try/catch blocks that clutter the code and make it hard to understand what is going on.
 
 Also, as mentioned in the comments, it's hard to tell what exceptions can be raised by different parts of the code. You either have to trust the documentation, catch weird generic errors and parse out their string messages to tell what happened, or dig deep into the implementation details. This leads to bugs, confusion, and even when it works its slow and difficult to maintain.
 
@@ -107,12 +107,12 @@ data class SubscriptionService(
     val captureResult = paymentGateway.capture(subcription.paymentMethodId, subscription.amountDue)
 
     val updatedSubscription = captureResult.fold(
-      ifLeft: { when (it) {
+      ifLeft = { when (it) {
           is CardDeclined -> subscription.setDelinquent(reason = Reason.CardDeclined)
           is PartnerUnavailble -> subscription.setDelinquent(reason = Reason.Unknown(message = it.message))
         }
       },
-      ifRight: { subscription.addSuccessfulPayment() }
+      ifRight = { subscription.addSuccessfulPayment() }
     )
 
     subscriptionRepo.save(updatedSubscription).bind()
@@ -121,23 +121,23 @@ data class SubscriptionService(
 }
 ```
 
-This might take a little getting used to because we are using the [Arrow library to provide tooling that makes using `Either` a lot nicer.](https://arrow-kt.io/docs/apidocs/arrow-core/arrow.core/-either/).
+This might take a little getting used to because we are using the [Arrow library to provide tooling that makes using `Either` a lot nicer.](https://arrow-kt.io/docs/apidocs/arrow-core/arrow.core/-either/)
 
 But you can see that exceptions are only appearing in this code where it drives business logic: when it affects how we updated a subscription when capture fails. Failures like get/save are handled implicitly by the `either` block, they short-circuit by return the error. 
 
 This is much more declarative and less cluttered than the previous code.
 
-Additionally, we are coding to contract using the type system. The compiled let's us know which errors we need to handle when we use a `when`. Similarly, using `Either` makes it hard to ignore failure cases since you have to provide a handle for both the left and right sides of an Either in `fold` in order to get access to the "happy path side.
+Additionally, we are coding to contract using the type system. The compiled lets us know which errors we need to handle when we use a `when`. Similarly, using `Either` makes it hard to ignore failure cases since you have to provide a handle for both the left and right sides of an Either in `fold` in order to get access to the "happy path" side.
 
 ## Resulting Context
 The explicit modeling of domain errors in your code significantly improved the maintainability and expressiveness of your code.
 
-By modeling the errors explicitly, you can code to contract instead of needing to break the abstraction to dig into what exceptions may or may not be thrown (which is a general problem when dealing with side effects). You are better equiped to express the problem space in your domain model since, let's face it, most of the complexity of a domain comes from how to handle failures, not the happy path cases.
+By modeling the errors explicitly, you can code to contract instead of needing to break the abstraction to dig into what exceptions may or may not be thrown (which is a general problem when dealing with side effects). You are better equipped to express the problem space in your domain model since, let's face it, most of the complexity of a domain comes from how to handle failures, not the happy path cases.
 
 Honestly, by writing code in this style, the compiler constantly reminds me that I am trying to be lazy and avoid handling error cases all the time (it reminds me by failing to build). Modeling errors like this quickly becomes a critical tool for engineers working in complicated domains and leads to a better understanding of the domain itself.
 
-For a much better walkthrough of this style of coding (as well as another perspective on the tradeoffs) check out [Railway Oriented Programming](https://fsharpforfunandprofit.com/rop/) as well as the Arrow team's docs on [Either](https://arrow-kt.io/docs/apidocs/arrow-core/arrow.core/-either/)
+For a much better walk-through of this style of coding (as well as another perspective on the tradeoffs) check out [Railway Oriented Programming](https://fsharpforfunandprofit.com/rop/) as well as the Arrow team's docs on [Either](https://arrow-kt.io/docs/apidocs/arrow-core/arrow.core/-either/)
 
 Note that these code examples also make use of [PORTS AND ADAPTERS](ports_and_adapters.md), [HIDE THE DOMAIN](hide_the_domain), [KEEP THE DOMAIN PURE](keep_the_domain_pure.md), and [ENFORCE REFERENTIAL TRANSPARENCY](enforce_referential_transparency.md).
 
-Also note that `Either` is a gateway to FP. `Either` is an incredible tool but it has it's own downsides that aren't really addressed anywhere except in FP toolkits (for instance, the use of the `either` computation arrow provides to give us this nice imperative syntax without deep nesting). I consider this a plus -- it's easy to convince engineers of the value of `Either`, and then they will naturally learn FP as they use it without necessarily being overwhelmed like one would if they tried to tackle FP all at once and with less concrete usecases. However, if you a rabidly against FP, you may need to let the problems this patterns addresses go unsolved.
+Also note that `Either` is a gateway to FP. `Either` is an incredible tool, but it has its own downsides that aren't really addressed anywhere except in FP toolkits (for instance, the use of the `either` computation arrow provides to give us this nice imperative syntax without deep nesting). I consider this a plus -- it's easy to convince engineers of the value of `Either`, and then they will naturally learn FP as they use it without necessarily being overwhelmed like one would if they tried to tackle FP all at once and with less concrete usecases. However, if you are rabidly against FP, you may need to let the problems this patterns addresses go unsolved.

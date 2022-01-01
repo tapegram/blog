@@ -7,7 +7,7 @@ But what is a Good Test? Like nearly every question, the answer is "it depends."
 That being said, a Good Test should 
 
 1) Ensure correctness
-2) Ensure refactorability
+2) Ensure refactor-ability
 
 These are both essential qualities. That is, they are equally important, and your tests should never compromise on either. In my experience, most engineers focus on just the correctness aspect of tests and completely neglect the refactorability of tested code. Writing tests this way will not lead to the natural development of good architecture. [Even worse, it tends to actively hurt the system, team, and organization over time.](https://www.youtube.com/watch?v=xPL84vvLwXA&ab_channel=VMwareTanzu)
 
@@ -197,7 +197,7 @@ Please note that there might not be enough complexity in this domain to necessar
 
 I intend to eventually do another blog post with a more complex domain that I have some familiarity with so I can show PR by PR what decisions are made and how the testing infrastructure helps support an evolving architecture.
 
-Take a look! The the code is [here](https://github.com/tapegram/blog/tree/main/blog/an_opinionated_set_of_testing_patterns/birthday_kata)
+Take a look! The code is [here](https://github.com/tapegram/blog/tree/main/blog/an_opinionated_set_of_testing_patterns/birthday_kata)
 
 If you want to see an example of a rather large refactor (generalizing the messaging instead of only allowing emails), take a look at [this draft pr.](https://github.com/tapegram/blog/pull/2)
 

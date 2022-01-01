@@ -3,7 +3,7 @@
 ## Problem Context
 If you are applying [PORTS_AND_ADAPTERS](ports_and_adapters.md) you have inverted your application's dependencies so that everything points towards the domain.
 
-This is good, but it does introduce a small set of problems. Now that everything depends on your domain model, any change to the domain model can require cascading changes to all of the rest of your application! Similar to how changes to the data model had a cascading effect on the rest of the layers in a poorly isolated n-tier architecture.
+This is good, but it does introduce a small set of problems. Now that everything depends on your domain model, any change to the domain model can require cascading changes to all the rest of your application! Similar to how changes to the data model had a cascading effect on the rest of the layers in a poorly isolated n-tier architecture.
 
 This is no good since one of the major benefits of PORTS AND ADAPTERS is making it easier to refactor and refine these models by decoupling them from infrastructure. Now the problem has changed from the domain being tightly coupled to the infrastructure, to the infrastructure being coupled to the domain! Again, this is a better problem to have, but it will also slow your team down and cause issues in the long run.
 
@@ -52,7 +52,7 @@ class ItemRequest(
 @RestController
 @RequestMapping("/api")
 class CartController(
-  val cartService: CartService
+  private val cartService: CartService
 ) {
 
   @PostMapping("/cart/{id}/item")
@@ -82,9 +82,9 @@ class CartTest : StringSpec({
     "successfully adds an item to the cart" {
       val result = service.addItem(cart.id, product.sku)
       assertSoftly {
-        result.items.length `shouldBe` 1
-        result.items[0].sku `shouldBe` product.sku
-        result.items[0].price `shouldBe` product.price
+        result.items.length shouldBe 1
+        result.items[0].sku shouldBe product.sku
+        result.items[0].price shouldBe product.price
       }
     }
 
@@ -93,13 +93,13 @@ class CartTest : StringSpec({
     Testing all kinds of different products, prices, etc.
     */
 
-    "throws an exception if the sku doesnt exist" {
+    "throws an exception if the sku doesn't exist" {
       shouldThrow<SkuDoesNotExist> {
         service.addItem(cart.id, "alkjsfalksjbg")
       }
     }
 
-    "throws an exception if the cart doesnt exist" {
+    "throws an exception if the cart doesn't exist" {
       shouldThrow<SkuDoesNotExist> {
         service.addItem(UUID.randomUUID(), product.sku)
       }
@@ -107,7 +107,7 @@ class CartTest : StringSpec({
 })
 ```
 
-Let's say we want to do something good and MAKE THE AGGREGATE A STATE MACHINE so we can better represent the domain and introduce some type-safety. In particular, we want to disallow updating carts that are "closed," or that have already successfully checkout out.
+Let's say we want to do something good and MAKE THE AGGREGATE A STATE MACHINE, so we can better represent the domain and introduce some type-safety. In particular, we want to disallow updating carts that are "closed," or that have already successfully checkout out.
 
 ```kotlin
 sealed class Cart {
@@ -207,14 +207,15 @@ data class CartService(
   val cartRepo: CartRepo,
   val productCatalogRepo: ProductCatalogRepo,
 ) {
-  fun addItem(command: Commands.AddItem): Cart {
-      val cart = cartRepo.findById(cartId)
-      val product = productCatalogRepo.findBySku(productSku)
+    fun addItem(command: Commands.AddItem): Cart {
+        val cart = cartRepo.findById(cartId)
+        val product = productCatalogRepo.findBySku(productSku)
 
-      return cart.addItem(product.toItem())
-        .also { cartRepo.save(cart) }
-        .toResponse()
-  }
+        return cart.addItem(product.toItem())
+            .also { cartRepo.save(cart) }
+            .toResponse()
+    }
+}
 ```
 
 With this extra level of indirection, now the adapters depend on the Service level command and response models, and the domain models are fully encapsulated.
@@ -228,4 +229,4 @@ The `response` model sometimes can feel wasteful since it will closely resemble 
 
 If you find that this approach feels increasingly wasteful, it may be because you are implementing a read heavy service with domain models, which are optimized for writes. If you are light on business logic, this pattern (and many others here) may not be appropriate for you.
 
-Additionally, out-bound adapters will still need to depend directly on domain objects. In my experience, these are often limited to repositories or some occasional adapters for communicating with third-party services and are easy to update. The biggest win for this pattern is ensuring that your domain is refactorable by loosely coupling with tests.
+Additionally, out-bound adapters will still need to depend directly on domain objects. In my experience, these are often limited to repositories or some occasional adapters for communicating with third-party services and are easy to update. The biggest win for this pattern is ensuring that your domain is refactor-able by loosely coupling with tests.

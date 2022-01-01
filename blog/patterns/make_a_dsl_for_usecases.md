@@ -10,7 +10,7 @@ As you write your tests, attempt to build out a DSL for doing your test setup th
 
 I personally prefer a builder syntax, though Kotlin has great support for building DSLs with lambdas.
 
-Lets say this is what our tests look like now
+Let's say this is what our tests look like now
 ```kotlin
 val cart = Cart(UUID.randomUUID(), items = emptyList())
 val cartRepo = InMemoryCartRepo(
@@ -29,9 +29,9 @@ class CartTest : StringSpec({
       val result = service.addItem(cart.id, product.sku)
 
       assertSoftly {
-        result.items.length `shouldBe` 1
-        result.items[0].sku `shouldBe` product.sku
-        result.items[0].price `shouldBe` product.price
+        result.items.length shouldBe 1
+        result.items[0].sku shouldBe product.sku
+        result.items[0].price shouldBe product.price
       }
     }
 
@@ -42,9 +42,9 @@ class CartTest : StringSpec({
       val result = service.addItem(cart.id, limitedProduct.sku)
 
       assertSoftly {
-        result.items.length `shouldBe` 1
-        result.items[0].sku `shouldBe` product.sku
-        result.items[0].price `shouldBe` product.price
+        result.items.length shouldBe 1
+        result.items[0].sku shouldBe product.sku
+        result.items[0].price shouldBe product.price
       }
 
       shouldThrow<ProductLimitExceeded> {
@@ -60,17 +60,17 @@ class CartTest : StringSpec({
       val result = service.addItem(cart.id, limitedProduct.sku)
 
       assertSoftly {
-        result.items.length `shouldBe` 2
+        result.items.length shouldBe 2
       }
     }
 
-    "throws an exception if the sku doesnt exist" {
+    "throws an exception if the sku doesn't exist" {
       shouldThrow<SkuDoesNotExist> {
         service.addItem(cart.id, "alkjsfalksjbg")
       }
     }
 
-    "throws an exception if the cart doesnt exist" {
+    "throws an exception if the cart doesn't exist" {
       shouldThrow<SkuDoesNotExist> {
         service.addItem(UUID.randomUUID(), product.sku)
       }
@@ -95,7 +95,7 @@ data class Given(
   }
 
   fun `a limited availability snowglobe`(id: UUID = UUID.randomUUID(), price: Int = 999, purchaseLimit: Int? = 1) {
-    `a product`(id = id, sku="snowglobe", price = price, purchaseLimit: Int? = 1)
+    `a product`(id = id, sku="snowglobe", price = price, purchaseLimit = 1)
     return this
   }
 
@@ -125,9 +125,9 @@ class CartTest : StringSpec({
         .addItem(cartId, "blue-shirt")
 
       assertSoftly {
-        result.items.length `shouldBe` 1
-        result.items[0].sku `shouldBe` "blue-shirt"
-        result.items[0].price `shouldBe` 100
+        result.items.length shouldBe 1
+        result.items[0].sku shouldBe "blue-shirt"
+        result.items[0].price shouldBe 100
       }
     }
 
@@ -149,19 +149,19 @@ class CartTest : StringSpec({
         .addItem(cartId, "snowglobe")
 
       assertSoftly {
-        result.items.length `shouldBe` 1
-        result.items[0].sku `shouldBe` "snowglobe"
-        result.items[0].price `shouldBe` 999
+        result.items.length shouldBe 1
+        result.items[0].sku shouldBe "snowglobe"
+        result.items[0].price shouldBe 999
       }
     }
 })
 ```
 
 ## Resulting Context
-The result of applying this pattern is a deeper understanding of the problem domain and better tooling for writing "good" tests (refactorable and ensures correctness). This DSL will allow you to crank out realistic test cases with the proper amount of abstraction.
+The result of applying this pattern is a deeper understanding of the problem domain and better tooling for writing "good" tests (refactor-able and ensures correctness). This DSL will allow you to crank out realistic test cases with the proper amount of abstraction.
 
-Even better, junior engineers can pick this up with little or no coaching and you can better collaborate with product and the business since you directly translate requirements into test cases!
+Even better, junior engineers can pick this up with little or no coaching, and you can better collaborate with product and the business since you directly translate requirements into test cases!
 
-By extending and maintaining this DSL youare forcing yourself to better understand the domain, and at the same time producing excellent, type-safe documentation.
+By extending and maintaining this DSL you're forcing yourself to better understand the domain, and at the same time producing excellent, type-safe documentation.
 
-I have been writing tests like this for a while now and I can not recommend it enough. It saves an enormous amount of time when a new engineer can pick up a ticket and just look at the tests to understand the problem domain, and then in-turn can easily write tests and get to work, without me even getting involved!
+I have been writing tests like this for a while now, and I can not recommend it enough. It saves an enormous amount of time when a new engineer can pick up a ticket and just look at the tests to understand the problem domain, and then in-turn can easily write tests and get to work, without me even getting involved!

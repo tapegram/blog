@@ -1,7 +1,7 @@
 # KEEP THE DOMAIN PURE
 
 ## Problem Context
-If you are practicing [TEST DRIVEN DEVELOPMENT](test_driven_development.md) you will have quickly run into the issue that it is really hard to test impure code. Most impure code tends to come from infrastructure, so you may have already applied [PORTS AND ADAPTERS](ports_and_adapters.md) to try to separate out most of the impurity and then [TEST WITH IN MEMORY ADAPTERS](test_with_in_memory_adapters.md) and [HIDE THE DOMAIN](hide_the_domain.md) to make testing as easy as possible.
+If you are practicing [TEST DRIVEN DEVELOPMENT](test_driven_development.md) you will have quickly run into the issue that it is really hard to test impure code. Most impure code tends to come from infrastructure, so you may have already applied [PORTS AND ADAPTERS](ports_and_adapters.md) to try to separate out most of the impurity and then [HIDE THE DOMAIN](hide_the_domain.md) to make testing as easy as possible.
 
 Regardless, it can be really hard to test and reason about your business logic if it is impure.
 
@@ -91,7 +91,7 @@ class CartTest : StringSpec({
         InMemoryTicketRepo(emptyList()),
         MockUUID(uuid),
         BrokenClock(now),
-      ).create("description for the ticket", null) `shouldBe` TicketResponse(
+      ).create("description for the ticket", null) shouldBe TicketResponse(
         id = uuid,
         description = "description for the ticket",
         assigned = null,
@@ -128,7 +128,7 @@ class CartTest : StringSpec({
       val now = Timestamp.now()
       val result = TicketService(
         InMemoryTicketRepo(emptyList()),
-      ).create(id, "description for the ticket", null, now) `shouldBe` TicketResponse(
+      ).create(id, "description for the ticket", null, now) shouldBe TicketResponse(
         id = uuid,
         description = "description for the ticket",
         assigned = null,
@@ -146,6 +146,6 @@ The result of applying this pattern is a more scalable codebase. Keeping busines
 
 Composing pure and impure code at the service level synergizes well with other patterns such as HIDE THE DOMAIN, PORTS AND ADAPTERS, and just in general makes life better! Please do not take this benefit lightly just because there is a simple example above!
 
-Additionally, just trying to keep the domain pure can naturally lead to PORTS AND ADAPTERS, as other engineers will stumble upon similar patters in order to get a working solution that priortizes the purity of the domain.
+Additionally, just trying to keep the domain pure can naturally lead to PORTS AND ADAPTERS, as other engineers will stumble upon similar patters in order to get a working solution that prioritizes the purity of the domain.
 
-However, sometimes it can be hard to maintain this (and other patterns) across a team, as not all engineers know about these pattern and [its a constant battle to maintain this architecture.](https://www.youtube.com/watch?v=US8QG9I1XW0&ab_channel=NDCConferences) If you can find a way to [ENFORCE REFERENCIAL TRANSPARENCY](enforce_referential_transparency.md) you will be setting up your team to apply these patterns by default, without intervention from more senior engineers.
+However, sometimes it can be hard to maintain this (and other patterns) across a team, as not all engineers know about these pattern, and [it's a constant battle to maintain this architecture.](https://www.youtube.com/watch?v=US8QG9I1XW0&ab_channel=NDCConferences) If you can find a way to [ENFORCE REFERENTIAL TRANSPARENCY](enforce_referential_transparency.md) you will be setting up your team to apply these patterns by default, without intervention from more senior engineers.

@@ -1,4 +1,4 @@
-# ENFORCE REFERNTIAL TRANSPARENCY
+# ENFORCE REFERENTIAL TRANSPARENCY
 
 ## Problem Context
 You want to apply [PORTS AND ADAPTERS](ports_and_adapters.md) at scale in your work but people keep breaking the architecture. Either they are well-intentioned junior engineers who don't understand the architecture and think they are helping, or they are seniors on a time crunch who promise to "address the tech debt later" (this will never happen). And once the coupling is introduced it tends to get worse instead of better.
@@ -20,7 +20,7 @@ This requires buy-in from your team, but in my experience, everyone wants to "do
 
 For further documentation, please see [this excellent write-up by the Arrow team.](https://arrow-kt.io/docs/fx/purity-and-referentially-transparent-functions/)
 
-Unfortunately, you can enforce this in languages where asynchronous or effectful behavior is part of the type signatue of a function. For instance, you may be able to do something similar in JS by labeling impure functions as `async`. However, I'm not aware of a good way to do this in a language like Python. For languages that don't support this pattern, you will have to rely on culture, PR reviews, and education to encourage separation of pure/impure functions, possibly adopting a function naming convention to identify impurity. Ruby, for example, [has a convention of marking effectful functions with a `!` in the name.](https://hackernoon.com/functional-programming-in-ruby-how-to-create-pure-functions-0uq3ujr). I haven't worked a lot with custom linting rules, but you could theoretically update a linter to disallow calling `!`'d (or whatever indicates impurity in your convention) from pure functions.
+Unfortunately, you can enforce this in languages where asynchronous or effectful behavior is part of the type signature of a function. For instance, you may be able to do something similar in JS by labeling impure functions as `async`. However, I'm not aware of a good way to do this in a language like Python. For languages that don't support this pattern, you will have to rely on culture, PR reviews, and education to encourage separation of pure/impure functions, possibly adopting a function naming convention to identify impurity. Ruby, for example, [has a convention of marking effectful functions with a `!` in the name.](https://hackernoon.com/functional-programming-in-ruby-how-to-create-pure-functions-0uq3ujr) I haven't worked a lot with custom linting rules, but you could theoretically update a linter to disallow calling `!`'d (or whatever indicates impurity in your convention) from pure functions.
 
 ## Resulting Context
 Now you are naturally guiding your whole team towards PORTS AND ADAPTERS and KEEP THE DOMAIN PURE! It's a huge win for maintainability and scalability of the code without needing to play the villain!

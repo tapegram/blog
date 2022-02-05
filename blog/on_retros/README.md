@@ -118,3 +118,59 @@ So do what it takes to make small actionable tasks and make sure they get done. 
 
 #### Conversations Run Long and Time Runs Out
 Sometimes there is bikeshedding or sometimes the team gets into a really good conversation about a specific topic. It's hard to know when to stop. Over time, the team will need to learn to keep itself on track. Until then, the facilitator will need to refocus the team when the discussion gets too off the rails. If it's a good discussion but isn't going to result in a decision any time soon, take an action item to schedule dedicated time to discuss that issue and move on. Give the big topics the time they deserve, don't limit them to your retro time block.
+
+#### Toxic Professionalism
+I've found that many people have internalized "professionalism" to mean not complaining, sucking it up, and pushing through problems. Quietly suffering is a recipe for disaster. Fail loudly -- always. Shorten the iterations you work in to make sure you can safely fail early and often.
+
+Complaints are good! That's how we know what to improve! "The squeeky wheel gets the grease."
+
+Just make sure you complain constructively and in pursuit of a solution. That means not blaming individuals for their mistakes or other issues. I would again suggest keeping in mind the "5 whys." Nearly all problems are institutional and structural, which is what retros try to solve (at whatever level the "team" exists at).
+
+All of your colleagues are smart and well-intentioned people struggling to do the right thing within the context of organizations that often discourage it. If it well and truly is a problem with in an individual, that's a conversation to have with their manager (or a recruiter at another company).
+
+
+## Some Examples of Retro-Driven Successes
+
+### Tracking Action Items in the Sprint
+We noticed that action items were often not done or people were scrambling to do them right before the next retro.
+
+We thought about why this happened, and landed on that it's a whole other thing people have to remember to do, it’s not really visibly tracked, and they aren’t part of the engineers' daily work.
+
+So we started putting all action items in 0 point tickets at the top of the next sprint. Now they are super visible and way more of them get done. In fact, on the team I'm currently on, we have done nearly every action item from every retro in the following sprint (knock on wood). I think we had one rollover item one time, and it was addressed in the next sprint after it was brought up in retro again.
+
+And to push it further, we started tracking retro action item tickets in JIRA with a specific label so we can look at a dashboard of jira metrics at the end of each sprint (along with other cool data like interrupts, time to close tickets, etc.). I'm very excited about how this level of insight might help us make data driven process changes in the future!
+
+### Pairing and Mob Programming
+One retro years ago we were discussing issues involving long delays for reviewing PRs. At the time, it was our biggest bottleneck. Someone casual threw out the idea of "pair programming being a continuous code review" with a built-in reviewer, so that retro we got sponsorship from a manager and decided to have one person on the squad exclusively pair for their work (pulling in different team members for each PR).
+
+Each retro we checked in on how everyone was feeling about pairing and about the PR review turnaround, and people were increasingly liking the results of pairing. More and more people started doing it as their default method of work, and we continued to discuss the logistics of it during retros.
+
+Eventually, it became everyone's favorite way to work and we started experimenting with mob programming (to address other issues involving siloing of knowledge about different features).
+
+Now mob and pair programming are basically the default ways we work, and our retro discussion about them are more focused on 1) how to maximize the value and efficiency of mobs 2) how to determine when it makes the most sense to swarm vs mob, or just to go heads down by yourself on a problem.
+
+### Fullstack teams
+This is very close to the same story as pair and mob programming, except we took a similar incremental and experimental approach to transitioning our separate "front end" and "back end" teams into cross-functional fullstack teams.
+
+One of the original problems we were trying to solve was just the communication barrier and latency of delivering value if we had to prioritize work for a single feature across multiple different teams, and all the standard functionally segregated team problems you have probably experienced.
+
+We put one backend engineer on a frontend team to start. We continued to point frontend and backend tickets separately, and we increasingly leveraged pair programming between frontend and backend engineers.
+
+This went well and we increasingly staffed frontend and backend engineers to the same teams.
+
+Still going well, we pushed hard on pairing to build expertise in our existing engineers so people were more comfortable working full stack as individuals.
+
+And eventually we decided to start writing our stories as single full stack vertical slices.
+
+And now we are continuing to apply the same concepts with SDETs, SREs, and designers to iteratively build out true cross-functional teams.
+
+### Work-Life Balance
+COVID and the transition to remote work has been a big challenge for us. Problems were coming up in retro about how work was going later and later because the "return commute" hard stop at the end of the day disappeared. People found they were working more than when we worked in the office, but also were communicating and socializing less and were starting to burn out.
+
+So we tried a few things.
+1) We scheduled a recurring monthly in person happy hour (once everyone was vaccinated) so people had the option of interacting in person with their coworkers.
+2) We started experimenting with recurring zoom "game nights." We did a few ad hoc starting at 5pm (so the day actually ended at 5) and if you wanted to you could join in to play code names, or among us, or jackbox games. Depending on how the team felt week to week, we would start to have these as often as every day.
+3) We gave everyone a personal action item to go ahead and schedule a bunch of PTO. In our experience, unlimited vacation days leads to people not taking vacations. So we tracked setting up vacation days in our sprints for a while.
+4) We also experimented with other mini end of day events like a "mini retro" every day where teams could demo their work for the day and get change management and UAT signoff and bring up issues we could discuss in standup the next morning.
+
+## Patterns!

@@ -128,6 +128,11 @@ Just make sure you complain constructively and in pursuit of a solution. That me
 
 All of your colleagues are smart and well-intentioned people struggling to do the right thing within the context of organizations that often discourage it. If it well and truly is a problem with in an individual, that's a conversation to have with their manager (or a recruiter at another company).
 
+#### Retro isn't fun
+It doesn't have to be the greatest thing in the world, but retro is better if people aren't dreading it. Good thing retro is a perfectly good subject for retros!
+
+I don't know if this is the example anyone would want to copy, but one team I was on renamed retros to "Sprint Celebration," the facilitator was required to make (and expense) cocktails for the team (I always did Whiskey Sours), and then at the end we would nominate each other for sprint MVP and hand out an enormous novelty trophy. We had to move this meeting to 4pm on Fridays for obvious reasons. As a result it tended to accidentally segue into a full-blown company happy hour. A lot of people tried to join that team.
+
 
 ## Some Examples of Retro-Driven Successes
 

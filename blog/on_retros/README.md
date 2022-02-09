@@ -179,3 +179,70 @@ So we tried a few things.
 4) We also experimented with other mini end of day events like a "mini retro" every day where teams could demo their work for the day and get change management and UAT signoff and bring up issues we could discuss in standup the next morning.
 
 ## Patterns!
+
+### Action Items Not Getting Done
+
+If action items aren't being done, the most common problems are that either they aren't tracked as part of normal sprint work so they aren't top of mind for anyone, or the action items aren't concrete and actionable enough to actually get done.
+
+For the first case, as recommended early, I strongly suggest converting all action items to tickets at the top of the next sprint so they are given the first class "normal day to day work" experience.
+
+For the latter case, I'd recommend applying the same standards you apply to your other engineering tickets to the action items from retros. That means clear context and well-defined acceptance criteria. Following the same principles as normal tickets in a sprint, the more well-defined the scope and AC, and the smaller the scope of the ticket, the easier it is to start and complete.
+
+### Tickets Rolling Over
+There are a lot of reasons velocity may be stuck and tickets are rolling over sprint to sprint. I'll cover some other bottlenecks below, but one of the first things to cover is to make sure your tickets are adequately groomed / refined and ready to go.
+
+If tickets are too big and poorly defined, it's hard to ever "finish" them. In general, the smaller the ticket, the mor explicit the scope, the more clear the problem context, the explicitness of the acceptance criteria, etc. all contribute to being able to actually execute and delivering some value. My recommendations to teams struggling with grooming tend to have two aspects
+1) What is a "Groomed Ticket"
+2) What is the process for grooming
+
+First of all, I'd recommend just getting the team to agree to some minimum requirement for a groomed ticket. For example, every Story needs 
+- User Stories: given in an `As <persona>, I want <X> so <reason>`. Again, this isn't supposed to replace building relationships with customers/stakeholders and having discussions, but having the context provided on each ticket from the perspective of the effected user is critical.
+- Acceptance Criteria: often (but not always) written in a testing format (Given/When/Then). In my ideal world, the ticket is "done" when the AC is translated into tests and the tests pass, pending other change management requirements.
+
+This is just a starting point, of course. Your teams will evolve their "templates" their own ways, but this seems like a great place to start. Some of my teams are experimenting with [Dual Track Agile](https://www.productboard.com/glossary/dual-track-agile/), so we have separate templates for tasks (delivery track, unambiguous and heavily focused on implementation details) and stories (discovery track, focused on the problem context, experimentation, learning, and eventually generating the delivery track tickets if the feature isn't killed).
+
+Not all teams do pointing, but if you do, I strongly recommend doing planning poker (and there are some fun [async slack apps](https://pelotoncycle.slack.com/apps/A57FFS3QE-poker-planner) to facilitate this). If any team member doesn't think they can point the ticket based exclusively on the content of the ticket, it's probably not refined enough to be actionable.
+
+In terms of process, I'd start with a once a week, 1 hour grooming session, where the team collectively (and cross-functionally! It's important that product / onsite customers, etc. all be present and contributing) to make sure there is a clear prioritized block of tickets ready to be picked up in future sprints.
+
+Note that this should be engineer-driven, not dictated by product, though collaboration with product is essential. And remember, priorities change! The backlog is likely to be constantly shifting and what was pointed one day may no longer be accurate on the next day, so don't be afraid to review already groomed tickets and reprioritize.
+
+As the team builds competency in grooming, having a one off meeting each week becomes increasingly tedious, and you will likely want to explore getting rid of the meeting and doing grooming more "continuously." This requires experimentation, but ideally everyone on the team is engaged in taking looks at the backlog, bringing up epics/stories to discuss and reprioritize, etc.
+
+Hopefully, by the time planning comes along, all you have to do is pull in the top X points, discuss themes/sprint goals and maybe do some light curating of the tickets in the sprint, review them together to make sure everyone is on the same page, and BAM -> planning only takes 10 minutes and everyone is confident in the work.
+
+When tickets are well-defined and small, you tend to make more accurate guesses for what work can be done each sprint (on some of my teams, we decided 5s were "too big" and always tried to break them down as much as possible without losing the "cohesion" of the problem they were solving. In general, we found that 5s tended to break down in to 6-10 points worth of 2 and 3 pointers).
+
+Similarly, well groomed tickets are easier to finish, so just by investing in grooming, you will see big gains in velocity and less rollover.
+
+### Bottlenecks in Codereview
+
+Codereview is a common bottleneck for new teams. You have to explain every decision you made when tackling a ticket, and convince someone who wasn't present for any of it that you made really good decisions. They didn't see the things you tried that didn't work, or the conversations you had to narrow down solutions. And it only gets worse if the PRs are big. Reviewing someone elses' PR is more a or less a trust exercise. It's very difficult to just look at a diff and be like "yup I totally understand the context of all of this is and this is perfect."
+
+Often times, this "handoff" results in thrashing as a review spends a while looking at it, leaves a bunch of comments that may or may not actually be helpful, and then it goes back to the dev, back to the reviewer, etc. The fewer times that happens the better.
+
+And most engineers don't just wait for the codereview to get done (especially at orgs where this takes days or hours, instead of minutes), so they are working on something else and now there is the added difficultly of context switching and interruptions.
+
+If this sounds like you, I'd recommend experimenting with pair programming: the "continuous code review." Two or more people working on a PR together is guaranteed better than one person making the changes and another person reviewing it after. It's more efficient, there are no handoffs, discussions happen continuously, and it often results in better code from the start. You also avoid fun situations where a junior engineer spends days/weeks (oof) working on a change and then a senior engineer rejects it out of hand because it wrecks the whole architecture and it needs to be completely redone. If they were pairing from the start, the junior engineer learns much earlier on not to go down that rabbit-hole and everyone is happier. It feels bad to be put in the position where you have to reject someone's hard work out of hand.
+
+If your organization change management process is ok with it, I'd suggest allowing for paired PRs to merge immediately after tests pass, though of course you should still circulate the PR to allow other's the opportunity to stay informed or make suggestions, even if they are after merging a PR. You can always revert it or do a follow up if someone brings up something smart two hours later!
+
+### Bottlenecks in UAT/Testing/QA
+
+### Bottlenecks on other teams
+
+### Bottlenecks on individuals within teams
+
+### Too many meetings
+
+
+## Principles
+From those patterns, you can see that most solutions I like involve one or more of
+1) Can we do it more continuously? (instead of in big, synchronous chunks?)
+2) Can we be more cross-functional? (and reduce thrashing from external dependencies)
+3) Can we automate it? (and reduce manual process)
+4) Can we foster more ad hoc conversations? (and reduce meetings)
+5) Can we encourage teaching and knowledge sharing? (and reduce silos)
+6) Can we reduce dependencies on individuals? (and take on work as a team, regardless of who is on vacation or otherwise busy)
+7) Can we have fun?
+8) Can we minimize our processes over time?

@@ -229,11 +229,34 @@ If your organization change management process is ok with it, I'd suggest allowi
 
 ### Bottlenecks in UAT/Testing/QA
 
-### Bottlenecks on other teams
+Once code is flowing, the next place tickets tend to bottleneck is in the UAT and QA/Testing stage.
 
-### Bottlenecks on individuals within teams
+On the ecommerce team at Peloton, we require that applicable tickets (read: anything that changes production behavior visible to users/customers in production, i.e. not refactoring) requires production signoff. All tickets that resulted in code changing requires "testing" signoff.
+
+Most teams struggle with this because PMs are really busy and it's hard for them to be on top of everything all the time. Depending on the ticket, sometimes we allow engineering managers to do product sign off.
+
+Some things we have done in retros to help with this are
+1) Write simple testing instructions in the ticket when it is ready for PM review, explaining the workflow and how to test, so the PM can signoff async. If the ticket is simple enough, maybe you just want to link example orders/records/whatever that they can verify after, or you can take screenshots.
+2) On another team, we introduced the concept of a "mini retro" at 4:50 each day where we could first quickly bring up any new issues/blockers we wanted to write down before standup the next day, but also we could use the last 5-10 minutes of the day to demo any of the work we got done. That way the whole team could actually see what was being accomplished and product could sign off on the spot, with only a 15-minute daily commitment.
+
+For QA/Testing, we were running into issues where the "tester," being another handoff, need to be retold all of the decisions and context for the change, shown the workflow, shown the unit tests, shown the implementation, etc. This was a huge bottleneck.
+
+Some things that worked well for us were
+1) Decided that instead of requiring signoff from "the SDET," instead any engineer who didn't make a commit could signoff, but the SDET would work with the engineers to teach them what the standards were for testing.
+2) Automated testing was sufficient for signoff, so we pushed hard on TDD and including automated testing in the "definition of done" for tickets. This led to a better understanding of testing amongst engineers and as a side effect, better code! Easy to test code is usually well architected.
 
 ### Too many meetings
+A common complaint is that engineers have too many meetings to actually have time to do dev work. In order to address this problem, we usually try to figure out what kinds of meetings these are
+
+If they are internal team meetings, like sprint ceremonies, these can be gradually shortened and optimized over time as the team builds competency and mastery of its own practices. For instance, once a team gets good at continuous grooming, it no longer needs a recurring grooming meeting. Once the backlog is in good shape, planning meetings take around 15 minutes. Additionally, since the team owns these meetings, they can just cancel them if they feel it delivers less value than just having more dev time.
+
+If they are external team meetings, like working groups or TAGs or even just checkins on programs or meetings set up to talk about issues that other teams need help for, that's a lot trickier to solve.
+
+I've seen some people try "no meetings Wednesdays" or stuff like that, but it always seems to fall apart after a few weeks. And honestly, I'm not sure that does anything but fill up the other days with Wednesday's meetings.
+
+What I have been experimenting with, to some successful, is to have the team block off an agreed upon block to "be available" together for dev work. If possible, I would make that time block auto-decline meetings. If its actually important, the organizer will reach out to ask if you can join. This way team can reclaim an hour or two to all be present and doing work together each day. You can tweek as you like over the course of multiple retros.
+
+That being said, I think "meeting culture" deserves its own blog post. Meetings are definitely a useful tool, but in my opinion, maybe like 25% of the meetings I go to are actually good uses of synchronous time being blocked off. And once you start having a bunch of those meetings on repeat every week, the problem snowballs. If everyone is in so many meetings you can't schedule time with the people you need to talk to, when you do get a time, it starts to make sense to schedule recurring "checkins" with people just so you can talk to them at all. The problem compounds rapidly.
 
 
 ## Principles
@@ -244,5 +267,6 @@ From those patterns, you can see that most solutions I like involve one or more 
 4) Can we foster more ad hoc conversations? (and reduce meetings)
 5) Can we encourage teaching and knowledge sharing? (and reduce silos)
 6) Can we reduce dependencies on individuals? (and take on work as a team, regardless of who is on vacation or otherwise busy)
-7) Can we have fun?
-8) Can we minimize our processes over time?
+7) Can we have more fun?
+8) Can we learn more?
+9) Can we minimize our processes over time?

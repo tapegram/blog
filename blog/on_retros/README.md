@@ -217,7 +217,7 @@ Similarly, well groomed tickets are easier to finish, so just by investing in gr
 
 ### Bottlenecks in Codereview
 
-Codereview is a common bottleneck for new teams. You have to explain every decision you made when tackling a ticket, and convince someone who wasn't present for any of it that you made really good decisions. They didn't see the things you tried that didn't work, or the conversations you had to narrow down solutions. And it only gets worse if the PRs are big. Reviewing someone elses' PR is more a or less a trust exercise. It's very difficult to just look at a diff and be like "yup I totally understand the context of all of this is and this is perfect."
+Codereview is a common bottleneck for new teams. You have to explain every decision you made when tackling a ticket, and convince someone who wasn't present for any of it that you made optimal decisions. They didn't see the things you tried that didn't work, or the conversations you had to narrow down solutions. And it only gets worse if the PRs are big. Reviewing someone elses' PR is more a or less a trust exercise. It's very difficult to just look at a diff and be like "yup I totally understand the context of all of this is and this is perfect."
 
 Often times, this "handoff" results in thrashing as a review spends a while looking at it, leaves a bunch of comments that may or may not actually be helpful, and then it goes back to the dev, back to the reviewer, etc. The fewer times that happens the better.
 

@@ -1,7 +1,7 @@
 # On Retros
 
 ## Intro
-I can't think of a more pretentious name for a blog post than this. It's honestly kind of embarassing. Actually, writing any thoughts online is embarassing but it's a helpful exercise (I hope!).
+I can't think of a more pretentious name for a blog post than this. It's honestly kind of embarrassing. Actually, writing any thoughts online is embarrassing but it's a helpful exercise (I hope!).
 
 Anyway, this is another opinion and personal experience heavy post about one of my favorite topics: Sprint Retrospectives. The longer I operate as a self-styled "software engineer," the more and more I am convinced that the structure and processes of an organization and the teams that write the software are inextricably tied to the resulting code and success of the product. There is a long-winded and rambling talk I've given attempting to appraise this at a high level [on youtube](https://www.youtube.com/watch?v=nEGIfvxK8Uo) in case you have entirely too much free time. 
 
@@ -117,12 +117,12 @@ If you take an hour every week to earnestly discuss changes, write up and assign
 So do what it takes to make small actionable tasks and make sure they get done. I have some suggestions for this further down.
 
 #### Conversations Run Long and Time Runs Out
-Sometimes there is bikeshedding or sometimes the team gets into a really good conversation about a specific topic. It's hard to know when to stop. Over time, the team will need to learn to keep itself on track. Until then, the facilitator will need to refocus the team when the discussion gets too off the rails. If it's a good discussion but isn't going to result in a decision any time soon, take an action item to schedule dedicated time to discuss that issue and move on. Give the big topics the time they deserve, don't limit them to your retro time block.
+Sometimes there is bikeshedding or sometimes the team gets into an excellent conversation about a specific topic. It's hard to know when to stop. Over time, the team will need to learn to keep itself on track. Until then, the facilitator will need to refocus the team when the discussion gets too off the rails. If it's a good discussion but isn't going to result in a decision any time soon, take an action item to schedule dedicated time to discuss that issue and move on. Give the big topics the time they deserve, don't limit them to your retro time block.
 
 #### Toxic Professionalism
 I've found that many people have internalized "professionalism" to mean not complaining, sucking it up, and pushing through problems. Quietly suffering is a recipe for disaster. Fail loudly -- always. Shorten the iterations you work in to make sure you can safely fail early and often.
 
-Complaints are good! That's how we know what to improve! "The squeeky wheel gets the grease."
+Complaints are good! That's how we know what to improve! "The squeaky wheel gets the grease."
 
 Just make sure you complain constructively and in pursuit of a solution. That means not blaming individuals for their mistakes or other issues. I would again suggest keeping in mind the "5 whys." Nearly all problems are institutional and structural, which is what retros try to solve (at whatever level the "team" exists at).
 
@@ -184,7 +184,7 @@ So we tried a few things.
 
 If action items aren't being done, the most common problems are that either they aren't tracked as part of normal sprint work so they aren't top of mind for anyone, or the action items aren't concrete and actionable enough to actually get done.
 
-For the first case, as recommended early, I strongly suggest converting all action items to tickets at the top of the next sprint so they are given the first class "normal day to day work" experience.
+For the first case, as recommended early, I strongly suggest converting all action items to tickets at the top of the next sprint so they are given the first class "normal day-to-day work" experience.
 
 For the latter case, I'd recommend applying the same standards you apply to your other engineering tickets to the action items from retros. That means clear context and well-defined acceptance criteria. Following the same principles as normal tickets in a sprint, the more well-defined the scope and AC, and the smaller the scope of the ticket, the easier it is to start and complete.
 
@@ -237,13 +237,13 @@ Most teams struggle with this because PMs are really busy and it's hard for them
 
 Some things we have done in retros to help with this are
 1) Write simple testing instructions in the ticket when it is ready for PM review, explaining the workflow and how to test, so the PM can signoff async. If the ticket is simple enough, maybe you just want to link example orders/records/whatever that they can verify after, or you can take screenshots.
-2) On another team, we introduced the concept of a "mini retro" at 4:50 each day where we could first quickly bring up any new issues/blockers we wanted to write down before standup the next day, but also we could use the last 5-10 minutes of the day to demo any of the work we got done. That way the whole team could actually see what was being accomplished and product could sign off on the spot, with only a 15-minute daily commitment.
+2) On another team, we introduced the concept of a "mini retro" at 4:50 each day when we could first quickly bring up any new issues/blockers we wanted to write down before standup the next day, but also we could use the last 5-10 minutes of the day to demo any of the work we got done. That way the whole team could actually see what was being accomplished and product could sign off on the spot, with only a 15-minute daily commitment.
 
-For QA/Testing, we were running into issues where the "tester," being another handoff, need to be retold all of the decisions and context for the change, shown the workflow, shown the unit tests, shown the implementation, etc. This was a huge bottleneck.
+For QA/Testing, we were running into issues where the "tester," being another handoff, need to be retold all the decisions and context for the change, shown the workflow, shown the unit tests, shown the implementation, etc. This was a huge bottleneck.
 
 Some things that worked well for us were
 1) Decided that instead of requiring signoff from "the SDET," instead any engineer who didn't make a commit could signoff, but the SDET would work with the engineers to teach them what the standards were for testing.
-2) Automated testing was sufficient for signoff, so we pushed hard on TDD and including automated testing in the "definition of done" for tickets. This led to a better understanding of testing amongst engineers and as a side effect, better code! Easy to test code is usually well architected.
+2) Automated testing was sufficient for signoff, so we pushed hard on TDD and including automated testing in the "definition of done" for tickets. This led to a better understanding of testing amongst engineers and as a side effect, better code! [Easy to test code is usually well architected.](../an_opinionated_set_of_testing_patterns/README.md)
 
 ### Too many meetings
 A common complaint is that engineers have too many meetings to actually have time to do dev work. In order to address this problem, we usually try to figure out what kinds of meetings these are

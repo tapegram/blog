@@ -66,6 +66,10 @@ Retros matter because:
 5) If you invest in "making your own life better" you are really applying agile principles and good engineering to make a reactive, generic, amazing platform/product.
 6) So your job indirectly to make your own life better -- and value for the business ends up being a byproduct of that.
 
+Phrased another way, using "make my own working experience better" as a guiding principle converges, in practice, with the values and principles of Agile. As @pbouzakis mentioned in a comment on a draft of this blog post, this may deserve a deeper dive into ideas about [employees motivations](https://www.mindtools.com/pages/article/newLDR_74.htm). In my experience, maybe due we have done hiring, I have found all of my coworkers to be highly motivated to do good work and grow as engineers.
+
+Of course, there are many people who, understandably, want to keep their work and their "life" separate. This is also great! I don't want it to sound like I'm advocating for your work becoming your life. But even if you want to fully compartmentalize your work and home lives, improving your work experience, through retros, will make those 40 hours a week more pleasant. And I don't know about you all but no matter how much I try to compartmentalize, having a bad time at work affects me at home too (and the other way around).
+
 ## What Makes a Retro "Good" and What Makes One "Bad"
 Well everyone probably already knew what a retro is by the definition but what are some more concrete details? How does it work?
 
@@ -73,6 +77,8 @@ Well everyone probably already knew what a retro is by the definition but what a
 1) Engagement from everyone on the team.
 
 All levels of seniority and all functional roles should be contributing. It's not "bottom up" if only some specific subset of "enlightened" and confident (read: tenured) engineers are contributing. You must build a culture that encourages team members to share their experiences and ideas during retros, otherwise nothing will change.
+
+This could open up the question of "what is the team?" I don't have a definite answer to that, but I would suggest inviting anyone who works closely with you to participate. They are always free to decline! I don't have a lot of experience with this, but I would be very interested in seeing how retros with some "special guests" would go, like maybe directors or even executives. Stakeholders and "onsite customers" might provide another dimension of ideas for things to try, especially if you want to work beyond [Domain Driven Design and practice "Domain Design."](https://youtu.be/XH_awPS6hK4?t=1227)
 
 2) Should include both "problems" and "successes."
 
@@ -107,9 +113,11 @@ If the team doesn't have faith in the retro process, they won't engage with it, 
 3) Feeling like one's experiences or ideas are not valuable enough to be shared.
 
 These are hard problems to solve, but here are some of my recommendations
-1) Evangelize the process. Talk up how the point of the retro is to make everyone happier at work.
+1) Evangelize the process. Talk up how the point of the retro is to make everyone happier at work. I mention retros at basically every standup and pair/mob session whenever any kind of idea or problem comes up. "Oh that sounds like something we should fix, let's talk about that at retro." "Oh, I don't like that you have had to spend so much time working on this frustrating process, let's talk about it at retro and figure out how we can make it easier for you."
 2) Scope down the action items and track them to make sure they actually get done. Show the team that real change comes from retros.
 3) Make space for people to share their experiences and engage with them. Don't just dismiss them out of hand. Sometimes it's good just to try stuff people suggest even if you think its silly, because you can always revisit it next retro and now you have convinced team members that their thoughts matter and can cause change.
+
+These efforts may need to start with you and any alies you can find who are similarly bought into retros. But eventually, these should become "team" responsibilities. Teams should be self-organizing and engineering led. This includes running the processes and ceremonies. Through retros, the team should refine how they collectively run the retro process and how they do things like creating refined action items.
 
 #### Action Items are not Done
 If you take an hour every week to earnestly discuss changes, write up and assign out action items for the next sprint, and then never do them, the team will quickly learn that retro is a waste of time.
@@ -199,7 +207,9 @@ First, I'd recommend just getting the team to agree to some minimum requirement 
 - User Stories: given in an `As <persona>, I want <X> so <reason>`. Again, this isn't supposed to replace building relationships with customers/stakeholders and having discussions, but having the context provided on each ticket from the perspective of the effected user is critical.
 - Acceptance Criteria: often (but not always) written in a testing format (Given/When/Then). In my ideal world, the ticket is "done" when the AC is translated into tests and the tests pass, pending other change management requirements.
 
-This is just a starting point, of course. Your teams will evolve their "templates" their own ways, but this seems like a great place to start. Some of my teams are experimenting with [Dual Track Agile](https://www.productboard.com/glossary/dual-track-agile/), so we have separate templates for tasks (delivery track, unambiguous and heavily focused on implementation details) and stories (discovery track, focused on the problem context, experimentation, learning, and eventually generating the delivery track tickets if the feature isn't killed).
+This is just a starting point, of course. More than that, this is just my habit for defining tickets. Your teams will evolve their "templates" their own ways, but this seems like a great place to start. Some of my teams are experimenting with [Dual Track Agile](https://www.productboard.com/glossary/dual-track-agile/), so we have separate templates for tasks (delivery track, unambiguous and heavily focused on implementation details) and stories (discovery track, focused on the problem context, experimentation, learning, and eventually generating the delivery track tickets if the feature isn't killed).
+
+Additionally, I highly recommend checking out [this talk which has some spicy takes on the current state of agile (timestamped to a bit about user stories).](https://youtu.be/ZrBQmIDdls4?t=2273). [That talk pairs well with this calmer discussion.](https://www.youtube.com/watch?v=KtHQGs3zFAM)
 
 Not all teams do pointing, but if you do, I strongly recommend doing planning poker (and there are some fun [async slack apps](https://pelotoncycle.slack.com/apps/A57FFS3QE-poker-planner) to facilitate this). If any team member doesn't think they can point the ticket based exclusively on the content of the ticket, it's probably not refined enough to be actionable.
 
@@ -228,6 +238,8 @@ If this sounds like you, I'd recommend experimenting with pair programming: the 
 If your organization change management process is ok with it, I'd suggest allowing for paired PRs to merge immediately after tests pass, though of course you should still circulate the PR to allow other's the opportunity to stay informed or make suggestions, even if they are after merging a PR. You can always revert it or do a follow-up if someone brings up something smart two hours later!
 
 ### Bottlenecks in UAT/Testing/QA
+
+*Note, these terms (UAT, Testing, QA, etc.) are a little ambiguous and the differences are not always clear, but I'm just going to ignore that for now as I think everyone can understand what part of the process this is describing.
 
 Once code is flowing, the next place tickets tend to bottleneck is in the UAT and QA/Testing stage.
 

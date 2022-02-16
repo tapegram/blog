@@ -1,7 +1,7 @@
 package contexts
 
-import Word
+import core.Word
 
-interface Dictionary {
+fun interface Dictionary {
     fun getWordleWord(): Word
 }

@@ -1,4 +1,4 @@
-package usecases
+package usecases.createwordle
 
 import CreateWordleFailure
 import arrow.core.left

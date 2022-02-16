@@ -1,4 +1,4 @@
-package usecases
+package usecases.createwordle
 
 import CreateWordleContext
 import arrow.core.Either

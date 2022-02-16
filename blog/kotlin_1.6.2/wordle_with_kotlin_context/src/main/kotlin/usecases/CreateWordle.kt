@@ -1,6 +1,5 @@
 import arrow.core.Either
 import arrow.core.computations.either
-import arrow.core.left
 import contexts.Dictionary
 import contexts.UUIDGenerator
 import contexts.SaveWordleFailure

@@ -21,25 +21,27 @@ context(CreateWordleContext)
 suspend fun createWordle(): Either<CreateWordleFailure, Wordle> = either {
     val wordleId = uuid()
 
-    val doesWordleExist = exists(wordleId)
-        .mapLeft { it.toCreateWordleFailure()}
-        .bind()
-
-    ensure(!doesWordleExist) {
+    ensure(!doesWordleExist(wordleId).bind()) {
         CreateWordleFailure.WordleAlreadyExists(wordleId)
     }
 
-    val wordle = Wordle.new(
+    Wordle.new(
         id = wordleId,
         answer = getWordleWord(),
     )
-
-    save(wordle)
-        .mapLeft { it.toCreateWordleFailure() }
+        .save()
         .bind()
-
-    wordle
 }
+
+context(WordleRepo)
+private fun doesWordleExist(id: WordleId): Either<CreateWordleFailure, Boolean> =
+    exists(id).mapLeft { it.toCreateWordleFailure()}
+
+context(WordleRepo)
+private fun Wordle.save(): Either<CreateWordleFailure, Wordle> =
+    save(this)
+        .mapLeft { it.toCreateWordleFailure() }
+        .map { this }
 
 private fun WordleExistsFailure.toCreateWordleFailure(): CreateWordleFailure =
     when (this) {

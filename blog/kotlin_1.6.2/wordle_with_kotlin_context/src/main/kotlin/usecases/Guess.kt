@@ -9,6 +9,7 @@ import contexts.GetWordleFailure
 import contexts.SaveWordleFailure
 import contexts.WordleRepo
 import core.Guess
+import core.GuessFailure
 import core.Word
 import core.Wordle
 import core.WordleId
@@ -18,6 +19,7 @@ sealed class GuessWordFailure {
     data class WordleNotFound(val wordleId: WordleId) : GuessWordFailure()
     data class GetWordleFailure(val wordleId: WordleId, val message: String) : GuessWordFailure()
     data class SaveWordleFailure(val wordleId: WordleId, val message: String) : GuessWordFailure()
+    data class GameIsOver(val wordleId: WordleId) : GuessWordFailure()
 }
 
 interface GuessContext : WordleRepo
@@ -28,8 +30,16 @@ suspend fun guess(
     word: Word,
 ): Either<GuessWordFailure, Wordle> = either {
     getWordle(id).bind()
-        .guess(word.toGuess())
+        .makeGuess(word.toGuess()).bind()
         .save().bind()
+}
+
+private fun Wordle.makeGuess(guess: Guess.Unvalidated): Either<GuessWordFailure, Wordle> =
+    this.guess(guess)
+        .mapLeft { it.toGuessWordFailure()}
+
+private fun GuessFailure.toGuessWordFailure(): GuessWordFailure = when (this) {
+    is GuessFailure.NoRemainingGuesses -> GuessWordFailure.GameIsOver(wordleId)
 }
 
 private fun Word.toGuess(): Guess.Unvalidated =

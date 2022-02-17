@@ -9,16 +9,15 @@ import core.wrongPlace
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.core.spec.style.StringSpec
 import usecases.Wordles
-import usecases.Words
 import usecases.guess
 
 
 class RealisticScenarioTest : StringSpec({
     /*
     Answer:  CAKES
-    Guesses: CRANE
-    Guesses: CAKED
-    Guesses: CAKES
+    Guess: CRANE
+    Guess: CAKED
+    Guess: CAKES
     */
     "'CAKES' 1/6 - CRANE" {
         with(DummyGuessContext(mutableListOf(Wordles.CAKES))) {
@@ -127,30 +126,4 @@ class RealisticScenarioTest : StringSpec({
             )
         }
     }
-//
-//            guess(Wordles.CAKES.id, "CAKES".toWord()) shouldBeRight Wordles.CAKES.copy(
-//                guesses = listOf(
-//                    Guess.Validated(
-//                        'C'.rightPlace(),
-//                        'R'.wrong(),
-//                        'A'.wrongPlace(),
-//                        'N'.wrong(),
-//                        'E'.wrongPlace(),
-//                    ),
-//                    Guess.Validated(
-//                        'C'.rightPlace(),
-//                        'A'.rightPlace(),
-//                        'K'.rightPlace(),
-//                        'E'.rightPlace(),
-//                        'D'.wrong(),
-//                    ),
-//                    Guess.Validated(
-//                        'C'.rightPlace(),
-//                        'A'.rightPlace(),
-//                        'K'.rightPlace(),
-//                        'E'.rightPlace(),
-//                        'S'.rightPlace(),
-//                    ),
-//                )
-//            )
 })

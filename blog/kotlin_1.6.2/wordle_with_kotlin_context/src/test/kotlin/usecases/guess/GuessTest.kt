@@ -35,12 +35,14 @@ data class DummyGuessContext(
     },
     ) : GuessContext {
 
-    override fun get(id: WordleId): Either<GetWordleFailure, Wordle?> = getWordle(id)
+    override fun get(id: WordleId): Either<GetWordleFailure, Wordle?> =
+        getWordle(id)
 
-    override fun save(wordle: Wordle): Either<SaveWordleFailure, Unit> = saveWordle(wordle)
+    override fun save(wordle: Wordle): Either<SaveWordleFailure, Unit> =
+        saveWordle(wordle)
 
-    override fun exists(id: WordleId): Either<WordleExistsFailure, Boolean> = wordleExists(id)
-
+    override fun exists(id: WordleId): Either<WordleExistsFailure, Boolean> =
+        wordleExists(id)
 }
 
 class GuessingOnFirstTry : StringSpec({

@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="usecases.guess.GuessingOnFirstTry" tests="1" skipped="0" failures="1" errors="0" timestamp="2022-02-16T19:06:28" hostname="Tavishs-MBP.lan" time="0.012">
+<testsuite name="usecases.guess.GuessingOnFirstTry" tests="1" skipped="0" failures="1" errors="0" timestamp="2022-02-17T03:51:47" hostname="Tavishs-MBP.lan" time="0.014">
   <properties/>
-  <testcase name="First try!" classname="usecases.guess.GuessingOnFirstTry" time="0.012">
+  <testcase name="First try!" classname="usecases.guess.GuessingOnFirstTry" time="0.014">
     <failure message="kotlin.NotImplementedError: An operation is not implemented." type="kotlin.NotImplementedError">kotlin.NotImplementedError: An operation is not implemented.
-	at usecases.GuessKt.guess(Guess.kt:15)
-	at usecases.guess.GuessingOnFirstTry$1$1.invokeSuspend(GuessTest.kt:49)
+	at usecases.GuessKt.getWordle(Guess.kt:30)
+	at usecases.GuessKt.access$getWordle(Guess.kt:1)
+	at usecases.GuessKt$guess$$inlined$invoke$1.invokeSuspend(Effect.kt:27)
+	at usecases.GuessKt$guess$$inlined$invoke$1.invoke(Effect.kt)
+	at usecases.GuessKt$guess$$inlined$invoke$1.invoke(Effect.kt)
+	at arrow.continuations.generic.SuspendMonadContinuation.startCoroutineUninterceptedOrReturn(SuspendingComputation.kt:89)
+	at arrow.continuations.Reset.suspended(Reset.kt:27)
+	at usecases.GuessKt.guess(Guess.kt:37)
+	at usecases.guess.GuessingOnFirstTry$1$1.invokeSuspend(GuessTest.kt:51)
 	at usecases.guess.GuessingOnFirstTry$1$1.invoke(GuessTest.kt)
 	at usecases.guess.GuessingOnFirstTry$1$1.invoke(GuessTest.kt)
 	at io.kotest.core.spec.style.scopes.StringSpecRootScope$invoke$1.invokeSuspend(StringSpecRootScope.kt:72)
@@ -141,8 +148,15 @@
 	at io.kotest.engine.spec.runners.SingleInstanceSpecRunner$execute$interceptAndRun$2$2.invokeSuspend(SingleInstanceSpecRunner.kt:51)
 	at io.kotest.engine.test.scheduler.SequentialTestScheduler$schedule$3$1$1.invokeSuspend(SequentialTestScheduler.kt:20)
 Caused by: kotlin.NotImplementedError: An operation is not implemented.
-	at usecases.GuessKt.guess(Guess.kt:15)
-	at usecases.guess.GuessingOnFirstTry$1$1.invokeSuspend(GuessTest.kt:49)
+	at usecases.GuessKt.getWordle(Guess.kt:30)
+	at usecases.GuessKt.access$getWordle(Guess.kt:1)
+	at usecases.GuessKt$guess$$inlined$invoke$1.invokeSuspend(Effect.kt:27)
+	at usecases.GuessKt$guess$$inlined$invoke$1.invoke(Effect.kt)
+	at usecases.GuessKt$guess$$inlined$invoke$1.invoke(Effect.kt)
+	at arrow.continuations.generic.SuspendMonadContinuation.startCoroutineUninterceptedOrReturn(SuspendingComputation.kt:89)
+	at arrow.continuations.Reset.suspended(Reset.kt:27)
+	at usecases.GuessKt.guess(Guess.kt:37)
+	at usecases.guess.GuessingOnFirstTry$1$1.invokeSuspend(GuessTest.kt:51)
 	at usecases.guess.GuessingOnFirstTry$1$1.invoke(GuessTest.kt)
 	at usecases.guess.GuessingOnFirstTry$1$1.invoke(GuessTest.kt)
 	at io.kotest.core.spec.style.scopes.StringSpecRootScope$invoke$1.invokeSuspend(StringSpecRootScope.kt:72)

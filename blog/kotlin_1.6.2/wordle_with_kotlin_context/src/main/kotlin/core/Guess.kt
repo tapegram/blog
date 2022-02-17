@@ -1,8 +1,5 @@
 package core
 
-import core.ValidatedChar
-import java.util.UUID
-
 
 sealed class Guess {
     data class Unvalidated(

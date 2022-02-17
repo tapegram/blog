@@ -5,18 +5,9 @@ import arrow.core.right
 import contexts.GetWordleFailure
 import contexts.SaveWordleFailure
 import contexts.WordleExistsFailure
-import core.Guess
-import core.ValidatedChar
 import core.Wordle
 import core.WordleId
-import io.kotest.assertions.arrow.core.shouldBeRight
-import io.kotest.core.spec.style.StringSpec
 import usecases.GuessContext
-import usecases.Wordles
-import usecases.Words
-import usecases.Words.CAKES
-import usecases.guess
-
 
 data class DummyGuessContext(
     val wordles: MutableList<Wordle>,
@@ -33,7 +24,7 @@ data class DummyGuessContext(
     val wordleExists : DummyGuessContext.(WordleId) -> Either<WordleExistsFailure, Boolean> = {
         (wordles.find { curr -> curr.id == it } != null).right()
     },
-    ) : GuessContext {
+) : GuessContext {
 
     override fun get(id: WordleId): Either<GetWordleFailure, Wordle?> =
         getWordle(id)
@@ -45,20 +36,3 @@ data class DummyGuessContext(
         wordleExists(id)
 }
 
-class GuessingOnFirstTry : StringSpec({
-    "First try!" {
-        with(DummyGuessContext(mutableListOf(Wordles.CAKES))) {
-            guess(Wordles.CAKES.id, Words.CAKES) shouldBeRight Wordles.CAKES.copy(
-                guesses = listOf(
-                    Guess.Validated(
-                        ValidatedChar.RightPlace('C'),
-                        ValidatedChar.RightPlace('A'),
-                        ValidatedChar.RightPlace('K'),
-                        ValidatedChar.RightPlace('E'),
-                        ValidatedChar.RightPlace('S'),
-                    )
-                )
-            )
-        }
-    }
-})

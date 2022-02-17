@@ -22,9 +22,19 @@ fun Word.validate(guess: Guess.Unvalidated): Guess.Validated =
 
 fun Word.validateChar(guessChar: Char, answerChar: Char): ValidatedChar =
     when (guessChar) {
-        answerChar -> ValidatedChar.RightPlace(answerChar)
-        else -> when (contains(answerChar)) {
-            true -> ValidatedChar.WrongPlace(answerChar)
-            false -> ValidatedChar.Wrong(answerChar)
+        answerChar -> ValidatedChar.RightPlace(guessChar)
+        else -> when (contains(guessChar)) {
+            true -> ValidatedChar.WrongPlace(guessChar)
+            false -> ValidatedChar.Wrong(guessChar)
         }
     }
+
+fun String.toWord(): Word =
+    // TODO: Add arrow analysis to force this to always be a 5 char string.
+    Word(
+        char1 = this[0],
+        char2 = this[1],
+        char3 = this[2],
+        char4 = this[3],
+        char5 = this[4],
+    )

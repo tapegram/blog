@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="usecases.guess.GuessingOnFirstTry" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-02-17T04:16:39" hostname="Tavishs-MBP.lan" time="0.004">
+<testsuite name="usecases.guess.GuessingOnFirstTry" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-02-17T22:04:27" hostname="Tavishs-MBP.lan" time="0.001">
   <properties/>
-  <testcase name="First try!" classname="usecases.guess.GuessingOnFirstTry" time="0.004"/>
+  <testcase name="First try!" classname="usecases.guess.GuessingOnFirstTry" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

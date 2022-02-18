@@ -22,10 +22,20 @@ sealed class GuessFailure {
 
 fun Wordle.guess(guess: Guess.Unvalidated): Either<GuessFailure, Wordle> =
     // TODO: Instead of checking the len of guesses, can we make Wordle into a state machine?
-    when (guesses.size < 6) {
+    when (!this.isGameOver()) {
         true -> copy(guesses = guesses + answer.validate(guess)).right()
         false -> GuessFailure.NoRemainingGuesses(id).left()
     }
+
+fun Wordle.isGameOver(): Boolean =
+    guesses.size >= 6 || guesses.any { it.isCorrect() }
+
+fun Guess.Validated.isCorrect(): Boolean =
+    this.char1 is ValidatedChar.RightPlace &&
+    this.char2 is ValidatedChar.RightPlace &&
+    this.char3 is ValidatedChar.RightPlace &&
+    this.char4 is ValidatedChar.RightPlace &&
+    this.char5 is ValidatedChar.RightPlace
 
 fun Wordle.Companion.new(id: WordleId, answer: Word): Wordle =
     Wordle(

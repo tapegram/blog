@@ -1,17 +1,14 @@
 package usecases.guess
 
 import core.Guess
-import core.ValidatedChar
 import core.rightPlace
 import core.toWord
 import core.wrong
 import core.wrongPlace
 import io.kotest.assertions.arrow.core.shouldBeLeft
-import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.core.spec.style.StringSpec
 import usecases.GuessWordFailure
 import usecases.Wordles
-import usecases.Words
 import usecases.guess
 
 

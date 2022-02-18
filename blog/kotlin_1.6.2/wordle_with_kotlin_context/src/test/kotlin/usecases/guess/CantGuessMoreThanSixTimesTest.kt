@@ -54,18 +54,12 @@ class CantGuessMoreThanSixTimesTest : StringSpec({
                                 'E'.rightPlace(),
                                 'S'.rightPlace(),
                             ),
-                            Guess.Validated(
-                                'C'.rightPlace(),
-                                'A'.rightPlace(),
-                                'P'.wrong(),
-                                'E'.rightPlace(),
-                                'S'.rightPlace(),
-                            ),
                         ),
                     ),
                 )
             )
         ) {
+            guess(Wordles.CAKES.id, "CAPES".toWord())
             guess(Wordles.CAKES.id, "CAKES".toWord()) shouldBeLeft GuessWordFailure.GameIsOver(Wordles.CAKES.id)
         }
     }

@@ -2,6 +2,7 @@ package usecases.guess
 
 import core.Guess
 import core.ValidatedChar
+import core.Wordle
 import core.rightPlace
 import core.toWord
 import core.wrong
@@ -99,7 +100,9 @@ class RealisticScenarioTest : StringSpec({
                 )
             )
         ) {
-            guess(Wordles.CAKES.id, "CAKES".toWord()) shouldBeRight Wordles.CAKES.copy(
+            guess(Wordles.CAKES.id, "CAKES".toWord()) shouldBeRight Wordle.Complete(
+                id = Wordles.CAKES.id,
+                answer = "CAKES".toWord(),
                 guesses = listOf(
                     Guess.Validated(
                         'C'.rightPlace(),

@@ -16,24 +16,9 @@ import usecases.guess
 
 
 class CantGuessMoreAfterGettingAnswerTest : StringSpec({
-    "Cant guess more than six times" {
-        with(
-            DummyGuessContext(
-                mutableListOf(
-                    Wordles.CAKES.copy(
-                        guesses = listOf(
-                            Guess.Validated(
-                                'C'.rightPlace(),
-                                'A'.rightPlace(),
-                                'K'.rightPlace(),
-                                'E'.rightPlace(),
-                                'S'.rightPlace(),
-                            ),
-                        ),
-                    ),
-                )
-            )
-        ) {
+    "Cant guess more after getting the answer" {
+        with(DummyGuessContext(mutableListOf(Wordles.CAKES))) {
+            guess(Wordles.CAKES.id, "CAKES".toWord())
             guess(Wordles.CAKES.id, "CRATE".toWord()) shouldBeLeft GuessWordFailure.GameIsOver(Wordles.CAKES.id)
         }
     }

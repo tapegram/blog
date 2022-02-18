@@ -3,22 +3,20 @@ package usecases.createwordle
 import CreateWordleFailure
 import arrow.core.left
 import contexts.SaveWordleFailure
-import core.Wordle
 import createWordle
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.core.spec.style.StringSpec
 import usecases.WordleIds.id1
+import usecases.WordleIds.id2
+import usecases.Wordles
 import usecases.Words.BEANS
 import usecases.Words.CAKES
 
 class CreateWordleTest : StringSpec({
     "Create a new wordle game" {
         with(DummyCreateWordleContext(id1, CAKES, mutableListOf())) {
-            createWordle() shouldBeRight Wordle(
-                id = id1,
-                answer = CAKES,
-            )
+            createWordle() shouldBeRight Wordles.CAKES
         }
     }
 
@@ -27,18 +25,15 @@ class CreateWordleTest : StringSpec({
         // But whatever.
         with(
             DummyCreateWordleContext(
-                generatedUUID = id1,
-                dictionaryWord = CAKES,
+                generatedUUID = Wordles.BEANS.id,
+                dictionaryWord = BEANS,
                 wordles = mutableListOf(
-                    Wordle(
-                        id = id1,
-                        answer = BEANS,
-                    )
+                    Wordles.BEANS
                 ),
             )
         ) {
             createWordle() shouldBeLeft CreateWordleFailure.WordleAlreadyExists(
-                id = id1,
+                id = id2,
             )
         }
     }

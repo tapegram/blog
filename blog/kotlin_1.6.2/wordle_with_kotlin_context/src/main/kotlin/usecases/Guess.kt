@@ -35,8 +35,14 @@ suspend fun guess(
 }
 
 private fun Wordle.makeGuess(guess: Guess.Unvalidated): Either<GuessWordFailure, Wordle> =
-    this.guess(guess)
-        .mapLeft { it.toGuessWordFailure()}
+    when (this) {
+        is Wordle.InProgress ->
+            this.guess(guess)
+                .mapLeft { it.toGuessWordFailure()}
+
+        is Wordle.Complete,
+        is Wordle.Failure -> GuessWordFailure.GameIsOver(id).left()
+    }
 
 private fun GuessFailure.toGuessWordFailure(): GuessWordFailure = when (this) {
     is GuessFailure.NoRemainingGuesses -> GuessWordFailure.GameIsOver(wordleId)

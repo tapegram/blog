@@ -19,8 +19,8 @@ class CreateWordleTest : StringSpec({
     }
 
     "Can't create a new wordle game for an existing wordle ID" {
-        // In retrospect, this is only needed if we think there will be duplicate UUIDs, which should basically never have in real life.
-        // But whatever.
+        // In retrospect, this is only needed if we think there will be duplicate UUIDs, which should basically never happen in real life.
+        // But whatever...
         with(
             DummyCreateWordleContext(
                 generatedUUID = Beans.wordle.id,

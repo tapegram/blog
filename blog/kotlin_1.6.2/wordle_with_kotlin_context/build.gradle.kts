@@ -42,4 +42,7 @@ dependencies {
     // Arrow
     implementation(platform("io.arrow-kt:arrow-stack:1.0.1"))
     implementation("io.arrow-kt:arrow-core")
+
+    // Clikt for CLI
+    implementation("com.github.ajalt.clikt:clikt-jvm:3.4.0")
 }

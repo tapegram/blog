@@ -34,6 +34,7 @@ fun Word.validateChar(guessChar: Char, answerChar: Char): ValidatedChar =
 
 fun String.toWord(): Word =
     // TODO: Add arrow analysis to force this to always be a 5 char string and always caps.
+    // Right now this "function" is lying in its signature.
     Word(
         char1 = this[0].uppercaseChar(),
         char2 = this[1].uppercaseChar(),

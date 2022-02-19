@@ -3,10 +3,9 @@ package usecases.guess
 import core.toWord
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.core.spec.style.StringSpec
-import usecases.Cakes
 import usecases.GuessWordFailure
-import usecases.Wordles
 import usecases.guess
+import usecases.wordles.Cakes
 
 
 class CantGuessMoreThanSixTimesTest : StringSpec({
@@ -14,7 +13,7 @@ class CantGuessMoreThanSixTimesTest : StringSpec({
         with(
             DummyGuessContext(
                 mutableListOf(
-                    Wordles.CAKES.copy(
+                    Cakes.wordle.copy(
                         guesses = listOf(
                             Cakes.Guesses.CRANE,
                             Cakes.Guesses.CRABS,
@@ -26,8 +25,8 @@ class CantGuessMoreThanSixTimesTest : StringSpec({
                 )
             )
         ) {
-            guess(Wordles.CAKES.id, "CAPES".toWord())
-            guess(Wordles.CAKES.id, "CAKES".toWord()) shouldBeLeft GuessWordFailure.GameIsOver(Wordles.CAKES.id)
+            guess(Cakes.wordle.id, "CAPES".toWord())
+            guess(Cakes.wordle.id, "CAKES".toWord()) shouldBeLeft GuessWordFailure.GameIsOver(Cakes.wordle.id)
         }
     }
 })

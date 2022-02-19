@@ -1,26 +1,22 @@
 package usecases.guess
 
-import core.Guess
-import core.ValidatedChar
 import core.Wordle
-import core.rightPlace
+import core.toWord
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.core.spec.style.StringSpec
-import usecases.Cakes
-import usecases.Wordles
-import usecases.Words
 import usecases.guess
+import usecases.wordles.Cakes
 
 
 class GuessingOnFirstTry : StringSpec({
     "First try!" {
-        with(DummyGuessContext(mutableListOf(Wordles.CAKES))) {
-            guess(Wordles.CAKES.id, Words.CAKES) shouldBeRight Wordle.Complete(
-                id = Wordles.CAKES.id,
+        with(DummyGuessContext(mutableListOf(Cakes.wordle))) {
+            guess(Cakes.wordle.id, "CAKES".toWord()) shouldBeRight Wordle.Complete(
+                id = Cakes.wordle.id,
                 guesses = listOf(
                     Cakes.Guesses.CAKES,
                 ),
-                answer = Words.CAKES,
+                answer = "CAKES".toWord(),
             )
         }
     }

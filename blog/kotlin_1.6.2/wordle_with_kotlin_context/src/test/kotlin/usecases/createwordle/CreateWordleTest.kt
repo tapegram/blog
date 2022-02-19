@@ -3,20 +3,18 @@ package usecases.createwordle
 import CreateWordleFailure
 import arrow.core.left
 import contexts.SaveWordleFailure
+import core.toWord
 import createWordle
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.core.spec.style.StringSpec
-import usecases.WordleIds.id1
-import usecases.WordleIds.id2
-import usecases.Wordles
-import usecases.Words.BEANS
-import usecases.Words.CAKES
+import usecases.wordles.Beans
+import usecases.wordles.Cakes
 
 class CreateWordleTest : StringSpec({
     "Create a new wordle game" {
-        with(DummyCreateWordleContext(id1, CAKES, mutableListOf())) {
-            createWordle() shouldBeRight Wordles.CAKES
+        with(DummyCreateWordleContext(Cakes.wordle.id, "CAKES".toWord(), mutableListOf())) {
+            createWordle() shouldBeRight Cakes.wordle
         }
     }
 
@@ -25,15 +23,15 @@ class CreateWordleTest : StringSpec({
         // But whatever.
         with(
             DummyCreateWordleContext(
-                generatedUUID = Wordles.BEANS.id,
-                dictionaryWord = BEANS,
+                generatedUUID = Beans.wordle.id,
+                dictionaryWord = "BEANS".toWord(),
                 wordles = mutableListOf(
-                    Wordles.BEANS
+                    Beans.wordle
                 ),
             )
         ) {
             createWordle() shouldBeLeft CreateWordleFailure.WordleAlreadyExists(
-                id = id2,
+                id = Beans.wordle.id,
             )
         }
     }
@@ -41,19 +39,19 @@ class CreateWordleTest : StringSpec({
     "Unknown failure when saving wordle" {
         with(
             DummyCreateWordleContext(
-                generatedUUID = id1,
-                dictionaryWord = CAKES,
+                generatedUUID = Beans.wordle.id,
+                dictionaryWord = "CAKES".toWord(),
                 wordles = mutableListOf(),
                 saveWordle = {
                     SaveWordleFailure.Unknown(
-                        id = id1,
+                        id = Beans.wordle.id,
                         message = "Oops"
                     ).left()
                 }
             )
         ) {
             createWordle() shouldBeLeft CreateWordleFailure.FailedToSaveWordle(
-                id = id1,
+                id = Beans.wordle.id,
                 message = "Oops"
             )
         }

@@ -30,11 +30,11 @@ fun Word.validateChar(guessChar: Char, answerChar: Char): ValidatedChar =
     }
 
 fun String.toWord(): Word =
-    // TODO: Add arrow analysis to force this to always be a 5 char string.
+    // TODO: Add arrow analysis to force this to always be a 5 char string and always caps.
     Word(
-        char1 = this[0],
-        char2 = this[1],
-        char3 = this[2],
-        char4 = this[3],
-        char5 = this[4],
+        char1 = this[0].uppercaseChar(),
+        char2 = this[1].uppercaseChar(),
+        char3 = this[2].uppercaseChar(),
+        char4 = this[3].uppercaseChar(),
+        char5 = this[4].uppercaseChar(),
     )

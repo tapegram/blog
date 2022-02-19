@@ -1,23 +1,19 @@
-package usecases
+package usecases.wordles
 
 import core.Guess
 import core.Wordle
 import core.rightPlace
+import core.toWord
 import core.wrong
 import core.wrongPlace
-
-object Wordles {
-    val CAKES = Wordle.InProgress(
-        id = WordleIds.id1,
-        answer = Words.CAKES
-    )
-    val BEANS = Wordle.InProgress(
-        id = WordleIds.id2,
-        answer = Words.BEANS
-    )
-}
+import java.util.UUID
 
 object Cakes {
+    val wordle = Wordle.InProgress(
+        id = UUID.randomUUID(),
+        answer = "CAKES".toWord(),
+    )
+
     object Guesses {
         val CRANE = Guess.Validated(
             'C'.rightPlace(),

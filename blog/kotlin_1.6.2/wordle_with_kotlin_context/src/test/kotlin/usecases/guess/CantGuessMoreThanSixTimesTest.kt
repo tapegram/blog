@@ -1,12 +1,9 @@
 package usecases.guess
 
-import core.Guess
-import core.rightPlace
 import core.toWord
-import core.wrong
-import core.wrongPlace
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.core.spec.style.StringSpec
+import usecases.Cakes
 import usecases.GuessWordFailure
 import usecases.Wordles
 import usecases.guess
@@ -19,41 +16,11 @@ class CantGuessMoreThanSixTimesTest : StringSpec({
                 mutableListOf(
                     Wordles.CAKES.copy(
                         guesses = listOf(
-                            Guess.Validated(
-                                'C'.rightPlace(),
-                                'R'.wrong(),
-                                'A'.wrongPlace(),
-                                'N'.wrong(),
-                                'E'.wrongPlace(),
-                            ),
-                            Guess.Validated(
-                                'C'.rightPlace(),
-                                'R'.wrong(),
-                                'A'.wrongPlace(),
-                                'B'.wrong(),
-                                'S'.rightPlace(),
-                            ),
-                            Guess.Validated(
-                                'C'.rightPlace(),
-                                'A'.rightPlace(),
-                                'N'.wrong(),
-                                'T'.wrong(),
-                                'S'.rightPlace(),
-                            ),
-                            Guess.Validated(
-                                'C'.rightPlace(),
-                                'A'.rightPlace(),
-                                'S'.wrongPlace(),
-                                'E'.rightPlace(),
-                                'S'.rightPlace(),
-                            ),
-                            Guess.Validated(
-                                'C'.rightPlace(),
-                                'A'.rightPlace(),
-                                'W'.wrong(),
-                                'E'.rightPlace(),
-                                'S'.rightPlace(),
-                            ),
+                            Cakes.Guesses.CRANE,
+                            Cakes.Guesses.CRABS,
+                            Cakes.Guesses.CANTS,
+                            Cakes.Guesses.CASES,
+                            Cakes.Guesses.CAWES,
                         ),
                     ),
                 )

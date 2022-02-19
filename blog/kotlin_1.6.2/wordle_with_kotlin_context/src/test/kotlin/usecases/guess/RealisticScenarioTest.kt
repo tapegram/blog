@@ -9,6 +9,7 @@ import core.wrong
 import core.wrongPlace
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.core.spec.style.StringSpec
+import usecases.Cakes
 import usecases.Wordles
 import usecases.guess
 
@@ -104,27 +105,9 @@ class RealisticScenarioTest : StringSpec({
                 id = Wordles.CAKES.id,
                 answer = "CAKES".toWord(),
                 guesses = listOf(
-                    Guess.Validated(
-                        'C'.rightPlace(),
-                        'R'.wrong(),
-                        'A'.wrongPlace(),
-                        'N'.wrong(),
-                        'E'.wrongPlace(),
-                    ),
-                    Guess.Validated(
-                        'C'.rightPlace(),
-                        'A'.rightPlace(),
-                        'K'.rightPlace(),
-                        'E'.rightPlace(),
-                        'D'.wrong(),
-                    ),
-                    Guess.Validated(
-                        'C'.rightPlace(),
-                        'A'.rightPlace(),
-                        'K'.rightPlace(),
-                        'E'.rightPlace(),
-                        'S'.rightPlace(),
-                    ),
+                    Cakes.Guesses.CRANE,
+                    Cakes.Guesses.CAKED,
+                    Cakes.Guesses.CAKES,
                 )
             )
         }

@@ -31,6 +31,7 @@ suspend fun guess(
     id: WordleId,
     word: Word,
 ): Either<GuessWordFailure, Wordle> = either {
+    ensure(isInDictionary(word)) { GuessWordFailure.NotInDictionary(id, word.toString()) }
     getWordle(id).bind()
         .makeGuess(word.toGuess()).bind()
         .save().bind()

@@ -18,10 +18,12 @@ object Cakes: TestWordle {
         "CAKED",
         "CAKES",
         "CANTS",
+        "CAPES",
         "CASES",
         "CAWES",
         "CRABS",
         "CRANE",
+        "CRATE",
     ).map { it.toWord() }
 
     object Guesses {
@@ -50,6 +52,20 @@ object Cakes: TestWordle {
             'C'.rightPlace(),
             'A'.rightPlace(),
             'S'.wrongPlace(),
+            'E'.rightPlace(),
+            'S'.rightPlace(),
+        )
+        val CRATE = Guess.Validated(
+            'C'.rightPlace(),
+            'R'.wrong(),
+            'A'.wrongPlace(),
+            'T'.wrong(),
+            'E'.wrongPlace(),
+        )
+        val CAPES = Guess.Validated(
+            'C'.rightPlace(),
+            'A'.rightPlace(),
+            'P'.wrong(),
             'E'.rightPlace(),
             'S'.rightPlace(),
         )

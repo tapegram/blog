@@ -6,7 +6,10 @@ data class Word(
     val char3: Char,
     val char4: Char,
     val char5: Char,
-)
+) {
+    override fun toString(): String =
+        "$char1$char2$char3$char4$char5"
+}
 
 fun Word.contains(char: Char): Boolean =
     char in listOf(char1, char2, char3, char4, char5)

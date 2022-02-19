@@ -5,6 +5,7 @@ import arrow.core.computations.either
 import arrow.core.flatMap
 import arrow.core.left
 import arrow.core.right
+import contexts.Dictionary
 import contexts.GetWordleFailure
 import contexts.SaveWordleFailure
 import contexts.WordleRepo
@@ -20,9 +21,10 @@ sealed class GuessWordFailure {
     data class GetWordleFailure(val wordleId: WordleId, val message: String) : GuessWordFailure()
     data class SaveWordleFailure(val wordleId: WordleId, val message: String) : GuessWordFailure()
     data class GameIsOver(val wordleId: WordleId) : GuessWordFailure()
+    data class NotInDictionary(val wordleId: WordleId, val word: String) : GuessWordFailure()
 }
 
-interface GuessContext : WordleRepo
+interface GuessContext : WordleRepo, Dictionary
 
 context(GuessContext)
 suspend fun guess(

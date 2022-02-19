@@ -2,6 +2,7 @@ package contexts
 
 import core.Word
 
-fun interface Dictionary {
+interface Dictionary {
     fun getWordleWord(): Word
+    fun isInDictionary(word: Word): Boolean
 }

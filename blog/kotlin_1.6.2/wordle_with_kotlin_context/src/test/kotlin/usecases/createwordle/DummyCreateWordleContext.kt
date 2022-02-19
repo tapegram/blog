@@ -9,11 +9,14 @@ import contexts.WordleExistsFailure
 import core.Word
 import core.Wordle
 import core.WordleId
+import usecases.wordles.Beans
+import usecases.wordles.Cakes
 import java.util.UUID
 
 data class DummyCreateWordleContext(
     val generatedUUID: UUID,
     val dictionaryWord: Word,
+    val validWords: List<Word> =  Beans.dictionaryWords + Cakes.dictionaryWords,
     val wordles: MutableList<Wordle> = mutableListOf(),
 
     val getWordle : DummyCreateWordleContext.(WordleId) -> Either<GetWordleFailure, Wordle?> = {
@@ -31,6 +34,9 @@ data class DummyCreateWordleContext(
     },
 ): CreateWordleContext {
 
+    /*
+    WordleRepo Context
+     */
     override fun get(id: WordleId): Either<GetWordleFailure, Wordle?> =
         getWordle(id)
 
@@ -40,8 +46,17 @@ data class DummyCreateWordleContext(
     override fun exists(id: WordleId): Either<WordleExistsFailure, Boolean> =
         wordleExists(id)
 
+    /*
+    UUIDGenerator Context
+     */
     override fun uuid(): UUID = generatedUUID
 
+
+    /*
+    Dictionary Context
+     */
     override fun getWordleWord(): Word = dictionaryWord
+    override fun isInDictionary(word: Word): Boolean =
+        word in validWords
 
 }

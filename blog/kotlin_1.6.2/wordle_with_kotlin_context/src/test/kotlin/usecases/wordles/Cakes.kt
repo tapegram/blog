@@ -8,11 +8,21 @@ import core.wrong
 import core.wrongPlace
 import java.util.UUID
 
-object Cakes {
-    val wordle = Wordle.InProgress(
+object Cakes: TestWordle {
+    override val wordle = Wordle.InProgress(
         id = UUID.randomUUID(),
         answer = "CAKES".toWord(),
     )
+
+    override val dictionaryWords = listOf(
+        "CAKED",
+        "CAKES",
+        "CANTS",
+        "CASES",
+        "CAWES",
+        "CRABS",
+        "CRANE",
+    ).map { it.toWord() }
 
     object Guesses {
         val CRANE = Guess.Validated(

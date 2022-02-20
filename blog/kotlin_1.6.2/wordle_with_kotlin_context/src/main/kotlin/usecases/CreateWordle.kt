@@ -1,3 +1,5 @@
+package usecases
+
 import arrow.core.Either
 import arrow.core.computations.either
 import contexts.Dictionary

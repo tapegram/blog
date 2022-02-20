@@ -1,10 +1,10 @@
 package usecases.createwordle
 
-import CreateWordleFailure
+import usecases.CreateWordleFailure
 import arrow.core.left
 import contexts.SaveWordleFailure
 import core.toWord
-import createWordle
+import usecases.createWordle
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.core.spec.style.StringSpec

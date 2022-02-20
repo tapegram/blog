@@ -1,6 +1,6 @@
 package contexts
 
-import CreateWordleContext
+import usecases.CreateWordleContext
 import usecases.GuessContext
 
 // This is the full context to be able to run every usecase

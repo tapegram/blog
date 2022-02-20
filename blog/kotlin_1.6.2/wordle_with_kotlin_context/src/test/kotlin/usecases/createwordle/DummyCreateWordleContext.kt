@@ -1,6 +1,6 @@
 package usecases.createwordle
 
-import CreateWordleContext
+import usecases.CreateWordleContext
 import arrow.core.Either
 import arrow.core.right
 import contexts.GetWordleFailure

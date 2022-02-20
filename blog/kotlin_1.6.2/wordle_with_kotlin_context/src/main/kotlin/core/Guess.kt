@@ -16,5 +16,12 @@ sealed class Guess {
         val char3: ValidatedChar,
         val char4: ValidatedChar,
         val char5: ValidatedChar,
-    ): Guess()
+    ): Guess() {
+        override fun toString(): String =
+            "$char1$char2$char3$char4$char5"
+
+        fun toList(): List<ValidatedChar> =
+            listOf(char1, char2, char3, char4, char5)
+    }
+
 }

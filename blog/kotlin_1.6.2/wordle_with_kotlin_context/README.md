@@ -1,5 +1,8 @@
 # Wordle with Kotlin Context
 
+## Running the Wordle CLI
+`./wordle`
+
 ## Kotlin 1.6.20
 https://blog.jetbrains.com/kotlin/2022/02/kotlin-1-6-20-m1-released/#try-new-features-and-provide-feedback
 

@@ -33,6 +33,9 @@ application {
 }
 
 dependencies {
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+
     // Testing
     val kotestVersion = "5.0.3"
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")

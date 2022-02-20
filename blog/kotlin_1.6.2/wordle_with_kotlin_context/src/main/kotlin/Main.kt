@@ -1,3 +1,3 @@
-import adapters.Wordle
+import adapters.CLI
 
-fun main(args: Array<String>) = Wordle().main(args)
+fun main(args: Array<String>) = CLI().main(args)

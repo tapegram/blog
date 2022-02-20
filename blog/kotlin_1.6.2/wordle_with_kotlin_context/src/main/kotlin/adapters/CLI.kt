@@ -39,7 +39,7 @@ class CLI : CliktCommand() {
 
             while (wordle is Wordle.InProgress) {
                 val wordToGuess = prompt("Guess").orEmpty().uppercase()
-                val wordle = guess(wordle.id, wordToGuess.toWord())
+                wordle = guess(wordle.id, wordToGuess.toWord())
                     .fold(
                         {
                             echo(message = it.show(), err = true)
@@ -76,19 +76,15 @@ private fun CreateWordleFailure.show(): String =
 
 private fun Wordle.show(): String = when (this) {
     is Wordle.InProgress -> this.guesses.show()
-    is Wordle.Complete -> {
-        """
-        You got it! ${this.guesses.size}/6
-        ${this.guesses.show()}
-        """.trimIndent()
-    }
-    is Wordle.Failure -> {
-        """
-        You blew it! X/6
-        The answer was ${this.answer.toString()}
-        ${this.guesses.show()}
-        """.trimIndent()
-    }
+    is Wordle.Complete -> """
+You got it! ${this.guesses.size}/6
+${this.guesses.show()}
+    """.trimIndent()
+    is Wordle.Failure -> """
+You blew it! X/6
+The answer was ${this.answer.toString()}
+${this.guesses.show()}
+    """.trimIndent()
 }
 
 private fun ValidatedGuesses.show(): String =

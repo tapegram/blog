@@ -7,6 +7,8 @@ import contexts.GetWordleFailure
 import contexts.SaveWordleFailure
 import contexts.WordleContext
 import contexts.WordleExistsFailure
+import core.Guess
+import core.ValidatedGuesses
 import core.Word
 import core.Wordle
 import core.WordleId
@@ -18,10 +20,31 @@ import java.util.UUID
 class CLI : CliktCommand() {
     override fun run() = runBlocking {
         with(wordleContext()) {
-            val wordle = createWordle()
+            createWordle()
+                .fold(
+                    { TODO() },
+                    { wordle ->
+                        echo(wordle.show())
+                    }
+                )
         }
     }
 }
+
+fun Wordle.show(): String = when (this) {
+    is Wordle.InProgress -> this.guesses.show()
+    is Wordle.Complete -> "Complete"
+    is Wordle.Failure -> "Failure"
+}
+
+private fun ValidatedGuesses.show(): String =
+    when (this.size > 1) {
+        true -> this.map { it.show() }.joinToString("\n")
+        false -> "No guesses"
+    }
+
+fun Guess.Validated.show(): String =
+    this.toString()
 
 fun wordleContext(): WordleContext = Context(
     wordles = mutableListOf(),
@@ -48,7 +71,8 @@ data class Context(val wordles: MutableList<Wordle>): WordleContext {
         "CAKES".toWord()
 
     override fun isInDictionary(word: Word): Boolean =
-        // Even lazier. If this was real we would want to do this with a DB or file or anything else.
+        // Even lazier.
+        // If this was real we would want to do real stuff with a DB or file or anything other than this.
         true
 
 }

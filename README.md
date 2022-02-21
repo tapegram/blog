@@ -3,6 +3,8 @@ Hello and welcome to [my exercise in self-indulgence!](ABOUT.md)
 
 Feel free to browse the repo or to jump into any of the content links below!
 
+[Kotlin 1.6.2-M1 and Context Receivers](blog/kotlin_1.6.2/README.md)
+
 [On Retros](blog/on_retros/README.md)
 
 [Excerpt From a Document on Project Structure](blog/excerpt_from_a_document_on_project_structure/README.md)

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="usecases.createwordle.CreateWordleTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2022-02-20T20:22:23" hostname="Tavishs-MBP.lan" time="0.039">
+  <properties/>
+  <testcase name="Create a new wordle game" classname="usecases.createwordle.CreateWordleTest" time="0.031"/>
+  <testcase name="Can't create a new wordle game for an existing wordle ID" classname="usecases.createwordle.CreateWordleTest" time="0.004"/>
+  <testcase name="Unknown failure when saving wordle" classname="usecases.createwordle.CreateWordleTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

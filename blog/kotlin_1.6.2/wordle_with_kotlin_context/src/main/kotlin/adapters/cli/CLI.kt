@@ -37,7 +37,7 @@ data class CLI(val context: WordleContext) : CliktCommand() {
 }
 
 /**
- * We can choose to be wayyyy more rigourous in our failure handling here.
+ * We can choose to be wayyyy more rigorous in our failure handling here.
  * For instance, we may decide that some failure for guesses (like repo failures) should
  * terminate the game, or we could retry up to X number of times before giving up.
  *

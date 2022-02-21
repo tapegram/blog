@@ -17,7 +17,6 @@ fun context(): WordleContext = Context(
     wordles = mutableListOf(),
 )
 
-
 data class Context(val wordles: MutableList<Wordle>): WordleContext {
     override fun get(id: WordleId): Either<GetWordleFailure, Wordle?> =
         wordles.find { it.id == id }.right()

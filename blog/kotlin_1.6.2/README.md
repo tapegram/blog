@@ -28,4 +28,6 @@ All of this is lead up to say that the new context receivers prototype in 1.6.2-
 
 I decided to play around with this prototype in a silly little Wordle clone (I'm hip to what the kids are doing!).
 
+[Here is a link directly to the project.](https://github.com/tapegram/blog/tree/main/blog/kotlin_1.6.2/wordle_with_kotlin_context)
+
 Please take a look at the project and feel free to clone it and play around with it! I've also included more thoughts about the actual code in the [project's README.](wordle_with_kotlin_context/README.md)

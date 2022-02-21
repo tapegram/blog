@@ -23,6 +23,7 @@ The Unison language has a cool implementation of algebraic effects (in addition 
 
 There are several Haskell libraries attempting to add similar functionality (though they aren't as nice as the built in Unison support for it). Check out [another great blog post](https://reasonablypolymorphic.com/blog/freer-monads/) by Sandy Maguire on using Freer Monads in Haskell.
 
+## The Actual Post (or at least a link to the code and a readme...)
 All of this is lead up to say that the new context receivers prototype in 1.6.2-M1 gives us a taste of this functionality in Kotlin. And the result is... it's really nice!
 
 I decided to play around with this prototype in a silly little Wordle clone (I'm hip to what the kids are doing!).

@@ -1,7 +1,7 @@
 # Context Receivers!
 
 ## Background
-This post is a write-up of my experiences playing around with the new context receivers prototype in Kotlin 1.6.2.
+This post is a write-up of my experiences playing around with the new context receivers prototype in Kotlin 1.6.20.
 
 See [the KEEP](https://github.com/Kotlin/KEEP/blob/master/proposals/context-receivers.md) for more thorough documentation.
 
@@ -19,12 +19,12 @@ That's where Algebraic Effects come into play! My brain is a little bit too smoo
 
 Plus, the big whitepaper is called ["Do Be Do Be Do"](https://arxiv.org/pdf/1611.09259.pdf) which should just automatically make everyone a fan.
 
-The Unison language has a cool implementation of algebraic effects (in addition to a lot of other incredibly cool ideas) but if you want to check that out some more you can look at [their website](https://www.unisonweb.org/) or [a blog post I wrote using algebraic effects in a common ports and adapters code kata.](https://www.unisonweb.org/2021/08/20/birthday-kata/).
+The Unison language has a cool implementation of algebraic effects (in addition to a lot of other incredibly cool ideas) but if you want to check that out some more you can look at [their website](https://www.unisonweb.org/) or [a blog post I wrote using algebraic effects in a common ports and adapters code kata.](https://www.unisonweb.org/2021/08/20/birthday-kata/)
 
 There are several Haskell libraries attempting to add similar functionality (though they aren't as nice as the built in Unison support for it). Check out [another great blog post](https://reasonablypolymorphic.com/blog/freer-monads/) by Sandy Maguire on using Freer Monads in Haskell.
 
 ## The Actual Post (or at least a link to the code and a readme...)
-All of this is lead up to say that the new context receivers prototype in 1.6.2-M1 gives us a taste of this functionality in Kotlin. And the result is... it's really nice!
+All of this is lead up to say that the new context receivers prototype in 1.6.20-M1 gives us a taste of this functionality in Kotlin. And the result is... it's really nice!
 
 I decided to play around with this prototype in a silly little Wordle clone (I'm hip to what the kids are doing!).
 

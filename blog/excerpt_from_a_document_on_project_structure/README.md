@@ -3,7 +3,7 @@ While working on an internal project at Peloton to build out a "service template
 
 Overall, I think it's a good intro to the kinds of discussions I'm interested in, including Pits of Success and Conway's Law.
 
-I've excised the bits from the document that were peloton specific on directory layout and just kept in the meater decision points.
+I've excised the bits from the document that were peloton specific on directory layout and just kept in the meatier decision points.
 
 # Project Structure
 ## Motivation

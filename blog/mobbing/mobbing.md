@@ -20,28 +20,28 @@ The "traditional" way of working. The most commonly done, the one everyone seems
 
 Swarming is the least collaborative way you can approach work as a software engineer. The best way to describe this I think is just to list a bunch of scenarios that I imagine are familiar to most people:
 
-- A junior engineer picks up a ticket and disappears for too long to work on it. When they emerge they excitedly share out a monstrous, disaster of a PR that destroys all the architecture in the codebase, would be untestable and unmaintainable, and probably violates international law. They are devastated when you tell them to delete the entire PR and start over (if you don't end up needing to take the ticket yourself). Just the process of reading the PR and understanding it wastes a lot of the senior's time. Everyone is frustrated. The junior engineer learns a little bit through the process though! But the learning is framed very negatively (You worked hard and we hated it). No one else learns anything. Very inefficient use of time. This is the most common way I've seen people work themselves out of a job, unfortunately.
+- A junior engineer picks up a ticket and disappears for too long to work on it. When they emerge they excitedly share out a monstrous, disaster of a PR that destroys all the architecture in the codebase. It's untestable and unmaintainable, and probably violates international law. They are devastated when you tell them to delete the entire PR and start over (if you don't end up needing to take the ticket yourself). Just the process of reading the PR and understanding it wastes a lot of the senior's time. Everyone is frustrated. The junior engineer learns a little bit through the process though! But the learning is framed very negatively (You worked hard and we hated it). No one else learns anything. Very inefficient use of time. This is the most common way I've seen people work themselves out of a job: by doubling down on working this way and refusing help because they "almost have it" for days and weeks at a time.
 
-- A senior engineer picks up a ticket and disappears for too long to work on it. They emerge with something with an enormous amount of scope creep. They ran into a small problem and decided they could fix it along the way. This happens several more times, and before you know it the PR is huge and does a bunch of different stuff. The PR review process is very long since someone needs to relearn after the fact all the tradeoffs the author went through to even understand what's going on (why is any of this here I thought it was just a copy change???) There is a tendency to pull in low-priority work along with the high-priority focus of the ticket, so this is also an inefficient use of dev time. Because the dev put in so much work (and it's not _wrong_* per se) there is a lot of pressure to approve the PR and to include all the scope creep. The senior engineer learns a good amount, the reviewers learn a little (maybe I'm sharing my own experience a bit too much here, but I don't learn very much from reviewing other people's PRs, regardless of the effort spent to understand the PR), no one else learns anything. Overall, not a very efficient use of everyone's time.
+- A senior engineer picks up a ticket and disappears for too long to work on it. They emerge with something with an enormous amount of scope creep. They ran into a small problem and decided they could fix it along the way. This happens several more times, and before you know it the PR is huge and does several different things that could have been done separately or maybe deferred entirely. The PR review process is very long since someone needs to relearn after the fact all the tradeoffs the author went through to even understand what's going on (why is any of this here I thought it was just a copy change???). There is a tendency to pull in low-priority work along with the high-priority focus of the ticket, so this is also an inefficient use of dev time. Because the dev put in so much work (and it's not _wrong_ per se) there is a lot of pressure to approve the PR and to include all the scope creep. _Testing_ might also become a bottleneck now since merging the change requires confirm multiple different workflows or units of work, each of which may block the others from being delivered. The senior engineer learns a good amount, the reviewers learn a little (maybe I'm sharing my own experience a bit too much here, but I don't learn very much from reviewing other people's PRs, regardless of the effort spent to understand the PR), no one else learns anything. Overall, not a very efficient use of everyone's time.
 
-- A senior engineer picks up a ticket and disappears for the exact appropriate amount of time to implement the ticket. The ticket has no scope creep. The reviewer then needs to reverse engineer all of the decisions that led to the PR before approving (or just pretend they did and hit approve). This is very efficient from the perspective of the author since they cranked out some work, but they probably didn't learn much as they seemed to have already known how to implement everything, and the reviewer didn't learn much from reviewing. This is more efficient in terms of effort to velocity in the short term than the above scenarios, but no one grew or learned anything -- so these just further silos work with the author of this PR. The team / junior engineers didn't get the chance to improve much.
+- A senior engineer picks up a ticket and disappears for the exact appropriate amount of time to implement the ticket. The ticket has no scope creep. The reviewer then needs to reverse engineer all of the decisions that led to the PR before approving (or just pretend they did and hit approve). This is very efficient from the perspective of the author since they cranked out some work, but they probably didn't learn much as they seemed to have already known how to implement everything, and the reviewer didn't learn much from reviewing. This is more efficient in terms of effort to velocity in the short term than the above scenarios, but no one grew or learned anything -- so these just further silos work with the author of this PR. The team / junior engineers didn't get a chance to learn or improve.
 
-- A senior engineer picks up a ticket and disappears for a reasonable amount of time. When they come back, they have an implementation, but also several alternative ideas for the implementation, without a clear idea about which would be the best one. The PR is the first time they would get feedback on the different ideas. This is also inefficient due to the late feedback/discussion (as opposed to pair/mobbing where you get feedback continuously)
+- A senior engineer picks up a ticket and disappears for a reasonable amount of time. When they come back, they have an implementation, but also several alternative ideas for the implementation, without a clear idea about which would be the best one. The PR is the first time they would get feedback on the different ideas. This is also inefficient due to the late feedback/discussion (as opposed to pair/mobbing where you get feedback continuously).
 
-Overall, individual work like swarming is usually 
+Overall, individual work like swarming tends to have the following qualities
 - inefficient due to the handoff for the code review
 - those with the biggest learning opportunity end up risking huge waste in chasing the wrong implementation, scope creep, etc.
-- less disciplined engineers are strongly tempted to go down rabbit holes instead of staying focused on the high-value aspects of the tickets (again, efficiency)
-- efficient work in this style tends to imply a lack of learning
-- the minimum number of people involved in doing the work which can contribute to heavy siloing of knowledge
+- on the other end of the spectrum from the previous point: efficient work in this style tends to imply a lack of learning
+- less disciplined engineers are strongly tempted to go down rabbit holes instead of staying focused on the high-value aspects of the tickets
+- the minimum number of people possible are involved in doing the work which can contribute to heavy siloing of knowledge
 
-There is a caveat here where a lot of these issues can be mitigated with outstanding engineering discipline, effort, and expertise (aka Hero work). If some absolute legend is constantly checking in with junior engineers to make sure they aren't spinning their wheels too long on anything and giving them quiet and helpful feedback for their PRs if senior engineers are perfectly able to identify when they should abandon work and pull the team into a conversation before continuing to code, or if engineers are experts at focusing on the high-value aspects of the tickets (while paradoxically, capable of judging when a situation has changed and the ticket is no longer high value to warrant its priority), etc.
+There is a caveat here where a lot of these issues can be mitigated with outstanding engineering discipline, effort, and expertise (aka Hero work). If some absolute legend is constantly checking in with junior engineers to make sure they aren't spinning their wheels too long on anything and giving them quiet and helpful feedback for their PRs, and senior engineers are perfectly able to identify when they should abandon work and pull the team into a conversation before continuing to code, and engineers are experts at focusing on the high-value aspects of the tickets (while paradoxically, capable of judging when a situation has changed and the ticket is no longer high value to warrant its priority), etc. then this could work out pretty well!
 
 The above is all good stuff to strive for, but it is _hard_ to do in this paradigm, whereas it is _easier_ to do in pairing and the _natural default_ in mobbing.
 
 ### Benefits
 
-- *IF* (read: "big if") you can manage the drawbacks above, this allows you to parallelize tasks in such a way that you can increase your team's velocity. Again, that is if you can manage the drawbacks like siloing, inefficiency, etc. that normally lead to parallelizing work like this being slower than pairing or even mobbing.
+- *IF* (read: "big if") you can manage the drawbacks above, this allows you to parallelize tasks in such a way that you can increase your team's velocity. Again, that is if you can manage the drawbacks like siloing, inefficiency, etc. that normally lead to parallelizing work like this being slower than pairing or mobbing.
 
 - Working on something by yourself is very inefficient but you do undoubtedly learn a lot from the struggle. Additionally, what you learn in this way is different than what you get when you are taught something. [Marvin Minksy used the phrase "Hard Fun" when describing childhood learning with difficult games or activities (like tinker toys).](https://mitpress.mit.edu/9780262039093/inventive-minds/) He also talks about expertise being the collection of ["negative" knowledge](https://web.media.mit.edu/~minsky/papers/NegExp.mss.txt) (i.e. internalizing what _not to do_ over _what to do_). I think these two ideas combined best describe the benefits an individual gets when suffering through some new piece of work by themselves. In my opinion, for a team to grow strong engineers optimally, it must provide opportunities to learn by being _taught_ and to learn through _experience_. More on that a bit later though.
 
@@ -49,23 +49,23 @@ The above is all good stuff to strive for, but it is _hard_ to do in this paradi
 
 Swarming or solo works seems most appropriate for work that 
 
-- Is well understood by the team as a whole, so there isn't a lot of learning to be done and little benefit from involving multiple people. For example: implementing a bunch of new emails from a spreadsheet when a well-established framework or pattern exists in the codebase. That might benefit everyone on the team by just picking up one or two tickets so the team as a whole can get it done as fast as possible.
+- Is well understood by the team as a whole, so there isn't a lot of learning to be done and little benefit from involving multiple people. For example: implementing a bunch of new emails from a spreadsheet with a well-established framework or pattern (e.g. You just implement the `Email` interface for each new message). 
 
-- Is tedious, such as requiring lots of trial and error instead of discussion and design. Someone could work on this and then report back to the team with the learnings. Examples include doing changes like renaming some types across the whole codebase, some pre-agreed upon structural refactoring to the codebase, or debugging some weird low-level issue (test flakiness, intermittent OOM errors when running the tests locally, stuff like that where you just have to sit and suffer until it works).
+- Is tedious, maybe requiring lots of trial and error instead of discussion and design. Someone could work on this and then report back to the team with the summarized learnings. Examples include changes like renaming some types across the whole codebase, some pre-agreed upon structural refactoring to the codebase, or debugging some weird low-level issue (test flakiness, intermittent OOM errors when running the tests locally, stuff like that where you just have to sit and suffer until it works).
 
 - Some exploratory work: such as trying your hand at something to build a POC or just getting a sense of a new pattern, paradigm or technology, before bringing it to the team for everyone to try.
 
-- If you just feel like it because you've been doing a lot of pairing and mobbing and just want to go heads down on something for a bit, even though you know it's less efficient. That's ok sometimes! Though it's probably better that it's the exception rather than the rule.
+- You just feel like it because you've been doing a lot of pairing and mobbing and just want to go heads down on something for a bit, even though you know it's less efficient. That's ok sometimes! 
 
 ## Pairing 
 
-Because Pairing and Mobbing have more benefits than drawbacks, in my opinion, I'll start with benefits going forward.
+Because Pairing and Mobbing have more benefits than drawbacks, I'll start with benefits going forward.
 
 ### Benefits
 
 In general, pairing is more efficient than solo work.
 
-- Less chance to fall down rabbit holes since you are working with another person. I can't tell you how many times I've started to get off track except for the person I'm pairing with who will just say "let's worry about that later." It's really easy to stray from the main point of your work by yourself, but it's even easier to keep someone else focused when you are working with them and seeing them start to veer off course.
+- Less chance to fall down rabbit holes since you are working with another person. I can't tell you how many times I've started to get off track when the person I'm pairing with says "let's worry about that later." It's really easy to stray from the main point of your work by yourself, but it's easy to keep someone else on track.
 
 - Less decision latency: you can immediately discuss every decision you make as you are writing the code with the other person, no need to post in slack and wait for someone to see it and choose to involve themselves or worst case implement the whole thing and then get design feedback on the PR.
 
@@ -73,21 +73,23 @@ In general, pairing is more efficient than solo work.
 
 - More efficient PRs: Instead of needing to convince someone to review the PR and revisit/understand your design decisions, you get a "continuous" code review from the person you are pairing with! Instant PR approval!
 
-- Can be leveraged to help with learning: instead of sending a junior engineer off to teach themselves how to do something by themselves, you can pair with them to teach them by guiding them through it. Additionally, the more senior engineer of the pair is forced to explain their ideas and thoughts in ways that may force them to better understand, refine, or even challenge their ideas.
+- Can be leveraged to help with learning: instead of sending a junior engineer off to teach themselves how to do something by themselves, you can pair with them to teach them by guiding them through it. Additionally, the more senior engineer of the pair is forced to explain their ideas and thoughts in ways that may force them to better understand, refine, or even challenge them.
 
 - Reduces corner-cutting by social pressure: I may be telling on myself here but if I'm doing solo work, it's a lot easier for me to cut a corner or be a little sloppy because I'm starting to feel like I want to get something done sooner. But when I'm working with someone else, I know I'll need to justify it or I'll get called out for it, so I'm usually on my best behavior.
+
+- Overall, I just find my brain and internal monologue to be unreliable. Your brain can just tell you "this makes sense, trust me bro" and you have no choice but to believe it. But once spoken into existence it can quickly fall apart, which is good! Shorten that feedback loop by putting yourself in the position where you have to work through your thoughts out loud and in real life.
 
 Overall, pairing is _usually_ more efficient for getting quality work done since it minimizes handoffs, reduces decision latency, shortens feedback loops, improves quality, and reduces silos (by 1)
 
 ### Drawbacks
 
-Pairing is a discipline and a skill so as a result it can be done "well" or "poorly" and this can affect the degree of the benefits you can get from it.
+Pairing is a discipline and a skill so it can be done _well_ or _poorly_ and this can affect the degree of the benefits you can get from it, or possibly push it over into a net negative.
 
 For example,
 
 - I might hog all the driving or refuse to drive outright in the wrong context. For example, if I'm the senior engineer teaching a junior engineer, it's probably best to encourage them to drive more so they can get as much engagement and hands-on experience as possible with me guiding them. If I insist on driving the whole time, it will be hard for them to stay engaged. If we are both similarly experienced engineers bouncing ideas off of each other, it may start to be a struggle to stay in the navigator role for long periods, especially if the driver takes over both roles and just starts doing everything without any room for discussion. That's just swarming but wasting an extra person's time.
 
-- Pairing does require some degree of empathy and social awareness. You can't just dump on the other person's ideas or reject everything out of hand. You have to intentionally build rapport with your teammates and pairing partners and intentionally make pairing a fun and productive experience for everyone. One of my favorite pages in XP Explained has a paragraph dedicated to making sure that if you are pairing, you are showering and respecting people's personal space. It matters!
+- Pairing does require some degree of empathy and social awareness. You can't just dump on the other person's ideas or reject everything out of hand. You have to intentionally build rapport with your teammates and pairing partners and intentionally make pairing a fun and productive experience for everyone. One of my favorite pages in XP Explained has a paragraph dedicated to making sure that if you are pairing, you are showering and respecting people's personal space. It's a low bar, but it does matter!
 
 - Despite reducing siloing, it only does it by 1 person. And we still can have decision latency when it comes to non-engineering roles, like PMs, managers, or other areas of expertise necessary to make good software.
 
@@ -95,9 +97,9 @@ For example,
 
 ### When to use it
 
-In general, I would suggest pair programming as a great "default" for how to work with most teams. You get a ton of benefits with a minimal amount of downsides (most of which are "learning how to pair", which is done through practice).
+In general, I would suggest pair programming as a great "default." You get a ton of benefits with a minimal amount of downsides (most of which are "learning how to pair", which is done through practice).
 
-Additionally, pairing can still result in siloing knowledge if not intentionally managed, like it swarming. Just with pairs instead of individuals.
+Additionally, pairing can still result in siloing knowledge if not intentionally managed, like in swarming. Just with pairs instead of individuals.
 
 I would suggest pairing or mobbing depending on how important minimizing siloing is to your team, as well as how much of your work is design based, or how much of your work is bottlenecked based on decision latency. The more *collaboration* required, the more pairing and mobbing benefits you.
 
@@ -117,27 +119,27 @@ Similar to pairing but *more*.
 
 - No siloing because the entire team is there, so everyone takes part in the discussions and the decisions and can stay abreast of all the work being done.
 
-- Prioritization becomes easier because if the team's WIP is approach 1, that should always be "the most important thing." You won't always get this right, but the process of mobbing strongly encourages that the team is always working on The Most Important Thing.
+- Prioritization becomes easier because if the team's WIP is approach 1, that work should always be "the most important thing." You won't always get this right, but the process of mobbing strongly encourages that the team is always working on The Most Important Thing.
 
 - Similarly, mobbing strongly discourages increasing scope or falling down rabbit holes. The whole team is there to keep the work focused and on track. Even better, with the whole team there, priorities can pivot immediately and correctly based on the full team's input when something new is discovered via that work in progress. Especially, if you manage to get your PO or onsite customer in the mob.
 
 - Quality in your work is likely to end up being as good as it can be because the whole team is involved in designing and delivering the work continuously. It's like every team member is signing off on every PR but better. This also helps with efficiency because there will be fewer bugs, UAT issues, etc. that will come back to the team to interrupt them.
 
-- Decision latency and handoffs are eliminated (if they are decisions and handoffs within the team). Any problem that can be handled by _someone_ in the team, can be handled immediately in the mob. Absolute efficiency!
+- Decision latency and handoffs are eliminated (if they are decisions and handoffs within the team, external handoffs may need to be addressed through retros and process changes). Any problem that can be handled by _someone_ in the team, can be handled immediately in the mob. Absolute efficiency!
 
-- Fewer "meetings" are needed, because, like in the above case, anything that can be handled by someone in the team can be handled ad hoc in the mob.
+- Fewer meetings are needed, as anything that can be handled by someone in the team can be handled ad hoc in the mob.
 
 - It's fun and social! Maybe this isn't a positive for everyone, but I find this to be the *most fun way to work*. Lots of joking around and having fun and still being productive!
 
 ### Drawbacks
 
-Like with pairing but even more so: mobbing is a discipline and a skill that the team will need to get good at. 
+Like with pairing but even more so: mobbing is a discipline and a skill that the team will need to build competency in. 
 
-It has all the social problems that pairing has but MORE SO. It's easy for someone who isn't confident to get lost in the mob and hide in the number -- not engaging and as a result not learning or helping others learn. It's also even more important to consider other people when you are in the mob. An example of this can be seen in some of the mobbing talks and posts seen online that recommend talking in a declarative instead of an imperative way: don't just tell people to do things, state instead what you are thinking or how you feel about stuff. It's easy to rub people the wrong way if you are talking over other people or are perceived as ordering people around, so the team as a whole needs to learn how to communicate effectively with each other in a sustainable way. A lot of "I feel like we should try X because Y" or "I am not as much a fan of that choice because Z" instead of "Do X" or "don't do Z" or "delete that and never do it again, you detestable fool."
+It has all the social problems that pairing has but MORE SO. It's easy for someone who isn't confident to get lost in the mob and disappear -- not engaging and as a result not learning or helping others learn. It's also even more important to consider other people when you are in the mob. In many of the mobbing talks and posts seen online ("the literature"), they repeatedly emphasize the importance of talking in a declarative instead of an imperative way: don't just tell people to do things, state instead what you are thinking or how you feel about it. It's easy to rub people the wrong way if you are talking over other people or are perceived as ordering people around, so the team as a whole needs to learn how to communicate effectively with each other in a sustainable way. A lot of "I feel like we should try X because Y" or "I am not as much a fan of that choice because Z" instead of "Do X" or "don't do Z" or "delete that and never do it again, you detestable fool."
 
-There can be a lot of organizational suspicion of a team doing "1 thing at a time" when they could be doing "n things at a time." Though it ends up being more efficient (anecdotally, from my experience) it may seem counterintuitive to people who have not experienced all of these different ways of working and their different tradeoffs.
+There can be a lot of organizational suspicion of a team doing "1 thing at a time" when they could be doing "n things at a time" ("Why did we hire all of these engineers if they aren't even doing their own work???"). Though it ends up being more efficient (anecdotally, from my experience) it may seem counterintuitive to people who have not experienced all of these different ways of working and their different tradeoffs.
 
-Additionally, I have seen issues with some teams where they love mob programming so much they NEVER WORK ANOTHER WAY, which in some ways warms my heart because I think mobbing is _often_ the best way to work, there are times when pairing or swarming or something in between might be better for any of the previously mentioned reasons. Mobbing is an excellent tool in the team's toolbox, which often can and should be the default way of working, but it should not be the _only_ way the team works.
+Additionally, I have seen issues with some teams where they love mob programming so much they NEVER WORK ANOTHER WAY, which in some ways warms my heart because I think mobbing is _often_ the best way to work, there are times when pairing or swarming or something in between might be better for any of the previously mentioned reasons. Mobbing is an excellent addition to the team's toolbox, which can and should be the default way of working, but it should not be the _only_ way the team works.
 
 It can also be difficult to get the full benefit of mobbing because individuals may not be able to consistently make it to the mob together. For instance, the mob benefits a lot from having a PO present, but in my experience, they are usually too busy to be there all the time. However, POs often quickly see the value of mobs and make time to show up to the mob when asked, because it ends up being the most efficient use of their time as well.
 
@@ -202,3 +204,5 @@ In particular, for mobbing, I would recommend floating the idea with the team an
 [Remote Mob Programming](https://www.remotemobprogramming.org/)
 
 [Rob Martin - Teaching functional programming to noobs (Lambda Days 2016)](https://www.youtube.com/watch?v=bmFKEewRRQg)
+
+[Mob Programming - A Full Team Approach](https://www.youtube.com/watch?v=SHOVVnRB4h0)

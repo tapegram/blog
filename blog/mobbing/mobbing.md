@@ -9,8 +9,7 @@ There are even more extreme XPers like [Woody Zuill who advocate for "mob progra
 
 I want to answer the question: Which is the best option? 
 
-Spoiler: There is no best option overall, but each option has strengths and weaknesses that are situationally appropriate. I would suggest that any team would benefit from learning how to identify when one strategy is better than another and flexibly applying them to their work.
-
+*Spoilers!* There is no best option overall, but each option has strengths and weaknesses that are situationally appropriate. I would suggest that any team would benefit from learning how to identify when one strategy is better than another and flexibly applying them to their work. That being said, I usually feel like I'm wasting time whenever I'm not mobbing.
 
 ## Swarming
 

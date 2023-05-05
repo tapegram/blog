@@ -1,7 +1,10 @@
 # blog
+
 Hello and welcome to [my exercise in self-indulgence!](ABOUT.md)
 
 Feel free to browse the repo or to jump into any of the content links below!
+
+[Architecture Patterns at Extend](blog/architecture-patterns-at-extend/readme.md)
 
 [The Spectrum of Collaboration (Mobbing)](blog/mobbing/mobbing.md)
 

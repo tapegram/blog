@@ -1,53 +1,64 @@
-# Holiday ML Project
+# NonBlocking Code Review with Large Language Models
 
-Over the holidays I decided I wanted to do two things:
+I've been seeing a lot of really cool ML applications recently and have been particularly impressed with their ability to improve development workflows.
 
-* Get started learning some of the cool AI/ML stuff going on
-* Read a book about auth and identity
+I'm a big fan of Github Copilot auto completions and code generations, and I have been looking to integrate ChatGPT powered tools into my editor and developer flows which has been extremely productive and a lot of fun.
 
-The latter was boring so I neglected it in favor of working on a fun little project. 
+So it seemed like the time to dig deeper into the technology and see if I could make developer tools that solve some other problems I have.
 
-## The project
+In particular, I have been working on a couple side projects with some friends recently, and we have been experimenting with non-PR based workflows. That is, we all more or less work off of main locally, we have githooks for CI, and we just pair/mob a lot, trust the build system and the tests we write, and generally don't feel the desire to use a PR based system.
+
+Of course, there are lots of holes here to fill because there doesn't appear to be good tooling to support this way of working since PRs are the standard way of working at the moment for a variety of good reasons.
+
+And then I saw this post on LinkedIn:
 
 ![Kent Beck Post About Nonblocking Code Review](kent-beck-code-review.png)
 
-Kent Beck posted this on LinkedIn a bit ago and I thought it sounded like a really cool idea. I have also been growing increasingly suspicious of the PR process in general, and have been working without PRs with some friends on a separate project (which I hope to post about later, there is some very cool rust/htmx stuff going on there, along with code generation tooling for productivity)
+And I thought that this applied to us and could be a good opportunity to learn some new technologies and make a useful tool for ourselves.
 
-So this appealed to me -- it could be something I would want to use every day.
+So over the holidays I tried to quickly learn some AI/ML basics and get a prototype of the above application implemented -- with a bias towards learning the new technologies over maybe more *practical* choices like just using the chatgpt API.
+
+## The project
+
+In order to scope this down, I decided to focus on using an ML model for summarizing diffs to then display in a feed -- and stuff like personalization I decided to punt on.
 
 ### The plan
 
-First I would need to learn about ML stuff. I had previously done *The ML Class* that everyone does on Coursera, and I did a little bit of NLP research back in college, but other than that I was pretty thin on what this work would entail.
+First I would need to learn about ML stuff. My previous background included some NLP research in underground a decade ago, and [Andrew Ng's classic Coursera Machine Learning class.](https://www.coursera.org/specializations/machine-learning-introduction) So I knew a bit more than nothing, but I was pretty unfamiliar with the new world and everything that had emerged since the [Attention paper was published.](https://arxiv.org/abs/1706.03762)
 
-So I quickly did this excellent new Coursera class on LLMs/ML: [Generative AI with Large Language Models](https://www.coursera.org/learn/generative-ai-with-llms/)
+So I quickly did this excellent new Coursera class: [Generative AI with Large Language Models](https://www.coursera.org/learn/generative-ai-with-llms/) and I would strongly recommend it! 
 
-The high-level plan was:
+After completing the class I threw together a loose high-level plan:
 
-1) Integrate with Github to get webhook events related to changes (this ended up being Push events)
+1) Integrate with Github to get webhook events related to changes (this ended up being [Push events](https://docs.github.com/en/webhooks/webhook-events-and-payloads#push)
 
 2) Setup some kind of cool ML magic to summarize diffs in short tweet-like messages.
 
 3) Create a simple view to see those summaries, with the ability to drill into the actual commits if required.
 
-This was my outline for a very simple MVP. My main goal was to build something useful as quickly as possible, with some wiggle room to be more hands-on with the ML portion, even at the expense of accuracy and efficiency, since that is the stuff I was trying to learn.
+My main goal was to build something useful as quickly as possible -- ideally with it *barely* working, with some wiggle room to be more hands-on with the ML portion, even at the expense of accuracy and efficiency, since that is the stuff I was trying to learn.
 
-It was clear from some experimentation that just using an existing openai/chatgpt api to summarize my diffs was probably easier, cheaper, and better than the models I would deploy, but I wanted to go through the process.
+It was clear from some experimentation that just using an existing openai/chatgpt api to summarize my diffs was probably easier, cheaper, and better than the models I would deploy, but I wanted to go through the process of selecting a model, playing around with it in a notebook, messing with some simple prompt engineering, and actually deploying the model.
 
-For instance, by asking chatgpt to summarize this diff: https://github.com/tapegram/nonblocking-reviews/compare/6faabbc26aa1...cedddc12dc5b.diff I was able to get a summary I was pretty happy with:
+That is to say, ChatGPT seemed already pretty good at doing the exact diff summarization task I wanted, and I could have just used their [provided API](https://help.openai.com/en/collections/3675931-api) to incude this in my app without any additional work. 
+
+As an example, just plugging in this diff in the ChatGPT GUI gives a pretty good result: `https://github.com/tapegram/nonblocking-reviews/compare/6faabbc26aa1...cedddc12dc5b.diff`
 
 ![ChatGPT example](chatgpt-example.png)
 
-This felt like it would already be useful to me, and would leave open the possibility of further refining the summarizing and introducing other ML applications, like personalization.
+But I wanted to take a harder path for learning reasons, so I opted to go with AWS SageMaker Jumpstart, so I could try different models, play with them in a notebook, and then deploy them myself -- as well as leaving the door open for future fine-tuning. Based on the current state of ML tooling, I think you can get a lot of mileage out of just existing APIs for these models like what OpenAI provides, but I'm sure there are other more specific usecases where a company would get value out of refining a more specialized model, so I wanted to try going down that path even if it wasn't strictly necessary for the actual project needs.
+
+By now, my thoughts were to make an app that looked something like this:
+
+![Nonblocking Review High Level Diagram](nonblocking-review-diagram.png)
 
 ### The implementation
 
-Once the class was done, it was time to get to work
-
 #### Bootstrap a simple web application
 
-I created a simple template repository from the above mentioned htmx/rust project and used that to bootstrap a new simple web app.
+I have been working a lot recently with Rust and HTMX for webapps, and decided to continue doing that here because I have been enjoying myself. I previously created a simple template repository based on some of my preferences for working in that tech stack and with some opinionated code generation tools (which is another blog post) which made getting started pretty straightforward and I was able to move quickly while still having some separation of concerns in the app (general ports and adapters patterns while still prototyping rapidly).
 
-I just felt like continuing to use htmx and rust since I had grown comfortable using them for other projects recently.
+That being said, I did run into some expected frustration mapping models between layers. The data layer (Mongo records), the application layer, and the github adapter all had similar representations of a "Push," but I modeled them separately to be responsible and allow the app to evolve easier in the future -- but this did slow me down a little bit, maybe adding another hour to the project. This is an extremely low cost to staying agile and being able to continue iterating on this project quickly without dealing with accidental complexity from coupling -- but I definitely felt slowed down by doing this. I had the idea of trying to make a rust macro and/or a code generation tool for generating the mappers and structs for models that start off similar but may diverge in the future -- but decided to add that to my todo list instead of going down a rabbithole here. But I am very keen on making some small tool to allow for generating the boilerplate needed to keep concerns loosely coupled, as this boilerplate is by far the most frustrating aspect of my preferred architecture style and would hopefully eliminate the need to even consider writing highly-coupled code in the name of prototyping rapidly.
 
 #### Github App
 
@@ -59,11 +70,11 @@ The service would then just persist any relevant information
 
 #### Setup the ML Model
 
-I decided to stick with AWS SageMaker purely because it was what was used in the Coursera class. Using SageMaker Jumpstart I tried deploying a few different models and then playing with them in a jupyter notebook, which was an extremely positive experience that let me experiment quickly.
+I decided to stick with AWS SageMaker because it was what was used in the Coursera class. Using SageMaker Jumpstart, I tried deploying a few different models and then playing with them in a jupyter notebook, which was an extremely positive experience that let me experiment quickly.
 
-I tried a flan model which ended up giving me pretty poor results. AWS limited my options a bit since the bigger more expensive models weren't allowed to be deployed without contacting AWS to give me access, which is fair enough I don't want to accidentally spend a billion dollars on this side project.
+I was slightly limited in what I could try, since many of the models that looked especially promising required large instance sizes than my personal AWS account was approved for. I ended up only seriously trying two models: [Flan-T5](https://huggingface.co/google/flan-t5-xl) and [CodeLlama-7b-instruct](https://huggingface.co/codellama/CodeLlama-7b-Instruct-hf).
 
-After a couple of tries I found [CodeLlama-7b-instruct](https://studio-d-esnt37a3pxef.studio.us-east-1.sagemaker.aws/jumpstart/meta/meta-textgeneration-llama-codellama-7b-instruct) had pretty good out-of-the-box support for the diff summarization I wanted. Not as good as chat gpt, but more than good enough!
+The Flan model struggled out of the gate to do anything other than write a main method in Rust with any kind of zero-shot inference, whereas the CodeLlama model immediately had decent results, probably due to being trained more on code than a general-purpose Flan model.
 
 I then spent a couple of hours just fooling around with zero-shot prompts to try to consistently get the kind of response I wanted, using some of the diffs I had already captured in the application.
 

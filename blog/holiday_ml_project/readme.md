@@ -89,13 +89,13 @@ instructions = [
     ]
 ```
 
+The last bit about not saying "code change" was because the model kept trying to preppend every summary with "Code change: <summary>"
+
 #### Deploy the ML Model as an API
 
 Then I followed this documentation to expose this model via a Lambda and API Gateway: https://aws.amazon.com/blogs/machine-learning/call-an-amazon-sagemaker-model-endpoint-using-amazon-api-gateway-and-aws-lambda/
 
 This was pretty straightforward, and making the lambda was especially easy since I just picked a Python runtime and then mostly copy+pasted my work from the notebook into the lambda.
-
-I threw an API Key requirement on it to pretend it was secure and voila I had a ML diff summarizing endpoint!
 
 ![Postman Screenshot](ml-endpoint.png)
 
@@ -139,6 +139,8 @@ match event.kind {
         }
 
         // And now we feed the diff from above into our newly exposed model
+        // Note: I think this should step should probably be done inside the service and not the github
+        // webhook adapter, so that's something I plan to refactor soon.
         let client = reqwest::Client::new();
         let summary_response: Summary = client
             .post("https://myhash.execute-api.us-east-1.amazonaws.com/prod/diffsummary")
@@ -166,7 +168,7 @@ match event.kind {
 };
 ```
 
-The above code has a lot of room for improvement so please don't focus too much on that. I also think most of this process should probably be async and queue-based, which is something I might do after I deploy this service and start using it as a tool with my real work.
+I think most of this process should probably be async and queue-based, which is something I might do after I deploy this service and start using it as a tool with my real work. That would also allow for more fine-grained data processing and maybe a more interesting data model where we could organize the data in a way that allows for better personalization.
 
 #### Presenting this information as a view
 
@@ -176,16 +178,25 @@ I'm hand-waving this a bit but the service has two commands at the moment:
 
 2) `get_feed` which returns a "feed" which we can then render.
 
-I made a simple view in like 5 minutes for this (so again, please withhold your criticisms regarding the many lazy bits here)
+I made a simple view for this using [rscx](https://github.com/pitasi/rscx) plus some cool reusable components we have been building out in another rust project (like form, grid, and table components).
 
 ```rust
+// Some routes we wire up with the main app elsewhere.
 pub fn feed_routes(state: WebHtmxState) -> Router {
     Router::new()
         .route(routes::FEED, get(get_feed))
         .with_state(state)
 }
 
+// Our handler for the `/feed` route.
 async fn get_feed(State(state): State<WebHtmxState>) -> impl IntoResponse {
+    // Fetch the feed from the service.
+    // NOTE: we probably want to map this to a view model to avoid coupling between layers here. That is another follow up as 
+    // we productionize this.
+    // SECOND NOTE: I'm using a code generator to create all the scaffolding around service commands, and it defaults to
+    // generating input structs instead of multiple arguements for a service call. This doesn't take any input yet so I'm passing
+    // in an empty struct, but it should probably either take no arguments at all, or I should add a real arguement. This is probably
+    // where some identity token should be passed in so we can get a personalized feed.
     let feed = state.review_feed_service.get_feed(GetFeedInput {}).await.expect("Failed to get feed");
 
     let content: String = feed
@@ -222,7 +233,7 @@ And this looks like
 
 ![Feed view](feed-view.png)
 
-Which is pretty neat, in my opinion!
+Pretty neat!
 
 ## Result
 
@@ -232,7 +243,7 @@ Clicking any of the above summaries takes you directly to the commit so you can 
 
 This is a very exciting start and I have a ton of ideas to try next to push forward on it. I'm thinking of getting this slightly more "production ready" which should be a few small changes, and getting it deployed for me and some friends to use on a project together.
 
-By dogfooding it, I hope we can identify the high-value areas to improve and just to get iterating on it.
+By dogfooding it, I hope we can identify the high-value areas to improve and get iterating on it.
 
 Some ideas that we may end up trying are:
 
@@ -246,9 +257,11 @@ Some ideas that we may end up trying are:
 
 5) Experiment with making the model a program-aided model and allow it to look up user and commit information to better inform summaries and personalization.
 
+6) Or even just add some simple non-ML rules to the system. Like "show this to a user if they have a recent commit in a file" or "show this if the diff if larger that x lines." Or we could identity these as indicators that we also feed to the summarization model so it has more context than the diff when generating a more personalized summary.
+
 ## Conclusion
 
-It's cool how far NLP and ML have come. I'm especially excited about how accessible and how much good tooling exists for this stuff now. I was able to get this out the door from basically scratch during the holidays in between family events, dinners, friends visiting, etc -- which is a great testament to the ease one can ramp up on this stuff.
+It's cool how far NLP and ML have come. I'm especially excited about how accessible and how much good tooling exists for this stuff now. I was able to get this out the door despite knowing little about it and during the holidays in between family events, dinners, friends visiting, etc -- which is a great testament to the quality of tooling and efforts of the community to make ML accessable.
 
 I've only barely dipped my toes in, but it's cool to have gotten to go through the process (albeit without fine-tuning -- yet!).
 

@@ -261,6 +261,8 @@ Some ideas that we may end up trying are:
 
 6) Or even just add some simple non-ML rules to the system. Like "show this to a user if they have a recent commit in a file" or "show this if the diff if larger that x lines." Or we could identity these as indicators that we also feed to the summarization model so it has more context than the diff when generating a more personalized summary.
 
+I will also likely start looking into cheaper options like the OpenAI's API, so more to come there!
+
 ## Conclusion
 
 It's cool how far NLP and ML have come. I'm especially excited about how accessible and how much good tooling exists for this stuff now. I was able to get this out the door despite knowing little about it and during the holidays in between family events, dinners, friends visiting, etc -- which is a great testament to the quality of tooling and efforts of the community to make ML accessable.

@@ -91,7 +91,7 @@ instructions = [
     ]
 ```
 
-The last bit about not saying "code change" was because the model kept trying to preppend every summary with "Code change: <summary>"
+The last bit about not saying "code change" was because the model kept trying to preppend every summary with `Code change: <summary>`
 
 #### Deploy the ML Model as an API
 

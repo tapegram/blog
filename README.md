@@ -4,6 +4,8 @@ Hello and welcome to [my exercise in self-indulgence!](ABOUT.md)
 
 Feel free to browse the repo or to jump into any of the content links below!
 
+[Nonblocking Code Review with LLMs](blog/holiday_ml_project/readme.md)
+
 [Architecture Patterns at Extend](blog/architecture-patterns-at-extend/readme.md)
 
 [Less Discipline, More Unison! - Talk at first ever Unison For All Conference](https://www.youtube.com/watch?v=PRvBALAIo0s)
